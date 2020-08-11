@@ -6,7 +6,7 @@ on:
 
 jobs:
   
-  update wiki:
+  update_wiki:
     
     runs-on: ubuntu-latest
 
