@@ -5,22 +5,17 @@ on:
     types: [ published, created, edited ]
 
 jobs:
-  
   update_wiki:
-    
+    name: Update Wiki
     runs-on: ubuntu-latest
-
     steps:
-      
       - name: Checkout Repository
         uses: actions/checkout@v2
-      
       - name: Generate Documentation
         uses: SwiftDocOrg/swift-doc@master
         with:
           inputs: "./Sources"
           module-name: Interval
-      
       - name: Upload Documentation to Wiki
         uses: SwiftDocOrg/github-wiki-publish-action@v1
         env:
