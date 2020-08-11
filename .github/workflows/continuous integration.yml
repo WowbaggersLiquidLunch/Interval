@@ -1,0 +1,21 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Build & Test Interval on ${{ matrix.os }}
+        run: swift test --enable-code-coverage --enable-test-discovery --list-tests --sanitize --show-codecov-path --verbose
