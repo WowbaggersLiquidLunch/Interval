@@ -18,4 +18,4 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Build & Test Interval on ${{ matrix.os }}
-        run: swift test --enable-code-coverage --enable-test-discovery --list-tests --sanitize --show-codecov-path --verbose
+        run: swift test --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --show-codecov-path --verbose
