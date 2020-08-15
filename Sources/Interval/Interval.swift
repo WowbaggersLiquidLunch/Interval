@@ -520,7 +520,7 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	///
 	///	```swift
 	///	let chosenNumber = 3
-	///	if 0<~~<=10 ~= chosenNumber {
+	///	if 0<∙≤10 ~= chosenNumber {
 	///	    print("\(chosenNumber) is a single digit.")
 	///	}
 	///	//	Prints "3 is a single digit."
@@ -543,21 +543,21 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	///
 	///	```swift
 	///	let numbers = [10, 20, 30, 40, 50, 60, 70]
-	///	let upToFour = ~~~~<4
+	///	let upToFour = ∙∙<4
 	///
 	///	let i1 = upToFour.relative(to: numbers)
-	///	//	i1 == 0<=~~<4
+	///	//	i1 == 0≤∙<4
 	///	```
 	///
 	///	The `i1` interval is bounded on the lower boundary by `0` because that is the starting index of the `numbers` array. When the collection passed to
 	///	`relative(to:)` starts with a different index, that index is used as the lower endpoint instead. The next example creates a slice of `numbers` starting at index `2`, and then uses the slice with `relative(to:)` to convert `upToFour` to a bounded interval.
 	///
 	///	```swift
-	///	let numbersSuffix = numbers[2<=~~~]
+	///	let numbersSuffix = numbers[2≤∙∙]
 	///	//	numbersSuffix == [30, 40, 50, 60, 70]
 	///
 	///	let i2 = upToFour.relative(to: numbersSuffix)
-	///	//	i2 == 2<=~~<4
+	///	//	i2 == 2≤∙<4
 	///	```
 	///
 	///	Use this method only if you need the bounded interval it produces. To access a slice of a collection using an interval, use the collection's generic subscript that uses an interval as its parameter.
