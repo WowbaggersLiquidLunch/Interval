@@ -36,6 +36,12 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	///	The interval's upper boundary accessibility.
 	public let upperBoundaryAccessibility: IntervalBoundaryAccessibility
 	
+	///	The interval's lower boundary availability.
+	public var lowerBoundaryAvailability: IntervalBoundaryAvailability { .init(accessibility: lowerBoundaryAccessibility) }
+	
+	///	The interval's upper boundary availability.
+	public var upperBoundaryAvailability: IntervalBoundaryAvailability { .init(accessibility: upperBoundaryAccessibility) }
+	
 	///	The interval's lower endpoint.
 	public let lowerEndpoint: Endpoint
 	

@@ -24,4 +24,18 @@ final class IntervalBoundaryIndependenceTests: XCTestCase {
 		
 	}
 	
+	///	Checks that `IntervalBoundaryAvailability` is not bounded by `Interval.Member`.
+	func testIndependenceOfIntervalBoundaryAvailabilityFromInterval() {
+
+		let intervalOfInts: Interval<Int> = 0≤∙≤1
+		let intervalOfDoubles: Interval<Double> = 2.7≤∙≤3.14
+
+		XCTAssertEqual(
+			intervalOfInts.lowerBoundaryAvailability,
+			intervalOfDoubles.lowerBoundaryAvailability,
+			"`IntervalBoundaryAvailability` fails to be independent from `Interval`."
+		)
+
+	}
+	
 }
