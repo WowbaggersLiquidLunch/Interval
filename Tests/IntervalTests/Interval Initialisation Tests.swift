@@ -41,9 +41,9 @@ final class IntervalInitialisationTests: XCTestCase {
 							}
 							
 							if upperBoundaryAccessibility == .closed {
-								XCTAssertEqual(realInterval.upperBoundaryAccessibility, .closed, "Fails to instantiate a upper-closed real interval.")
+								XCTAssertEqual(realInterval.upperBoundaryAccessibility, .closed, "Fails to instantiate an upper-closed real interval.")
 							} else {
-								XCTAssertEqual(realInterval.upperBoundaryAccessibility, .open, "Fails to instantiate a upper-open real interval.")
+								XCTAssertEqual(realInterval.upperBoundaryAccessibility, .open, "Fails to instantiate an upper-open real interval.")
 							}
 							
 							if lowerEndpoint == .bounded(0) {
@@ -82,9 +82,9 @@ final class IntervalInitialisationTests: XCTestCase {
 						}
 						
 						if upperBoundaryAccessibility == .closed {
-							XCTAssertEqual(realInterval.upperBoundaryAccessibility, .closed, "Fails to instantiate a upper-closed real interval.")
+							XCTAssertEqual(realInterval.upperBoundaryAccessibility, .closed, "Fails to instantiate an upper-closed real interval.")
 						} else {
-							XCTAssertEqual(realInterval.upperBoundaryAccessibility, .open, "Fails to instantiate a upper-open real interval.")
+							XCTAssertEqual(realInterval.upperBoundaryAccessibility, .open, "Fails to instantiate an upper-open real interval.")
 						}
 						
 						if lowerEndpoint == .bounded(0) {
