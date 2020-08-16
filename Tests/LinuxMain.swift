@@ -1,5 +1,0 @@
-import XCTest
-
-import IntervalTests
-
-
