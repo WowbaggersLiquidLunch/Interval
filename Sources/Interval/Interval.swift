@@ -11,7 +11,7 @@
 
 ///	An interval.
 ///
-///	An interval has a lower boundary and an upper boundary, and a lower endpoint and an upper endpoint. It represents a range, or a continuous set, of values of a `Comparable` type. Each boundary can be either closed or open, and each endpoint can be either bounded or unbounded. A closed boundary includes its corresponding endpoint in the interval, while an open boundary does not. A bounded endpoint provides a tangible boundary for the interval; an unbounded lower endpoint is equivalent to the abstract negative infinity, an unbounded upper endpoint the positive infinity. An unbounded endpoint always comes with an open boundary.
+///	An interval has a lower boundary and an upper boundary, and a lower endpoint and an upper endpoint. It represents a range, or a continuous set, of values of a `Comparable` type. Each boundary can be either closed or open (or, inclusive or exclusive), and each endpoint can be either bounded or unbounded. A closed boundary includes its corresponding endpoint in the interval, while an open boundary does not. A bounded endpoint provides a tangible boundary for the interval; an unbounded lower endpoint is equivalent to the abstract negative infinity, an unbounded upper endpoint the positive infinity. An unbounded endpoint always comes with an open boundary.
 ///
 ///	Based of its boundries and endpoints, an interval can be empty, degenerate, or propper. An empty interval contains no members, a degenerate interval 1 and only 1 member, and a proper interval more than 1 member.
 ///
@@ -19,32 +19,6 @@
 public struct Interval<Member: Hashable & Comparable>: Hashable {
 	
 	//	MARK: - Supporting Types
-	
-	///	A boundary's style, either closed or open.
-	public enum Boundary: Hashable {
-		
-		///	Converts the boundary style from the "inclusive"/"exclusive" spelling to the "closed"/"open" spelling.
-		///	- Parameter boundaryClusivity: The given "inclusive"/"exclusive" spelling.
-		public init(clusivity boundaryClusivity: BoundaryClusivity) {
-			switch boundaryClusivity {
-			case .exclusive: self = .open
-			case .inclusive: self = .closed
-			}
-		}
-		
-		///	A closed boundary
-		case closed
-		///	An open boundary
-		case open
-	}
-	
-	///	A boundary's style, either inclusive or exclusive.
-	public enum BoundaryClusivity {
-		///	An inclusive boundary.
-		case inclusive
-		///	An exclusive boundary.
-		case exclusive
-	}
 	
 	///	An endpoint's style, either bounded or unbounded.
 	public enum Endpoint: Hashable {
@@ -56,11 +30,11 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	
 	//	MARK: - Interval-Defining Properties
 	
-	///	The interval's lower boundary.
-	public let lowerBoundary: Boundary
+	///	The interval's lower boundary accessibility.
+	public let lowerBoundaryAccessibility: IntervalBoundaryAccessibility
 	
-	///	The interval's upper boundary.
-	public let upperBoundary: Boundary
+	///	The interval's upper boundary accessibility.
+	public let upperBoundaryAccessibility: IntervalBoundaryAccessibility
 	
 	///	The interval's lower endpoint.
 	public let lowerEndpoint: Endpoint
@@ -72,27 +46,27 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	
 	///	Creates an interval with the given boundaries and endpoints.
 	///	- Parameters:
-	///	  - lowerBoundary: The interval's lower boundary.
+	///	  - lowerBoundaryAccessibility: The interval's lower boundary accessibility.
 	///	  - lowerEndpoint: The interval's lower endpoint.
 	///	  - upperEndpoint: The interval's upper endpoint.
-	///	  - upperBoundary: The interval's upper boundary.
+	///	  - upperBoundaryAccessibility: The interval's upper boundary accessibility.
 	///	  - isInverse: Whether the interval is iterated in the inverse (descending) direction, if `Member` conforms to `Strideable`, default `false`.
 	@inlinable
 	public init(
-		lowerBoundary: Boundary,
+		lowerBoundary lowerBoundaryAccessibility: IntervalBoundaryAccessibility,
 		lowerEndpoint: Endpoint,
 		upperEndpoint: Endpoint,
-		upperBoundary: Boundary,
+		upperBoundary upperBoundaryAccessibility: IntervalBoundaryAccessibility,
 		inInverseStridingDirection isInverse: Bool = false
 	) {
 		
-		self.lowerBoundary = lowerBoundary
+		self.lowerBoundaryAccessibility = lowerBoundaryAccessibility
 		self.lowerEndpoint = lowerEndpoint
 		self.upperEndpoint = upperEndpoint
-		self.upperBoundary = upperBoundary
+		self.upperBoundaryAccessibility = upperBoundaryAccessibility
 		
-		self.isLowerClosed = lowerBoundary == .closed
-		self.isUpperClosed = upperBoundary == .closed
+		self.isLowerClosed = lowerBoundaryAccessibility == .closed
+		self.isUpperClosed = upperBoundaryAccessibility == .closed
 		
 		//	Compare against `.unbounded` instead of `bounded`, in order to avoid getting the associated values using a switch-case.
 		
@@ -124,55 +98,55 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	///	Creates an interval with the given boundaries and endpoints.
 	///	- Parameters:
 	///	  - lowerEndpoint: The interval's lower endpoint.
-	///	  - lowerBoundaryClusivity: Whether the interval's lower boundary includes or excludes its corresponding endpoint.
+	///	  - lowerBoundaryAvailability: Whether the interval's lower boundary includes or excludes its corresponding endpoint.
 	///	  - upperEndpoint: The interval's upper endpoint.
-	///	  - upperBoundaryClusivity: Whether the interval's upper boundary includes or excludes its corresponding endpoint.
+	///	  - upperBoundaryAvailability: Whether the interval's upper boundary includes or excludes its corresponding endpoint.
 	///	  - isInverse: Whether the interval is iterated in the inverse (descending) direction, if `Member` conforms to `Strideable`, default `false`.
 	@inlinable
 	public init(
-		from lowerEndpoint: Member, _ lowerBoundaryClusivity: BoundaryClusivity,
-		to upperEndpoint: Member, _ upperBoundaryClusivity: BoundaryClusivity,
+		from lowerEndpoint: Member, _ lowerBoundaryAvailability: IntervalBoundaryAvailability,
+		to upperEndpoint: Member, _ upperBoundaryAvailability: IntervalBoundaryAvailability,
 		inInverseStridingDirection isInverse: Bool = false
 	) {
 		self.init(
-			lowerBoundary: Boundary(clusivity: lowerBoundaryClusivity),
+			lowerBoundary: IntervalBoundaryAccessibility(availability: lowerBoundaryAvailability),
 			lowerEndpoint: .bounded(lowerEndpoint),
 			upperEndpoint: .bounded(upperEndpoint),
-			upperBoundary: Boundary(clusivity: upperBoundaryClusivity),
+			upperBoundary: IntervalBoundaryAccessibility(availability: upperBoundaryAvailability),
 			inInverseStridingDirection: isInverse
 		)
 	}
 	
-	///	Creates an interval with the given endpoints and overall boundary style.
+	///	Creates an interval with the given endpoints and overall boundary availability.
 	///	- Parameters:
 	///	  - lowerEndpoint: The interval's lower endpoint.
 	///	  - upperEndpoint: The interval's upper endpoint.
-	///	  - boundaryClusivity: Whether the interval's boundaries include or exclude both endpoints.
+	///	  - boundariesAvailability: Whether the interval's boundaries include or exclude both endpoints.
 	///	  - isInverse: Whether the interval is iterated in the inverse (descending) direction, if `Member` conforms to `Strideable`, default `false`.
 	@inlinable
 	public init(
-		from lowerEndpoint: Member, to upperEndpoint: Member, _ boundaryClusivity: BoundaryClusivity,
+		from lowerEndpoint: Member, to upperEndpoint: Member, _ boundariesAvailability: IntervalBoundaryAvailability,
 		inInverseStridingDirection isInverse: Bool = false
 	) {
 		self.init(
-			from: lowerEndpoint, boundaryClusivity,
-			to: upperEndpoint, boundaryClusivity,
+			from: lowerEndpoint, boundariesAvailability,
+			to: upperEndpoint, boundariesAvailability,
 			inInverseStridingDirection: isInverse
 		)
 	}
 	
-	///	Creates an upper-unbounded interval with the given lower boundary and endpoint.
+	///	Creates an upper-unbounded interval with the given lower boundary availability and endpoint.
 	///	- Parameters:
 	///	  - lowerEndpoint: The interval's lower endpoint.
-	///	  - lowerBoundaryClusivity: Whether the interval's lower boundary includes or excludes its corresponding endpoint.
+	///	  - lowerBoundaryAvailability: Whether the interval's lower boundary includes or excludes its corresponding endpoint.
 	///	  - isInverse: Whether the interval is iterated in the inverse (descending) direction, if `Member` conforms to `Strideable`, default `false`.
 	@inlinable
 	public init(
-		toUnboundedFrom lowerEndpoint: Member, _ lowerBoundaryClusivity: BoundaryClusivity,
+		toUnboundedFrom lowerEndpoint: Member, _ lowerBoundaryAvailability: IntervalBoundaryAvailability,
 		inInverseStridingDirection isInverse: Bool = false
 	) {
 		self.init(
-			lowerBoundary: Boundary(clusivity: lowerBoundaryClusivity),
+			lowerBoundary: IntervalBoundaryAccessibility(availability: lowerBoundaryAvailability),
 			lowerEndpoint: .bounded(lowerEndpoint),
 			upperEndpoint: .unbounded,
 			upperBoundary: .open,
@@ -180,21 +154,21 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 		)
 	}
 	
-	///	Creates a lower-unbounded interval with the given upper boundary and endpoint.
+	///	Creates a lower-unbounded interval with the given upper boundary availability and endpoint.
 	///	- Parameters:
 	///	  - upperEndpoint: The interval's upper endpoint.
-	///	  - upperBoundaryClusivity: Whether the interval's upper boundary includes or excludes its corresponding endpoint.
+	///	  - upperBoundaryAvailability: Whether the interval's upper boundary includes or excludes its corresponding endpoint.
 	///	  - isInverse: Whether the interval is iterated in the inverse (descending) direction, if `Member` conforms to `Strideable`, default `false`.
 	@inlinable
 	public init(
-		fromUnboundedTo upperEndpoint: Member, _ upperBoundaryClusivity: BoundaryClusivity,
+		fromUnboundedTo upperEndpoint: Member, _ upperBoundaryAvailability: IntervalBoundaryAvailability,
 		inInverseStridingDirection isInverse: Bool = false
 	) {
 		self.init(
 			lowerBoundary: .open,
 			lowerEndpoint: .unbounded,
 			upperEndpoint: .bounded(upperEndpoint),
-			upperBoundary: Boundary(clusivity: upperBoundaryClusivity),
+			upperBoundary: IntervalBoundaryAccessibility(availability: upperBoundaryAvailability),
 			inInverseStridingDirection: isInverse
 		)
 	}
@@ -549,7 +523,7 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	///	//	i1 == 0≤∙<4
 	///	```
 	///
-	///	The `i1` interval is bounded on the lower boundary by `0` because that is the starting index of the `numbers` array. When the collection passed to
+	///	The `i1` interval is bounded on the lower end by `0` because that is the starting index of the `numbers` array. When the collection passed to
 	///	`relative(to:)` starts with a different index, that index is used as the lower endpoint instead. The next example creates a slice of `numbers` starting at index `2`, and then uses the slice with `relative(to:)` to convert `upToFour` to a bounded interval.
 	///
 	///	```swift
@@ -573,33 +547,33 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 		
 		if self.isBounded { return self }
 		
-		var newLowerBoundary: Boundary
-		var newUpperBoundary: Boundary
+		var newLowerBoundaryAccessibility: IntervalBoundaryAccessibility
+		var newUpperBoundaryAccessibility: IntervalBoundaryAccessibility
 		
 		var newLowerEndpoint: Endpoint
 		var newUpperEndpoint: Endpoint
 		
 		if self.isLowerUnbounded {
 			newLowerEndpoint = .bounded(collection.startIndex)
-			newLowerBoundary = .closed
+			newLowerBoundaryAccessibility = .closed
 		} else {
 			newLowerEndpoint = self.lowerEndpoint
-			newLowerBoundary = self.lowerBoundary
+			newLowerBoundaryAccessibility = self.lowerBoundaryAccessibility
 		}
 		
 		if self.isUpperUnbounded {
 			newUpperEndpoint = .bounded(collection.endIndex)
-			newUpperBoundary = .open
+			newUpperBoundaryAccessibility = .open
 		} else {
 			newUpperEndpoint = self.upperEndpoint
-			newUpperBoundary = self.upperBoundary
+			newUpperBoundaryAccessibility = self.upperBoundaryAccessibility
 		}
 		
 		return Interval(
-			lowerBoundary: newLowerBoundary,
+			lowerBoundary: newLowerBoundaryAccessibility,
 			lowerEndpoint: newLowerEndpoint,
 			upperEndpoint: newUpperEndpoint,
-			upperBoundary: newUpperBoundary
+			upperBoundary: newUpperBoundaryAccessibility
 		)
 		
 	}
@@ -662,21 +636,21 @@ extension Interval: LosslessStringConvertible where Member: LosslessStringConver
 		let lowerEndpointString = endpointStrings[0]
 		let upperEndpointString = endpointStrings[1]
 		
-		var lowerBoundary: Boundary
-		var upperBoundary: Boundary
+		var lowerBoundaryAccessibility: IntervalBoundaryAccessibility
+		var upperBoundaryAccessibility: IntervalBoundaryAccessibility
 		
 		var lowerEndpoint: Endpoint
 		var upperEndpoint: Endpoint
 		
 		switch lowerBoundaryCharacter {
-		case "[": lowerBoundary = .closed
-		case "(": lowerBoundary = .open
+		case "[": lowerBoundaryAccessibility = .closed
+		case "(": lowerBoundaryAccessibility = .open
 		default: return nil
 		}
 		
 		switch upperBoundaryCharacter {
-		case "]": upperBoundary = .closed
-		case ")": upperBoundary = .open
+		case "]": upperBoundaryAccessibility = .closed
+		case ")": upperBoundaryAccessibility = .open
 		default: return nil
 		}
 		
@@ -697,10 +671,10 @@ extension Interval: LosslessStringConvertible where Member: LosslessStringConver
 		}
 		
 		self.init(
-			lowerBoundary: lowerBoundary,
+			lowerBoundary: lowerBoundaryAccessibility,
 			lowerEndpoint: lowerEndpoint,
 			upperEndpoint: upperEndpoint,
-			upperBoundary: upperBoundary
+			upperBoundary: upperBoundaryAccessibility
 		)
 		
 	}
