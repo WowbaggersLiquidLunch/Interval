@@ -20,6 +20,13 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+      - name: Cache Dependencies and Build Outputs
+        uses: actions/cache@v2
+        with:
+          path: .build
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
       - name: Print Package Description
         run: swift package describe
       - name: Build & Test Interval Configured for Release
@@ -44,6 +51,13 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+      - name: Cache Dependencies and Build Outputs
+        uses: actions/cache@v2
+        with:
+          path: .build
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
       - name: Print Package Description
         run: swift package describe
       - name: Build & Test Interval Configured for Release
