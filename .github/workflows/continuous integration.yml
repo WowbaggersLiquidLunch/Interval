@@ -9,9 +9,9 @@ on:
 jobs:
   
   macOS_test:
-    name: Test on macOS ${{ matrix.os }}
+    name: Test on macOS ${{ matrix.macOS_version }}
     
-    runs-on: macos-${{ matrix.os }}
+    runs-on: macos-${{ matrix.macOS_version }}
     
     strategy:
       matrix:
