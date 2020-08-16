@@ -229,7 +229,7 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 		)
 	}
 	
-	//	MARK: - Boundary Styles
+	//	MARK: - Inspecting Boundaries
 	
 	///	A Boolean value indicating whether the interval is closed.
 	public var isClosed: Bool { isLowerClosed && isUpperClosed }
@@ -252,7 +252,7 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	///	A Boolean value indicating whether the interval's upper boundary is open.
 	public var isUpperOpen: Bool { !isUpperClosed }
 	
-	//	MARK: - Endpoint Styles
+	//	MARK: - Inspecting Endpoints
 	
 	///	A Boolean value indicating whether the interval is bounded.
 	public var isBounded: Bool { isLowerBounded && isUpperBounded }
