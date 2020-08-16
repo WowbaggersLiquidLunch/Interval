@@ -352,7 +352,7 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	
 	//	MARK: - Iterating Direction
 	
-	//	This part is not spun off into an extension `where Member: Strideable` is because extensions can not have stored instance properties, and `isInverse` has to be an instance property.
+	//	This part is not spun off into an extension `where Member: Strideable`, because extensions can not have stored instance properties, and `isInverse` has to be an instance property.
 	
 	///	A Boolean value indicating whether the interval is iterated in the inverse (descending) direction.
 	///
