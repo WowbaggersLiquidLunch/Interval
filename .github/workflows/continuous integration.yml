@@ -21,10 +21,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Build & Test Interval Configured for Release on macOS ${{ matrix.macOS_version }}
-        run: swift test --configuration release --enable-code-coverage --list-tests --sanitize=thread --show-codecov-path
+        run: swift test --configuration release --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --show-codecov-path
       - name: Build & Test Interval Configured for Debug on macOS ${{ matrix.macOS_version }}
         if: ${{ failure() }}
-        run: swift test --configuration debug --enable-code-coverage --list-tests --sanitize=thread --show-codecov-path --verbose
+        run: swift test --configuration debug --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --show-codecov-path --verbose
   
   ubuntu_test:
     name: Test on Ubuntu ${{ matrix.ubuntu_version }}
