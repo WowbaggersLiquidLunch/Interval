@@ -18,13 +18,13 @@ final class IntervalInitialisationTests: XCTestCase {
 		let boundaryAccessibilities: [IntervalBoundaryAccessibility] = [.closed, .open]
 		let whetherIntervalShouldBeOrderedDescendingly: [Bool] = [true, false]
 		
-		//	MARK: Initialise with Explicit Parameters Values
-		
 		lowerEndpoints.forEach { lowerEndpoint in
 			upperEndpoints.forEach { upperEndpoint in
 				boundaryAccessibilities.forEach { lowerBoundaryAccessibility in
 					boundaryAccessibilities.forEach { upperBoundaryAccessibility in
 						whetherIntervalShouldBeOrderedDescendingly.forEach { intervalShouldBeOrderedDescendingly in
+							
+							//	MARK: Initialise with Explicit Parameters Values
 							
 							let realInterval = Interval(
 								lowerBoundary: lowerBoundaryAccessibility,
@@ -65,17 +65,8 @@ final class IntervalInitialisationTests: XCTestCase {
 							}
 							
 						}
-					}
-				}
-			}
-		}
-		
-		//	MARK: Initialise with Default Parameters Values
-		
-		lowerEndpoints.forEach { lowerEndpoint in
-			upperEndpoints.forEach { upperEndpoint in
-				boundaryAccessibilities.forEach { lowerBoundaryAccessibility in
-					boundaryAccessibilities.forEach { upperBoundaryAccessibility in
+						
+						//	MARK: Initialise with Default Parameters Values
 						
 						let realInterval = Interval(
 							lowerBoundary: lowerBoundaryAccessibility,
