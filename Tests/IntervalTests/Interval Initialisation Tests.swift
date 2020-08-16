@@ -35,33 +35,33 @@ final class IntervalInitialisationTests: XCTestCase {
 							)
 							
 							if lowerBoundaryAccessibility == .closed {
-								XCTAssertEqual(realInterval.lowerBoundaryAccessibility, .closed, "Fails to instantiate a lower-closed interval.")
+								XCTAssertEqual(realInterval.lowerBoundaryAccessibility, .closed, "Fails to instantiate a lower-closed real interval.")
 							} else {
-								XCTAssertEqual(realInterval.lowerBoundaryAccessibility, .open, "Fails to instantiate a lower-open interval.")
+								XCTAssertEqual(realInterval.lowerBoundaryAccessibility, .open, "Fails to instantiate a lower-open real interval.")
 							}
 							
 							if upperBoundaryAccessibility == .closed {
-								XCTAssertEqual(realInterval.upperBoundaryAccessibility, .closed, "Fails to instantiate a upper-closed interval.")
+								XCTAssertEqual(realInterval.upperBoundaryAccessibility, .closed, "Fails to instantiate a upper-closed real interval.")
 							} else {
-								XCTAssertEqual(realInterval.upperBoundaryAccessibility, .open, "Fails to instantiate a upper-open interval.")
+								XCTAssertEqual(realInterval.upperBoundaryAccessibility, .open, "Fails to instantiate a upper-open real interval.")
 							}
 							
 							if lowerEndpoint == .bounded(0) {
-								XCTAssertEqual(realInterval.lowerEndpoint, .bounded(0), "Fails to instantiate an interval lower-bounded by 0.")
+								XCTAssertEqual(realInterval.lowerEndpoint, .bounded(0), "Fails to instantiate a real interval lower-bounded by 0.")
 							} else {
-								XCTAssertEqual(realInterval.lowerEndpoint, .unbounded, "Fails to instantiate an lower-unbounded interval.")
+								XCTAssertEqual(realInterval.lowerEndpoint, .unbounded, "Fails to instantiate a lower-unbounded real interval.")
 							}
 							
 							if upperEndpoint == .bounded(1) {
-								XCTAssertEqual(realInterval.upperEndpoint, .bounded(1), "Fails to instantiate an interval upper-bounded by 1.")
+								XCTAssertEqual(realInterval.upperEndpoint, .bounded(1), "Fails to instantiate a real interval upper-bounded by 1.")
 							} else {
-								XCTAssertEqual(realInterval.upperEndpoint, .unbounded, "Fails to instantiate an upper-unbounded interval.")
+								XCTAssertEqual(realInterval.upperEndpoint, .unbounded, "Fails to instantiate an upper-unbounded real interval.")
 							}
 							
 							if intervalShouldBeOrderedDescendingly {
-								XCTAssertTrue(realInterval.isInverse, "Fails to instantiate an descendingly ordered interval.")
+								XCTAssertTrue(realInterval.isInverse, "Fails to instantiate an descendingly ordered real interval.")
 							} else {
-								XCTAssertFalse(realInterval.isInverse, "Fails to instantiate an ascendingly ordered interval.")
+								XCTAssertFalse(realInterval.isInverse, "Fails to instantiate an ascendingly ordered real interval.")
 							}
 							
 						}
@@ -76,30 +76,30 @@ final class IntervalInitialisationTests: XCTestCase {
 						)
 						
 						if lowerBoundaryAccessibility == .closed {
-							XCTAssertEqual(realInterval.lowerBoundaryAccessibility, .closed, "Fails to instantiate a lower-closed interval.")
+							XCTAssertEqual(realInterval.lowerBoundaryAccessibility, .closed, "Fails to instantiate a lower-closed real interval.")
 						} else {
-							XCTAssertEqual(realInterval.lowerBoundaryAccessibility, .open, "Fails to instantiate a lower-open interval.")
+							XCTAssertEqual(realInterval.lowerBoundaryAccessibility, .open, "Fails to instantiate a lower-open real interval.")
 						}
 						
 						if upperBoundaryAccessibility == .closed {
-							XCTAssertEqual(realInterval.upperBoundaryAccessibility, .closed, "Fails to instantiate a upper-closed interval.")
+							XCTAssertEqual(realInterval.upperBoundaryAccessibility, .closed, "Fails to instantiate a upper-closed real interval.")
 						} else {
-							XCTAssertEqual(realInterval.upperBoundaryAccessibility, .open, "Fails to instantiate a upper-open interval.")
+							XCTAssertEqual(realInterval.upperBoundaryAccessibility, .open, "Fails to instantiate a upper-open real interval.")
 						}
 						
 						if lowerEndpoint == .bounded(0) {
-							XCTAssertEqual(realInterval.lowerEndpoint, .bounded(0), "Fails to instantiate an interval lower-bounded by 0.")
+							XCTAssertEqual(realInterval.lowerEndpoint, .bounded(0), "Fails to instantiate a real interval lower-bounded by 0.")
 						} else {
-							XCTAssertEqual(realInterval.lowerEndpoint, .unbounded, "Fails to instantiate an lower-unbounded interval.")
+							XCTAssertEqual(realInterval.lowerEndpoint, .unbounded, "Fails to instantiate a lower-unbounded real interval.")
 						}
 						
 						if upperEndpoint == .bounded(1) {
-							XCTAssertEqual(realInterval.upperEndpoint, .bounded(1), "Fails to instantiate an interval upper-bounded by 1.")
+							XCTAssertEqual(realInterval.upperEndpoint, .bounded(1), "Fails to instantiate a real interval upper-bounded by 1.")
 						} else {
-							XCTAssertEqual(realInterval.upperEndpoint, .unbounded, "Fails to instantiate an upper-unbounded interval.")
+							XCTAssertEqual(realInterval.upperEndpoint, .unbounded, "Fails to instantiate an upper-unbounded real interval.")
 						}
 						
-						XCTAssertFalse(realInterval.isInverse, "Fails to instantiate an ascendingly ordered interval using the default parameter value.")
+						XCTAssertFalse(realInterval.isInverse, "Fails to instantiate an ascendingly ordered real interval using the default parameter value.")
 						
 					}
 				}
