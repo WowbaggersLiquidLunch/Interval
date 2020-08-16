@@ -17,5 +17,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Build & Test Interval on ${{ matrix.os }}
-        run: swift test --configuration release --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --show-codecov-path --verbose
+      - name: Build & Test Interval Configured for Release on ${{ matrix.os }}
+        run: swift test --configuration release --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --show-codecov-path
+      - name: Build & Test Interval Configured for Debug on ${{ matrix.os }}
+        if: ${{ failure() }}
+        run: swift test --configuration debug --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --show-codecov-path --verbose
