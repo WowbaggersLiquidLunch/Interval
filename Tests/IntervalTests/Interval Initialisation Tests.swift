@@ -1,3 +1,9 @@
+//
+//	Interval Initialisation Tests.swift - Test cases and methods regarding instantiating an interval.
+//
+//	Created by Wowbagger & His Liquid Lunch on 20-08-10.
+//
+
 import XCTest
 @testable import Interval
 
