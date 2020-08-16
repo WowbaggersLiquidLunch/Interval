@@ -211,10 +211,4 @@ final class IntervalInitialisationTests: XCTestCase {
 		
 	}
 	
-	///	An array of all test cases and methods regarding instantiating `Interval`.
-	///
-	///	This constant informs `XCTestManifests.swift` of what cases there are to test.
-	static let allTests = [
-		("testIntervalOperators", testIntervalOperators),
-	]
 }

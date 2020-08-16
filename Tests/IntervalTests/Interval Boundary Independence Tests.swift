@@ -24,10 +24,4 @@ final class IntervalBoundaryIndependenceTests: XCTestCase {
 		
 	}
 	
-	///	An array of all test cases and methods regarding instantiating a boundary condition.
-	///
-	///	This constant informs `XCTestManifests.swift` of what cases there are to test.
-	static let allTests = [
-		("testIndependenceOfIntervalBoundaryAccessibilityFromInterval", testIndependenceOfIntervalBoundaryAccessibilityFromInterval)
-	]
 }
