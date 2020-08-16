@@ -42,9 +42,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Build Interval Configured for Debug
-        if: ${{ matrix.swift_version }} == "5.1"
-        run: swift build --configuration debug
       - name: Build & Test Interval Configured for Release
         run: swift test --configuration release --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread
       - name: Build & Test Interval Configured for Debug
