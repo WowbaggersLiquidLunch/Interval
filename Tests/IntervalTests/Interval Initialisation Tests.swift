@@ -13,9 +13,9 @@ final class IntervalInitialisationTests: XCTestCase {
 	///	Checks that `Interval`'s primary initialiser works as intended.
 	func testPrimaryInitialiser() {
 				
-		let lowerEndpoints: [Interval<Int>.Endpoint] = [.unbounded, .bounded(0)]
-		let upperEndpoints: [Interval<Int>.Endpoint] = [.unbounded, .bounded(1)]
-		let boundaryAccessibilities: [IntervalBoundaryAccessibility] = [.open, .closed]
+		let lowerEndpoints: [Interval<Int>.Endpoint] = [.bounded(0), .unbounded]
+		let upperEndpoints: [Interval<Int>.Endpoint] = [.bounded(1), .unbounded]
+		let boundaryAccessibilities: [IntervalBoundaryAccessibility] = [.closed, .open]
 		let whetherIntervalShouldBeOrderedDescendingly: [Bool] = [true, false]
 		
 		//	MARK: Initialise with Explicit Parameters Values
