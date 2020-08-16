@@ -46,5 +46,5 @@ jobs:
         run: swift test --configuration release --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread
       - name: Build & Test Interval Configured for Debug on Ubuntu ${{ matrix.ubuntu_version }}
         if: ${{ failure() }}
-        run: swift test --configuration debug --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread
+        run: swift test --configuration debug --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --verbose
        
