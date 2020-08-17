@@ -10,13 +10,31 @@ import XCTest
 ///	A group of test cases and methods regarding instantiating `Interval`.
 final class IntervalInitialisationTests: XCTestCase {
 	
+	///	The lower-bounded endpoint value for testing initialisations.
+	let lowerBoundedEndpointValue = 0
+	///	The upper-bounded endpoint value for testing initialisations.
+	let upperBoundedEndpointValue = 1
+	
+	///	The lower-bounded endpoint for testing initialisations.
+	var lowerBoundedEndpoint: Interval<Int>.Endpoint { .bounded(lowerBoundedEndpointValue) }
+	///	The upper-bounded endpoint for testing initialisations.
+	var upperBoundedEndpoint: Interval<Int>.Endpoint { .bounded(upperBoundedEndpointValue) }
+	
+	///	The collection of lower-bounded endpoints for testing initialisations.
+	var lowerEndpoints: [Interval<Int>.Endpoint] { [lowerBoundedEndpoint, .unbounded] }
+	///	The collection of upper-bounded endpoints for testing initialisations.
+	var upperEndpoints: [Interval<Int>.Endpoint] { [upperBoundedEndpoint, .unbounded] }
+	
+	///	The collection of boundary accessibilities for testing initialisations.
+	let boundaryAccessibilities: [IntervalBoundaryAccessibility] = [.closed, .open]
+	///	The collection of boundary availabilities for testing initialisations.
+	let boundaryAvailabilities: [IntervalBoundaryAvailability] = [.inclusive, .exclusive]
+	
+	///	The collection of interval striding directions for testing initialisations.
+	let whetherIntervalShouldBeOrderedDescendingly: [Bool] = [true, false]
+	
 	///	Checks that `Interval`'s primary initialiser works as intended.
 	func testPrimaryInitialiser() {
-				
-		let lowerEndpoints: [Interval<Int>.Endpoint] = [.bounded(0), .unbounded]
-		let upperEndpoints: [Interval<Int>.Endpoint] = [.bounded(1), .unbounded]
-		let boundaryAccessibilities: [IntervalBoundaryAccessibility] = [.closed, .open]
-		let whetherIntervalShouldBeOrderedDescendingly: [Bool] = [true, false]
 		
 		lowerEndpoints.forEach { lowerEndpoint in
 			upperEndpoints.forEach { upperEndpoint in
@@ -46,14 +64,14 @@ final class IntervalInitialisationTests: XCTestCase {
 								XCTAssertEqual(realInterval.upperBoundaryAccessibility, .open, "Fails to instantiate an upper-open real interval.")
 							}
 							
-							if lowerEndpoint == .bounded(0) {
-								XCTAssertEqual(realInterval.lowerEndpoint, .bounded(0), "Fails to instantiate a real interval lower-bounded by 0.")
+							if lowerEndpoint == lowerBoundedEndpoint {
+								XCTAssertEqual(realInterval.lowerEndpoint, lowerBoundedEndpoint, "Fails to instantiate a real interval lower-bounded by 0.")
 							} else {
 								XCTAssertEqual(realInterval.lowerEndpoint, .unbounded, "Fails to instantiate a lower-unbounded real interval.")
 							}
 							
-							if upperEndpoint == .bounded(1) {
-								XCTAssertEqual(realInterval.upperEndpoint, .bounded(1), "Fails to instantiate a real interval upper-bounded by 1.")
+							if upperEndpoint == upperBoundedEndpoint {
+								XCTAssertEqual(realInterval.upperEndpoint, upperBoundedEndpoint, "Fails to instantiate a real interval upper-bounded by 1.")
 							} else {
 								XCTAssertEqual(realInterval.upperEndpoint, .unbounded, "Fails to instantiate an upper-unbounded real interval.")
 							}
@@ -87,14 +105,14 @@ final class IntervalInitialisationTests: XCTestCase {
 							XCTAssertEqual(realInterval.upperBoundaryAccessibility, .open, "Fails to instantiate an upper-open real interval.")
 						}
 						
-						if lowerEndpoint == .bounded(0) {
-							XCTAssertEqual(realInterval.lowerEndpoint, .bounded(0), "Fails to instantiate a real interval lower-bounded by 0.")
+						if lowerEndpoint == lowerBoundedEndpoint {
+							XCTAssertEqual(realInterval.lowerEndpoint, lowerBoundedEndpoint, "Fails to instantiate a real interval lower-bounded by 0.")
 						} else {
 							XCTAssertEqual(realInterval.lowerEndpoint, .unbounded, "Fails to instantiate a lower-unbounded real interval.")
 						}
 						
-						if upperEndpoint == .bounded(1) {
-							XCTAssertEqual(realInterval.upperEndpoint, .bounded(1), "Fails to instantiate a real interval upper-bounded by 1.")
+						if upperEndpoint == upperBoundedEndpoint {
+							XCTAssertEqual(realInterval.upperEndpoint, upperBoundedEndpoint, "Fails to instantiate a real interval upper-bounded by 1.")
 						} else {
 							XCTAssertEqual(realInterval.upperEndpoint, .unbounded, "Fails to instantiate an upper-unbounded real interval.")
 						}
@@ -110,11 +128,6 @@ final class IntervalInitialisationTests: XCTestCase {
 	
 	///	Checks that `Interval`'s secondary initialisers work as intended.
 	func testSecondaryInitialisers() {
-		
-		let lowerEndpoint = 0
-		let upperEndpoint = 1
-		let boundaryAvailabilities: [IntervalBoundaryAvailability] = [.inclusive, .exclusive]
-		let whetherIntervalShouldBeOrderedDescendingly: [Bool] = [true, false]
 				
 		boundaryAvailabilities.forEach { lowerBoundaryAvailability in
 			boundaryAvailabilities.forEach { upperBoundaryAvailability in
@@ -123,8 +136,8 @@ final class IntervalInitialisationTests: XCTestCase {
 					//	MARK: Initialise with Explicit Parameters Values
 					
 					let realBoundedInterval = Interval(
-						from: lowerEndpoint, lowerBoundaryAvailability,
-						to: upperEndpoint, upperBoundaryAvailability,
+						from: lowerBoundedEndpointValue, lowerBoundaryAvailability,
+						to: upperBoundedEndpointValue, upperBoundaryAvailability,
 						inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 					)
 					
@@ -140,8 +153,8 @@ final class IntervalInitialisationTests: XCTestCase {
 						XCTAssertEqual(realBoundedInterval.upperBoundaryAccessibility, .open, "Fails to instantiate an upper-open bounded interval.")
 					}
 					
-					XCTAssertEqual(realBoundedInterval.lowerEndpoint, .bounded(0), "Fails to instantiate an interval lower-bounded by 0.")
-					XCTAssertEqual(realBoundedInterval.upperEndpoint, .bounded(1), "Fails to instantiate an interval upper-bounded by 1.")
+					XCTAssertEqual(realBoundedInterval.lowerEndpoint, lowerBoundedEndpoint, "Fails to instantiate an interval lower-bounded by 0.")
+					XCTAssertEqual(realBoundedInterval.upperEndpoint, upperBoundedEndpoint, "Fails to instantiate an interval upper-bounded by 1.")
 					
 					if intervalShouldBeOrderedDescendingly {
 						XCTAssertTrue(realBoundedInterval.isInverse, "Fails to instantiate an descendingly ordered bounded interval.")
@@ -154,8 +167,8 @@ final class IntervalInitialisationTests: XCTestCase {
 				//	MARK: Initialise with Default Parameters Values
 				
 				let realBoundedInterval = Interval(
-					from: lowerEndpoint, lowerBoundaryAvailability,
-					to: upperEndpoint, upperBoundaryAvailability
+					from: lowerBoundedEndpointValue, lowerBoundaryAvailability,
+					to: upperBoundedEndpointValue, upperBoundaryAvailability
 				)
 				
 				if lowerBoundaryAvailability == .inclusive {
@@ -170,8 +183,8 @@ final class IntervalInitialisationTests: XCTestCase {
 					XCTAssertEqual(realBoundedInterval.upperBoundaryAccessibility, .open, "Fails to instantiate an upper-open bounded interval.")
 				}
 				
-				XCTAssertEqual(realBoundedInterval.lowerEndpoint, .bounded(lowerEndpoint), "Fails to instantiate an interval lower-bounded by 0.")
-				XCTAssertEqual(realBoundedInterval.upperEndpoint, .bounded(upperEndpoint), "Fails to instantiate an interval upper-bounded by 1.")
+				XCTAssertEqual(realBoundedInterval.lowerEndpoint, lowerBoundedEndpoint, "Fails to instantiate an interval lower-bounded by 0.")
+				XCTAssertEqual(realBoundedInterval.upperEndpoint, upperBoundedEndpoint, "Fails to instantiate an interval upper-bounded by 1.")
 				
 				XCTAssertFalse(realBoundedInterval.isInverse, "Fails to instantiate an ascendingly ordered bounded interval using the default parameter value.")
 				
@@ -184,17 +197,17 @@ final class IntervalInitialisationTests: XCTestCase {
 				//	MARK: Initialise with Explicit Parameters Values
 				
 				let realIntervalWithSymmetricBoundaryConditions = Interval(
-					from: lowerEndpoint, to: upperEndpoint, boundaryAvailability,
+					from: lowerBoundedEndpointValue, to: upperBoundedEndpointValue, boundaryAvailability,
 					inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 				)
 				
 				let upperUnboundedRealInterval = Interval(
-					toUnboundedFrom: lowerEndpoint, boundaryAvailability,
+					toUnboundedFrom: lowerBoundedEndpointValue, boundaryAvailability,
 					inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 				)
 				
 				let lowerUnboundedRealInterval = Interval(
-					fromUnboundedTo: upperEndpoint, boundaryAvailability,
+					fromUnboundedTo: upperBoundedEndpointValue, boundaryAvailability,
 					inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 				)
 				
@@ -210,10 +223,10 @@ final class IntervalInitialisationTests: XCTestCase {
 					XCTAssertEqual(lowerUnboundedRealInterval.upperBoundaryAccessibility, .open, "Fails to instantiate an upper-open lower-unbounded real interval.")
 				}
 				
-				XCTAssertEqual(realIntervalWithSymmetricBoundaryConditions.lowerEndpoint, .bounded(lowerEndpoint), "Fails to instantiate a real interval with symmetric boundary conditions lower-bounded by 0.")
-				XCTAssertEqual(realIntervalWithSymmetricBoundaryConditions.upperEndpoint, .bounded(upperEndpoint), "Fails to instantiate a real interval with symmetric boundary conditions upper-bounded by 1.")
-				XCTAssertEqual(upperUnboundedRealInterval.lowerEndpoint, .bounded(lowerEndpoint), "Fails to instantiate an upper-unbounded real interval lower-bounded by 0.")
-				XCTAssertEqual(lowerUnboundedRealInterval.upperEndpoint, .bounded(upperEndpoint), "Fails to instantiate a lower-unbounded real interval upper-bounded by 1.")
+				XCTAssertEqual(realIntervalWithSymmetricBoundaryConditions.lowerEndpoint, lowerBoundedEndpoint, "Fails to instantiate a real interval with symmetric boundary conditions lower-bounded by 0.")
+				XCTAssertEqual(realIntervalWithSymmetricBoundaryConditions.upperEndpoint, upperBoundedEndpoint, "Fails to instantiate a real interval with symmetric boundary conditions upper-bounded by 1.")
+				XCTAssertEqual(upperUnboundedRealInterval.lowerEndpoint, lowerBoundedEndpoint, "Fails to instantiate an upper-unbounded real interval lower-bounded by 0.")
+				XCTAssertEqual(lowerUnboundedRealInterval.upperEndpoint, upperBoundedEndpoint, "Fails to instantiate a lower-unbounded real interval upper-bounded by 1.")
 
 				
 				if intervalShouldBeOrderedDescendingly {
@@ -230,10 +243,10 @@ final class IntervalInitialisationTests: XCTestCase {
 			
 			//	MARK: Initialise with Default Parameters Values
 			
-			let realIntervalWithSymmetricBoundaryConditions = Interval(from: lowerEndpoint, to: upperEndpoint, boundaryAvailability)
+			let realIntervalWithSymmetricBoundaryConditions = Interval(from: lowerBoundedEndpointValue, to: upperBoundedEndpointValue, boundaryAvailability)
 			
-			let upperUnboundedRealInterval = Interval(toUnboundedFrom: lowerEndpoint, boundaryAvailability)
-			let lowerUnboundedRealInterval = Interval(fromUnboundedTo: upperEndpoint, boundaryAvailability)
+			let upperUnboundedRealInterval = Interval(toUnboundedFrom: lowerBoundedEndpointValue, boundaryAvailability)
+			let lowerUnboundedRealInterval = Interval(fromUnboundedTo: upperBoundedEndpointValue, boundaryAvailability)
 			
 			if boundaryAvailability == .inclusive {
 				XCTAssertEqual(realIntervalWithSymmetricBoundaryConditions.lowerBoundaryAccessibility, .closed, "Fails to instantiate a lower-closed real interval with symmetric boundary conditions.")
@@ -247,10 +260,10 @@ final class IntervalInitialisationTests: XCTestCase {
 				XCTAssertEqual(lowerUnboundedRealInterval.upperBoundaryAccessibility, .open, "Fails to instantiate an upper-open lower-unbounded real interval.")
 			}
 			
-			XCTAssertEqual(realIntervalWithSymmetricBoundaryConditions.lowerEndpoint, .bounded(lowerEndpoint), "Fails to instantiate a real interval with symmetric boundary conditions lower-bounded by 0.")
-			XCTAssertEqual(realIntervalWithSymmetricBoundaryConditions.upperEndpoint, .bounded(upperEndpoint), "Fails to instantiate a real interval with symmetric boundary conditions upper-bounded by 1.")
-			XCTAssertEqual(upperUnboundedRealInterval.lowerEndpoint, .bounded(lowerEndpoint), "Fails to instantiate an upper-unbounded real interval lower-bounded by 0.")
-			XCTAssertEqual(lowerUnboundedRealInterval.upperEndpoint, .bounded(upperEndpoint), "Fails to instantiate a lower-unbounded real interval upper-bounded by 1.")
+			XCTAssertEqual(realIntervalWithSymmetricBoundaryConditions.lowerEndpoint, lowerBoundedEndpoint, "Fails to instantiate a real interval with symmetric boundary conditions lower-bounded by 0.")
+			XCTAssertEqual(realIntervalWithSymmetricBoundaryConditions.upperEndpoint, upperBoundedEndpoint, "Fails to instantiate a real interval with symmetric boundary conditions upper-bounded by 1.")
+			XCTAssertEqual(upperUnboundedRealInterval.lowerEndpoint, lowerBoundedEndpoint, "Fails to instantiate an upper-unbounded real interval lower-bounded by 0.")
+			XCTAssertEqual(lowerUnboundedRealInterval.upperEndpoint, upperBoundedEndpoint, "Fails to instantiate a lower-unbounded real interval upper-bounded by 1.")
 			
 			XCTAssertFalse(realIntervalWithSymmetricBoundaryConditions.isInverse, "Fails to instantiate an ascendingly ordered real interval with symmetric boundary conditions using the default parameter value.")
 			XCTAssertFalse(upperUnboundedRealInterval.isInverse, "Fails to instantiate an ascendingly ordered upper-unbounded real interval using the default parameter value.")
