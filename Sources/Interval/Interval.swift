@@ -206,14 +206,14 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	///	- Parameter upperBoundedAndClosedPartialRange: The upper-bounded and -closed partial range.
 	@inlinable
 	public init(upperBoundedAndClosedPartialRange: PartialRangeThrough<Member>) {
-		self.init(toUnboundedFrom: upperBoundedAndClosedPartialRange.upperBound, .inclusive)
+		self.init(fromUnboundedTo: upperBoundedAndClosedPartialRange.upperBound, .inclusive)
 	}
 	
 	///	Creates an interval from the given upper-bounded and -open partial range.
 	///	- Parameter upperBoundedAndOpenPartialRange: The upper-bounded and -open partial range.
 	@inlinable
 	public init(upperBoundedAndOpenPartialRange: PartialRangeUpTo<Member>) {
-		self.init(toUnboundedFrom: upperBoundedAndOpenPartialRange.upperBound, .exclusive)
+		self.init(fromUnboundedTo: upperBoundedAndOpenPartialRange.upperBound, .exclusive)
 	}
 	
 	///	Creates an interval from the given unbounded range.
