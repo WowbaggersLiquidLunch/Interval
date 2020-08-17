@@ -260,6 +260,60 @@ final class IntervalInitialisationTests: XCTestCase {
 		
 	}
 	
+	///	Checks that `Internal` can correctly initialise from a `ClosedRange` instance.
+	func testInitialisingFromClosedRange() {
+		XCTAssertEqual(
+			Interval(closedRange: 0...1),
+			0≤∙≤1,
+			"Fails to instantiate a `0≤∙≤1` from `0...1`"
+		)
+	}
+	
+	///	Checks that `Internal` can correctly initialise from a `Range` instance.
+	func testInitialisingFromRange() {
+		XCTAssertEqual(
+			Interval(range: 0..<1),
+			0≤∙<1,
+			"Fails to instantiate a `0≤∙<1` from `0...1`"
+		)
+	}
+	
+	///	Checks that `Internal` can correctly initialise from a `PartialRangeFrom` instance.
+	func testInitialisingFromLowerBoundedPartialRange() {
+		XCTAssertEqual(
+			Interval(lowerBoundedPartialRange: 0...),
+			0≤∙∙,
+			"Fails to instantiate a `0≤∙∙` from `0...`"
+		)
+	}
+	
+	///	Checks that `Internal` can correctly initialise from a `PartialRangeThrough` instance.
+	func testInitialisingFromUpperBoundedAndClosedPartialRange() {
+		XCTAssertEqual(
+			Interval(upperBoundedAndClosedPartialRange: ...1),
+			∙∙≤1,
+			"Fails to instantiate a `∙∙≤1` from `...1`"
+		)
+	}
+	
+	///	Checks that `Internal` can correctly initialise from a `PartialRangeTo` instance.
+	func testInitialisingFromUpperBoundedAndOpenPartialRange() {
+		XCTAssertEqual(
+			Interval(upperBoundedAndOpenPartialRange: ..<1),
+			∙∙<1,
+			"Fails to instantiate a `∙∙<1` from `..<1`"
+		)
+	}
+	
+	///	Checks that `Internal` can correctly initialise from a `UnboundedRange` instance.
+	func testInitialisingFromUnboundedRange() {
+		XCTAssertEqual(
+			Interval<Int>(unboundedRange: ...),
+			Interval<Int>.unbounded,
+			"Fails to instantiate an unbounded real interval from `...`"
+		)
+	}
+	
 	///	Checks that interval operators work as intended.
 	func testIntervalOperators() {
 		
