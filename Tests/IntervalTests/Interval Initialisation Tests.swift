@@ -314,6 +314,20 @@ final class IntervalInitialisationTests: XCTestCase {
 		)
 	}
 	
+	///	Checks that `Interval` can provide a correct unbounded interval.
+	func testCorrectnessOfUnboundedInterval() {
+		XCTAssertEqual(
+			Interval<Int>.unbounded,
+			Interval<Int>(
+				lowerBoundary: .open,
+				lowerEndpoint: .unbounded,
+				upperEndpoint: .unbounded,
+				upperBoundary: .open
+			),
+			"`Interval<Int>` fails to provide (-∞, ∞)."
+		)
+	}
+	
 	///	Checks that interval operators work as intended.
 	func testIntervalOperators() {
 		
