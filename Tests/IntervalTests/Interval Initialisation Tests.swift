@@ -108,7 +108,7 @@ final class IntervalInitialisationTests: XCTestCase {
 			boundaryAvailabilities.forEach { upperBoundaryAvailability in
 				whetherIntervalShouldBeOrderedDescendingly.forEach { intervalShouldBeOrderedDescendingly in
 					
-					//	MARK: Initialise with Explicit Parameters Values
+					//	MARK: Initialise with Explicit Parameter Values
 					
 					XCTAssertEqual(
 						Interval(
@@ -128,7 +128,7 @@ final class IntervalInitialisationTests: XCTestCase {
 					
 				}
 				
-				//	MARK: Initialise with Default Parameters Values
+				//	MARK: Initialise with Default Parameter Values
 				
 				XCTAssertEqual(
 					Interval(
@@ -155,7 +155,7 @@ final class IntervalInitialisationTests: XCTestCase {
 		boundaryAvailabilities.forEach { boundaryAvailability in
 			whetherIntervalShouldBeOrderedDescendingly.forEach { intervalShouldBeOrderedDescendingly in
 				
-				//	MARK: Initialise with Explicit Parameters Values
+				//	MARK: Initialise with Explicit Parameter Values
 				
 				XCTAssertEqual(
 					Interval(
@@ -174,7 +174,7 @@ final class IntervalInitialisationTests: XCTestCase {
 				
 			}
 			
-			//	MARK: Initialise with Default Parameters Values
+			//	MARK: Initialise with Default Parameter Values
 			
 			XCTAssertEqual(
 				Interval(from: lowerBoundedEndpointValue, to: upperBoundedEndpointValue, boundaryAvailability),
@@ -197,7 +197,7 @@ final class IntervalInitialisationTests: XCTestCase {
 		boundaryAvailabilities.forEach { lowerBoundaryAvailability in
 			whetherIntervalShouldBeOrderedDescendingly.forEach { intervalShouldBeOrderedDescendingly in
 				
-				//	MARK: Initialise with Explicit Parameters Values
+				//	MARK: Initialise with Explicit Parameter Values
 				
 				XCTAssertEqual(
 					Interval(
@@ -216,7 +216,7 @@ final class IntervalInitialisationTests: XCTestCase {
 				
 			}
 			
-			//	MARK: Initialise with Default Parameters Values
+			//	MARK: Initialise with Default Parameter Values
 			
 			XCTAssertEqual(
 				Interval(toUnboundedFrom: lowerBoundedEndpointValue, lowerBoundaryAvailability),
@@ -239,7 +239,7 @@ final class IntervalInitialisationTests: XCTestCase {
 		boundaryAvailabilities.forEach { upperBoundaryAvailability in
 			whetherIntervalShouldBeOrderedDescendingly.forEach { intervalShouldBeOrderedDescendingly in
 				
-				//	MARK: Initialise with Explicit Parameters Values
+				//	MARK: Initialise with Explicit Parameter Values
 				
 				XCTAssertEqual(
 					Interval(
@@ -258,7 +258,7 @@ final class IntervalInitialisationTests: XCTestCase {
 				
 			}
 			
-			//	MARK: Initialise with Default Parameters Values
+			//	MARK: Initialise with Default Parameter Values
 			
 			XCTAssertEqual(
 				Interval(fromUnboundedTo: upperBoundedEndpointValue, upperBoundaryAvailability),
