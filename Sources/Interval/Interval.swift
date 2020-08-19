@@ -264,7 +264,7 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	public var isBounded: Bool { isLowerBounded && isUpperBounded }
 	
 	///	A Boolean value indicating whether the interval is unbounded.
-	public var isUnbounded: Bool { !isLowerUnbounded && isUpperUnbounded }
+	public var isUnbounded: Bool { isLowerUnbounded && isUpperUnbounded }
 	
 	///	A Boolean value indicating whether the interval is half-bounded.
 	public var isHalfBounded: Bool { !(isBounded || isUnbounded) }
