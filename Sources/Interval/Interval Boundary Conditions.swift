@@ -9,7 +9,7 @@
 //
 
 ///	A boundary condition, either closed or open.
-public enum IntervalBoundaryAccessibility: Hashable {
+public enum IntervalBoundaryAccessibility: String {
 	///	Adapts the boundary condition from the "inclusive"/"exclusive" spelling to the "closed"/"open" spelling.
 	///	- Parameter boundaryAvailability: The given "inclusive"/"exclusive" spelling.
 	public init(availability boundaryAvailability: IntervalBoundaryAvailability) {
@@ -26,7 +26,7 @@ public enum IntervalBoundaryAccessibility: Hashable {
 }
 
 ///	A boundary condition, either inclusive or exclusive.
-public enum IntervalBoundaryAvailability {
+public enum IntervalBoundaryAvailability: String {
 	///	Adapts the boundary condition from the "closed"/"open" spelling to the "inclusive"/"exclusive" spelling.
 	///	- Parameter boundaryAccessibility: The given "closed"/"open" spelling.
 	public init(accessibility boundaryAccessibility: IntervalBoundaryAccessibility) {
