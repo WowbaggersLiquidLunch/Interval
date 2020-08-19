@@ -12,6 +12,7 @@
 public enum IntervalBoundaryAccessibility: String {
 	///	Adapts the boundary condition from the "inclusive"/"exclusive" spelling to the "closed"/"open" spelling.
 	///	- Parameter boundaryAvailability: The given "inclusive"/"exclusive" spelling.
+	@inlinable
 	public init(availability boundaryAvailability: IntervalBoundaryAvailability) {
 		switch boundaryAvailability {
 		case .exclusive: self = .open
@@ -29,6 +30,7 @@ public enum IntervalBoundaryAccessibility: String {
 public enum IntervalBoundaryAvailability: String {
 	///	Adapts the boundary condition from the "closed"/"open" spelling to the "inclusive"/"exclusive" spelling.
 	///	- Parameter boundaryAccessibility: The given "closed"/"open" spelling.
+	@inlinable
 	public init(accessibility boundaryAccessibility: IntervalBoundaryAccessibility) {
 		switch boundaryAccessibility {
 		case .open: self = .exclusive
