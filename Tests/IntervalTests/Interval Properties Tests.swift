@@ -13,31 +13,29 @@ final class IntervalPropertiesTests: XCTestCase {
 	///	Checks that an internal has correct properties after initialisation.
 	func testIntervalProperties() {
 		
-		///	The lower-bounded endpoint value for testing initialisations.
-		let lowerBoundedEndpointValue = 0
-		///	The upper-bounded endpoint value for testing initialisations.
-		let upperBoundedEndpointValue = 1
+		///	The lesser bounded endpoint value for testing interval properties.
+		let lesserBoundedEndpointValue = 0
+		///	The greater bounded endpoint value for testing interval properties.
+		let greaterBoundedEndpointValue = 1
 		
-		///	The lower-bounded endpoint for testing initialisations.
-		let lowerBoundedEndpoint: Interval<Int>.Endpoint = .bounded(lowerBoundedEndpointValue)
-		///	The upper-bounded endpoint for testing initialisations.
-		let upperBoundedEndpoint: Interval<Int>.Endpoint = .bounded(upperBoundedEndpointValue)
+		///	The lesser bounded endpoint for testing interval properties.
+		let lesserBoundedEndpoint: Interval<Int>.Endpoint = .bounded(lesserBoundedEndpointValue)
+		///	The greater bounded endpoint for testing interval properties.
+		let greaterBoundedEndpoint: Interval<Int>.Endpoint = .bounded(greaterBoundedEndpointValue)
 		
-		///	The collection of lower-bounded endpoints for testing initialisations.
-		let lowerEndpoints: [Interval<Int>.Endpoint] = [lowerBoundedEndpoint, .unbounded]
-		///	The collection of upper-bounded endpoints for testing initialisations.
-		let upperEndpoints: [Interval<Int>.Endpoint] = [upperBoundedEndpoint, .unbounded]
+		///	The collection of endpoints for testing interval properties.
+		let endpoints: [Interval<Int>.Endpoint] = [lesserBoundedEndpoint, greaterBoundedEndpoint, .unbounded]
 		
-		///	The collection of boundary accessibilities for testing initialisations.
+		///	The collection of boundary accessibilities for testing interval properties.
 		let boundaryAccessibilities: [IntervalBoundaryAccessibility] = [.closed, .open]
-//		///	The collection of boundary availabilities for testing initialisations.
+//		///	The collection of boundary availabilities for testing interval properties.
 //		let boundaryAvailabilities: [IntervalBoundaryAvailability] = [.inclusive, .exclusive]
 		
-		///	The collection of interval striding directions for testing initialisations.
+		///	The collection of interval striding directions for testing interval properties.
 		let whetherIntervalShouldBeOrderedDescendingly: [Bool] = [true, false]
 		
-		lowerEndpoints.forEach { lowerEndpoint in
-			upperEndpoints.forEach { upperEndpoint in
+		endpoints.forEach { lowerEndpoint in
+			endpoints.forEach { upperEndpoint in
 				boundaryAccessibilities.forEach { lowerBoundaryAccessibility in
 					boundaryAccessibilities.forEach { upperBoundaryAccessibility in
 						whetherIntervalShouldBeOrderedDescendingly.forEach { intervalShouldBeOrderedDescendingly in
@@ -74,10 +72,10 @@ final class IntervalPropertiesTests: XCTestCase {
 								"Fails to instantiate an upperEndpoint-\(IntervalBoundaryAvailability(accessibility: upperBoundaryAccessibility)) interval."
 							)
 							
-							if lowerEndpoint == lowerBoundedEndpoint {
+							if case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint {
 								XCTAssertEqual(
 									interval.lowerEndpoint,
-									lowerBoundedEndpoint,
+									lowerEndpoint,
 									"Fails to instantiate an interval lower-bounded by \(lowerBoundedEndpointValue)."
 								)
 							} else {
@@ -88,10 +86,10 @@ final class IntervalPropertiesTests: XCTestCase {
 								)
 							}
 							
-							if upperEndpoint == upperBoundedEndpoint {
+							if case let .bounded(upperBoundedEndpointValue) = upperEndpoint {
 								XCTAssertEqual(
 									interval.upperEndpoint,
-									upperBoundedEndpoint,
+									upperEndpoint,
 									"Fails to instantiate an interval upper-bounded by \(upperBoundedEndpointValue)."
 								)
 							} else {
@@ -156,7 +154,7 @@ final class IntervalPropertiesTests: XCTestCase {
 							
 							XCTAssertEqual(
 								interval.isBounded,
-								lowerEndpoint == lowerBoundedEndpoint && upperEndpoint == upperBoundedEndpoint,
+								lowerEndpoint != .unbounded && upperEndpoint != .unbounded,
 								"`Interval`'s instance property `isBounded` fails to evaluate correctly."
 							)
 							
@@ -168,19 +166,19 @@ final class IntervalPropertiesTests: XCTestCase {
 							
 							XCTAssertEqual(
 								interval.isHalfBounded,
-								(lowerEndpoint == lowerBoundedEndpoint && upperEndpoint == .unbounded) || (lowerEndpoint == .unbounded && upperEndpoint == upperBoundedEndpoint),
+								(lowerEndpoint != .unbounded && upperEndpoint == .unbounded) || (lowerEndpoint == .unbounded && upperEndpoint != .unbounded),
 								"`Interval`'s instance property `isHalfBounded` fails to evaluate correctly."
 							)
 							
 							XCTAssertEqual(
 								interval.isLowerBounded,
-								lowerEndpoint == lowerBoundedEndpoint,
+								lowerEndpoint != .unbounded,
 								"`Interval`'s instance property `isLowerBounded` fails to evaluate correctly."
 							)
 							
 							XCTAssertEqual(
 								interval.isUpperBounded,
-								upperEndpoint == upperBoundedEndpoint,
+								upperEndpoint != .unbounded,
 								"`Interval`'s instance property `isUpperBounded` fails to evaluate correctly."
 							)
 							
