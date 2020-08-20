@@ -194,6 +194,48 @@ final class IntervalPropertiesTests: XCTestCase {
 								"`Interval`'s instance property `isUpperUnbounded` fails to evaluate correctly."
 							)
 							
+							//	MARK: Test Interval Cardinality
+							
+							if case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint, case let .bounded(upperBoundedEndpointValue) = upperEndpoint {
+								let intervalIsEmpty = lowerBoundedEndpointValue > upperBoundedEndpointValue || (!interval.isClosed && lowerBoundedEndpointValue == upperBoundedEndpointValue) || (interval.isOpen && lowerBoundedEndpointValue.borders(on: upperBoundedEndpointValue))
+								XCTAssertEqual(
+									interval.isEmpty,
+									intervalIsEmpty,
+									"`Interval`'s instance property `isEmpty` fails to evaluate to `\(intervalIsEmpty)` for interval \(interval)."
+								)
+							} else {
+								XCTAssertFalse(interval.isEmpty, "`Interval`'s instance property `isEmpty` fails to evaluate to `false` for \(interval).")
+							}
+							
+							if case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint, case let .bounded(upperBoundedEndpointValue) = upperEndpoint {
+								let intervalIsDegenerate =  (interval.isClosed && lowerBoundedEndpointValue == upperBoundedEndpointValue)
+									|| lowerBoundedEndpointValue < upperBoundedEndpointValue && (
+										(interval.isHalfOpen && lowerBoundedEndpointValue.borders(on: upperBoundedEndpointValue)) || (interval.isOpen && lowerBoundedEndpointValue.separates(from: upperBoundedEndpointValue, byDegrees: 2))
+									)
+								XCTAssertEqual(
+									interval.isDegenerate,
+									intervalIsDegenerate,
+									"`Interval`'s instance property `isDegenerate` fails to evaluate to `\(intervalIsDegenerate)` for interval \(interval)."
+								)
+							} else {
+								XCTAssertFalse(interval.isDegenerate, "`Interval`'s instance property `isDegenerate` fails to evaluate to `false` for \(interval).")
+							}
+							
+							if case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint, case let .bounded(upperBoundedEndpointValue) = upperEndpoint {
+								let intervalIsProper = lowerBoundedEndpointValue < upperBoundedEndpointValue && (
+									interval.isClosed || !lowerBoundedEndpointValue.borders(on: upperBoundedEndpointValue) && (
+										interval.isHalfOpen || (interval.isOpen && !lowerBoundedEndpointValue.separates(from: upperBoundedEndpointValue, byDegrees: 2))
+									)
+								)
+								XCTAssertEqual(
+									interval.isProper,
+									intervalIsProper,
+									"`Interval`'s instance property `isProper` fails to evaluate to `\(intervalIsProper)` for \(interval)."
+								)
+							} else {
+								XCTAssertTrue(interval.isProper, "`Interval`'s instance property `isProper` fails to evaluate to `true` for \(interval).")
+							}
+							
 						}
 					}
 				}
