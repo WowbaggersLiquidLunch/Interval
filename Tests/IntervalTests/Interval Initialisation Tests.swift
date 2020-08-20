@@ -20,9 +20,9 @@ final class IntervalInitialisationTests: XCTestCase {
 	///	The upper-bounded endpoint for testing initialisations.
 	var upperBoundedEndpoint: Interval<Int>.Endpoint { .bounded(upperBoundedEndpointValue) }
 	
-	///	The collection of lower-bounded endpoints for testing initialisations.
+	///	The collection of lower endpoints for testing initialisations.
 	var lowerEndpoints: [Interval<Int>.Endpoint] { [lowerBoundedEndpoint, .unbounded] }
-	///	The collection of upper-bounded endpoints for testing initialisations.
+	///	The collection of upper endpoints for testing initialisations.
 	var upperEndpoints: [Interval<Int>.Endpoint] { [upperBoundedEndpoint, .unbounded] }
 	
 	///	The collection of boundary accessibilities for testing initialisations.
