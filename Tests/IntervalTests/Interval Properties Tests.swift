@@ -13,18 +13,14 @@ final class IntervalPropertiesTests: XCTestCase {
 	///	Checks that an internal has correct properties after initialisation.
 	func testIntervalProperties() {
 		
-		///	The lesser bounded endpoint value for testing interval properties.
-		let lesserBoundedEndpointValue = 0
-		///	The greater bounded endpoint value for testing interval properties.
-		let greaterBoundedEndpointValue = 1
+		///	The collection of bounded endpoint values for testing interval properties.
+		let boundedEndpointValues: [Int] = [.min, -1, 0, 1, 2, .max]
 		
-		///	The lesser bounded endpoint for testing interval properties.
-		let lesserBoundedEndpoint: Interval<Int>.Endpoint = .bounded(lesserBoundedEndpointValue)
-		///	The greater bounded endpoint for testing interval properties.
-		let greaterBoundedEndpoint: Interval<Int>.Endpoint = .bounded(greaterBoundedEndpointValue)
+		///	The collection of bounded endpoints for testing interval properties.
+		let boundedEndpoints: [Interval<Int>.Endpoint] = boundedEndpointValues.map { .bounded($0) }
 		
 		///	The collection of endpoints for testing interval properties.
-		let endpoints: [Interval<Int>.Endpoint] = [lesserBoundedEndpoint, greaterBoundedEndpoint, .unbounded]
+		let endpoints: [Interval<Int>.Endpoint] = boundedEndpoints + [.unbounded]
 		
 		///	The collection of boundary accessibilities for testing interval properties.
 		let boundaryAccessibilities: [IntervalBoundaryAccessibility] = [.closed, .open]
