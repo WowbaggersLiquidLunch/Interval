@@ -707,14 +707,55 @@ extension Comparable where Self: Strideable {
 		self.separates(from: other, byDegrees: 2) || self == other
 	}
 	
-	///	Tests the correctness of the Bacon number between this value and the given other value.
+	///	Tests the correctness of the Bacon number (or, degrees of separation) between this value and the given other value.
+	///
+	///	The current implementation of this method is provided by [cukr](https://forums.swift.org/t/negotiate-between-max-stride-size-and-max-distance/39559/5) on the Swift Forums.
+	///
+	///	If `Self` confroms to `BinaryInteger`, then in most cases, `self.separates(from: other, byDegrees: degrees)` is equivalent to `Stride(max(self, other) - min(self, other)) == degrees`. However, the equivalence breaks when `Self.min.distance(to: Self.max)` is greater than `Stride.max`, i.e. when the maximal distance between `self` and `other` is too large for `Stride` to represent.
+	///
+	///	- Precondition: `degrees >= 0`
+	///
+	///	- Complexity: O(_n_), where _n_ is either the maximal possible distance between `self` and `other` or the maximal possible value of `degrees`, whichever is greater.
+	///
+	///	  Because of the linear time complexity, conforming types should provide their own implementations with lower time complexities, when there is only the possibility of overflow up (when `degrees` is greater than `Self.max - self` or `Self.max - other`) or that of overflow down (when `Self.max - Self.min` is greater than `Stride.max`). For example, this is a rather straightforward custom implementation of this method for `UInt8`:
+	///
+	///	  ```swift
+	///	  func separates(from other: UInt8, byDegrees degrees: Int) -> Bool {
+	///	      precondition(degrees >= 0)
+	///	      return abs(self.distance(to: other)) == degrees
+	///	  }
+	///	  ```
+	///
+	///	  However, types such as `Int` and `UInt` are not as likely to have better-than-O(1) implementations, because they are possible to overflow both up and down. When working with these types, in situations where it's certain that they're free from at least one of the overflow risks, it might be advisable for clients to roll their own more efficient algorithms, instead of calling this merhod.
+	///
+	///	- ToDo: Find an O(1) solution.
+	///
 	///	- Parameters:
 	///	  - other: The given other value.
-	///	  - degrees: The Bacon number to test for.
+	///	  - degrees: The Bacon number.
+	///
 	///	- Returns: `true` if the Bacon number is correct, `false` otherwise.
 	@inlinable
 	public func separates(from other: Self, byDegrees degrees: Self.Stride) -> Bool {
-		other == self.advanced(by: degrees) || self == other.advanced(by: degrees)
+		precondition(degrees >= 0)
+		
+		var lowerValue = min(self, other)
+		let higherValue = max(self, other)
+		
+		var degrees = degrees
+		
+		repeat {
+			if lowerValue == higherValue {
+				return degrees == 0
+			}
+			if degrees == 0 {
+				return false
+			}
+			lowerValue = lowerValue.advanced(by: 1)
+			degrees -= 1
+		} while lowerValue <= higherValue
+		
+		return false
 	}
 }
 
