@@ -595,8 +595,8 @@ extension Interval: CustomStringConvertible where Member: CustomStringConvertibl
 		let lowerBoundaryCharacter: Character = self.isLowerClosed ? "[" : "("
 		let upperBoundaryCharacter: Character = self.isUpperClosed ? "]" : ")"
 		
-		var lowerEndpointString: String
-		var upperEndpointString: String
+		let lowerEndpointString: String
+		let upperEndpointString: String
 		
 		switch lowerEndpoint {
 		case .unbounded:
