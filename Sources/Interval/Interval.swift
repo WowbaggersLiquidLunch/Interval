@@ -301,11 +301,11 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	///	A Boolean value indicating whether the interval contains 1 and only 1 member.
 	public var isDegenerate: Bool {
 		guard
-			case let .bounded(lowerEndpoint) = lowerEndpoint,
-			case let .bounded(upperEndpoint) = upperEndpoint
+			case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint,
+			case let .bounded(upperBoundedEndpointValue) = upperEndpoint
 		else { return false }
 		return !isEmpty && (
-			(isClosed && lowerEndpoint == upperEndpoint) || (isHalfOpen && lowerEndpoint.borders(on: upperEndpoint)) || (isOpen && lowerEndpoint.sharesCommonNeighbor(with: upperEndpoint))
+			(isClosed && lowerBoundedEndpointValue == upperBoundedEndpointValue) || (isHalfOpen && lowerBoundedEndpointValue.borders(on: upperBoundedEndpointValue)) || (isOpen && lowerBoundedEndpointValue.sharesCommonNeighbor(with: upperBoundedEndpointValue))
 		)
 	}
 	
