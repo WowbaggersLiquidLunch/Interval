@@ -288,12 +288,12 @@ public struct Interval<Member: Hashable & Comparable>: Hashable {
 	///	A Boolean value indicating whether the interval contains no members.
 	public var isEmpty: Bool {
 		guard
-			case let .bounded(lowerEndpoint) = lowerEndpoint,
-			case let .bounded(upperEndpoint) = upperEndpoint
+			case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint,
+			case let .bounded(upperBoundedEndpointValue) = upperEndpoint
 		else { return false }
-		return lowerEndpoint > upperEndpoint || (
-			isOpen && (lowerEndpoint == upperEndpoint || lowerEndpoint.borders(on: upperEndpoint))
-		)
+		return lowerBoundedEndpointValue > upperBoundedEndpointValue
+			|| (!isClosed && lowerBoundedEndpointValue == upperBoundedEndpointValue)
+			|| (isOpen && lowerBoundedEndpointValue.borders(on: upperBoundedEndpointValue))
 	}
 	
 	//	FIXME: Use a stored property for `isDegenerate`.
