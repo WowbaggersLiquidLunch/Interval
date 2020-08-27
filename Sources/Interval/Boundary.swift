@@ -1,16 +1,16 @@
 //
-//	Interval Boundary Conditions.swift - A boundary's condition.
+//	Boundary.swift - A boundary of an interval.
 //
 //	Created by Wowbagger & His Liquid Lunch on 20-08-16.
 //
 
-///	This file comtains the definitaion of `IntervalBoundaryAccessibility` and `IntervalBoundaryAvailability` structs. The structs are defined ouside of the `Interval` generic struct, because boundary conditions are a universal feature across all intervals, and so an interval's boundary conditions shouldn't be bound by the interval's member's type.
+///	This file comtains the definitaion of `IntervalBoundaryAccessibility` and `IntervalBoundaryAvailability` structs. The structs are defined ouside of the `Interval` generic struct, because boundaries are universal across all intervals, and not bound by the interval's member's type.
 
 //
 
-///	A boundary condition, either closed or open.
+///	A boundary, either closed or open.
 public enum IntervalBoundaryAccessibility: String {
-	///	Adapts the boundary condition from the "inclusive"/"exclusive" spelling to the "closed"/"open" spelling.
+	///	Adapts the boundary from the "inclusive"/"exclusive" spelling to the "closed"/"open" spelling.
 	///	- Parameter boundaryAvailability: The given "inclusive"/"exclusive" spelling.
 	@inlinable
 	public init(availability boundaryAvailability: IntervalBoundaryAvailability) {
@@ -26,9 +26,9 @@ public enum IntervalBoundaryAccessibility: String {
 	case open
 }
 
-///	A boundary condition, either inclusive or exclusive.
+///	A boundary, either inclusive or exclusive.
 public enum IntervalBoundaryAvailability: String {
-	///	Adapts the boundary condition from the "closed"/"open" spelling to the "inclusive"/"exclusive" spelling.
+	///	Adapts the boundary from the "closed"/"open" spelling to the "inclusive"/"exclusive" spelling.
 	///	- Parameter boundaryAccessibility: The given "closed"/"open" spelling.
 	@inlinable
 	public init(accessibility boundaryAccessibility: IntervalBoundaryAccessibility) {

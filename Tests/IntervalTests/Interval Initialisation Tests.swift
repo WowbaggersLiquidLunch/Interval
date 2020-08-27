@@ -116,8 +116,8 @@ final class IntervalInitialisationTests: XCTestCase {
 				
 	}
 	
-	///	Checks that `Interval`'s interval-with-symmetric-boundary-conditions initialiser works as intended.
-	func testIntervalWithSymmetricBoundaryConditionsInitialiser() {
+	///	Checks that `Interval`'s interval-with-symmetric-boundaries initialiser works as intended.
+	func testIntervalWithSymmetricBoundariesInitialiser() {
 		
 		boundedEndpointValues.forEach { lowerBoundedEndpointValue in
 			boundedEndpointValues.forEach { upperBoundedEndpointValue in
@@ -138,7 +138,7 @@ final class IntervalInitialisationTests: XCTestCase {
 								upperBoundary: IntervalBoundaryAccessibility(availability: boundaryAvailability),
 								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 							),
-							"`Interval`'s initialiser for intervals with symmetric boundary conditions fails to initialise correctly."
+							"`Interval`'s initialiser for intervals with symmetric boundaries fails to initialise correctly."
 						)
 						
 					}
@@ -153,7 +153,7 @@ final class IntervalInitialisationTests: XCTestCase {
 							upperEndpoint: .bounded(upperBoundedEndpointValue),
 							upperBoundary: IntervalBoundaryAccessibility(availability: boundaryAvailability)
 						),
-						"`Interval`'s initialiser for intervals with symmetric boundary conditions fails to initialise correctly with default parameter values."
+						"`Interval`'s initialiser for intervals with symmetric boundaries fails to initialise correctly with default parameter values."
 					)
 					
 				}
