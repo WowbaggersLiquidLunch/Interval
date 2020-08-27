@@ -1,5 +1,5 @@
 //
-//	Interval Operators.swift
+//	Operators.swift - Interval-formation operators.
 //	
 //	Created by Wowbagger & His Liquid Lunch on 20-07-18.
 //
