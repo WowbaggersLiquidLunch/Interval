@@ -4,24 +4,26 @@
 //	Created by Wowbagger & His Liquid Lunch on 20-07-18.
 //
 
-///	This file comtains the definitaion of the `Interval` generic struct, along with its extensions. Extensions of `Comparable`, `Range`, and `Collection` that closely relate to `Interval` are also contained within, but potentially will be moved into their own files.
+///	This file comtains the definitaion of the `Interval` generic struct, along with its extensions. Extensions of `IntervalMember` that closely relate to `Interval` are also contained within, but potentially will be moved into their own files.
 
 //	TODO: Decide whether to allow closed unbounded intervals: [-∞, ∞], and up date the documentation if the decision is yes.
 //	TODO: Update the entire documentation as the prototype progresses.
 
 ///	An interval.
 ///
-///	An interval has a lower boundary and an upper boundary, and a lower endpoint and an upper endpoint. It represents a range, or a continuous set, of values of a `Comparable` type. Each boundary can be either closed or open (or, inclusive or exclusive), and each endpoint can be either bounded or unbounded. A closed boundary includes its corresponding endpoint in the interval, while an open boundary does not. A bounded endpoint provides a tangible boundary for the interval; an unbounded lower endpoint is equivalent to the abstract negative infinity, an unbounded upper endpoint the positive infinity. An unbounded endpoint always comes with an open boundary.
+///	An interval has a lower boundary and an upper boundary, and a lower endpoint and an upper endpoint. It represents a range, or a continuous set, of values of a `IntervalMember` type. Each boundary can be either closed or open (or, inclusive or exclusive), and each endpoint can be either bounded or unbounded. A closed boundary includes its corresponding endpoint in the interval, while an open boundary does not. A bounded endpoint provides a tangible boundary for the interval; an unbounded lower endpoint is equivalent to the abstract negative infinity, an unbounded upper endpoint the positive infinity. An unbounded endpoint always comes with an open boundary.
 ///
-///	Based of its boundries and endpoints, an interval can be empty, degenerate, or propper. An empty interval contains no members, a degenerate interval 1 and only 1 member, and a proper interval more than 1 member.
+///	Defined by its boundries and endpoints, an interval can be empty, degenerate, or propper: An empty interval contains no members, a degenerate interval 1 and only 1 member, and a proper interval more than 1 member.
 ///
-///	An interval whose `Member` conforms to the `Strideable` protocol is iterated in the inverse (descending) order, if `isInverse` is set to `true`.
-public struct Interval<Member: Hashable & Comparable>: Hashable {
+///	An interval whose `Member` conforms to the `Strideable` protocol is iterated in the inverse (descending) order, if `isInverse` is set to `true`. If `Member` doesn't conform to `Strideable`, then `isInverse` is accessible, but has no effects.
+///
+///	- SeeAlso: `IntervalMember` for additional design rationales.
+public struct Interval<Member: IntervalMember>: Equatable {
 	
 	//	MARK: - Supporting Types
 	
 	///	An endpoint's style, either bounded or unbounded.
-	public enum Endpoint: Hashable {
+	public enum Endpoint: Equatable {
 		///	A bounded endpoint with a value of `Member` type.
 		case bounded(_ value: Member)
 		///	An unbounded endpoint.
@@ -687,98 +689,9 @@ extension Interval: LosslessStringConvertible where Member: LosslessStringConver
 	
 }
 
-//	MARK: - Comparable Extensions for Testing Proximity between Values
+//	MARK: - Interval Operators
 
-extension Comparable where Self: Strideable {
-	///	Tests if this value is right next to the given other value.
-	///	- Parameter other: The given other value.
-	///	- Returns: `true` if the 2 values are right next to each other, `false` otherwise.
-	@inlinable
-	public func borders(on other: Self) -> Bool {
-		self.separates(from: other, byDegrees: 1)
-	}
-	
-	///	Tests if this value shares a common neighbor with the given other value.
-	///	- Parameter other: The given other value.
-	///	- Returns: `true` if the 2 values are both right next to a 3rd value, `false` otherwise.
-	///	- Note: The 2 values could be equal, if the function returns true.
-	@inlinable
-	public func sharesCommonNeighbor(with other: Self) -> Bool {
-		self.separates(from: other, byDegrees: 2) || self == other
-	}
-	
-	///	Tests the correctness of the Bacon number (or, degrees of separation) between this value and the given other value.
-	///
-	///	The current implementation of this method is provided by [cukr](https://forums.swift.org/t/negotiate-between-max-stride-size-and-max-distance/39559/5) on the Swift Forums.
-	///
-	///	If `Self` confroms to `BinaryInteger`, then in most cases, `self.separates(from: other, byDegrees: degrees)` is equivalent to `Stride(max(self, other) - min(self, other)) == degrees`. However, the equivalence breaks when `Self.min.distance(to: Self.max)` is greater than `Stride.max`, i.e. when the maximal distance between `self` and `other` is too large for `Stride` to represent.
-	///
-	///	- Precondition: `degrees >= 0`
-	///
-	///	- Complexity: O(_n_), where _n_ is either the maximal possible distance between `self` and `other` or the maximal possible value of `degrees`, whichever is greater.
-	///
-	///	  Because of the linear time complexity, conforming types should provide their own implementations with lower time complexities, when there is only the possibility of overflow up (when `degrees` is greater than `Self.max - self` or `Self.max - other`) or that of overflow down (when `Self.max - Self.min` is greater than `Stride.max`). For example, this is a rather straightforward custom implementation of this method for `UInt8`:
-	///
-	///	  ```swift
-	///	  func separates(from other: UInt8, byDegrees degrees: Int) -> Bool {
-	///	      precondition(degrees >= 0)
-	///	      return abs(self.distance(to: other)) == degrees
-	///	  }
-	///	  ```
-	///
-	///	  However, types such as `Int` and `UInt` are not as likely to have better-than-O(1) implementations, because they are possible to overflow both up and down. When working with these types, in situations where it's certain that they're free from at least one of the overflow risks, it might be advisable for clients to roll their own more efficient algorithms, instead of calling this merhod.
-	///
-	///	- ToDo: Find an O(1) solution.
-	///
-	///	- Parameters:
-	///	  - other: The given other value.
-	///	  - degrees: The Bacon number.
-	///
-	///	- Returns: `true` if the Bacon number is correct, `false` otherwise.
-	@inlinable
-	public func separates(from other: Self, byDegrees degrees: Self.Stride) -> Bool {
-		precondition(degrees >= 0)
-		
-		var lowerValue = min(self, other)
-		let higherValue = max(self, other)
-		
-		var degrees = degrees
-		
-		repeat {
-			if lowerValue == higherValue {
-				return degrees == 0
-			}
-			if degrees == 0 {
-				return false
-			}
-			lowerValue = lowerValue.advanced(by: 1)
-			degrees -= 1
-		} while lowerValue <= higherValue
-		
-		return false
-	}
-}
-
-extension Comparable {
-	///	Tests if the value is right next to the given other value.
-	///	- Parameter other: The given other value.
-	///	- Returns: `true` if the 2 values are right next to each other, `false` otherwise.
-	@inlinable
-	public func borders(on other: Self) -> Bool { false }
-	
-	///	Tests if the value shares a common neighbor with the given other value.
-	///	- Parameter other: The given other value.
-	///	- Returns: `true` if the 2 values are both right next to a 3rd value, `false` otherwise.
-	///	- Note: The 2 values could be equal, if the function returns true.
-	@inlinable
-	public func sharesCommonNeighbor(with other: Self) -> Bool {
-		self == other
-	}
-}
-
-//	MARK: - Comparable Extension for Interval Operators
-
-extension Comparable where Self: Hashable {
+extension IntervalMember {
 	
 	///	Creates a closed and bounded interval from the given endpoints.
 	///	- Parameters:
@@ -856,7 +769,7 @@ extension Comparable where Self: Hashable {
 
 //	MARK: Inverse Interval Operators
 
-extension Comparable where Self: Hashable & Strideable {
+extension IntervalMember where Self: Strideable {
 	
 	///	Creates a closed and bounded interval from the given endpoints that's iterated in reverse.
 	///	- Parameters:
