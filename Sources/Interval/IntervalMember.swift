@@ -112,11 +112,14 @@ extension DispatchWallTime: IntervalMember {}
 //	MARK: Conditionally Available Types
 
 @available(macOS 10.12, macCatalyst 13, iOS 10, watchOS 3, tvOS 10, *) extension DateInterval: IntervalMember {}
+@available(macOS 10.12, macCatalyst 13, iOS 10, watchOS 3, tvOS 10, *) extension Measurement: IntervalMember {}
+
+//	`SchedulerTimeType`s isn't available on Linux.
+#if !os(Linux)
 @available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension DispatchQueue.SchedulerTimeType: IntervalMember {}
 @available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension DispatchQueue.SchedulerTimeType.Stride: IntervalMember {}
-@available(macOS 10.12, macCatalyst 13, iOS 10, watchOS 3, tvOS 10, *) extension Measurement: IntervalMember {}
 @available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension OperationQueue.SchedulerTimeType: IntervalMember {}
 @available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension OperationQueue.SchedulerTimeType.Stride: IntervalMember {}
 @available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension RunLoop.SchedulerTimeType: IntervalMember {}
 @available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension RunLoop.SchedulerTimeType.Stride: IntervalMember {}
-
+#endif
