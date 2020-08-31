@@ -314,13 +314,13 @@ final class IntervalInitialisationTests: XCTestCase {
 		)
 	}
 	
-	///	Checks that interval operators work as intended.
-	func testIntervalOperators() {
+	///	Checks that interval-forming operators work as intended.
+	func testIntervalFormingOperators() {
 		
 		boundedEndpointValues.forEach { lowerBoundedEndpointValue in
 			boundedEndpointValues.forEach { upperBoundedEndpointValue in
 				
-				//	MARK: Ascending Interval operators.
+				//	MARK: Ascending Interval-Forming Operators
 				
 				XCTAssertEqual(
 					lowerBoundedEndpointValue≤∙≤upperBoundedEndpointValue,
@@ -418,7 +418,7 @@ final class IntervalInitialisationTests: XCTestCase {
 					"`\(lowerBoundedEndpointValue)<∙∙` fails to initialise (\(lowerBoundedEndpointValue), ∞)."
 				)
 				
-				//	MARK: Descending interval operators.
+				//	MARK: Descending Interval-Forming Operators
 				
 				XCTAssertEqual(
 					upperBoundedEndpointValue≥∙≥lowerBoundedEndpointValue,

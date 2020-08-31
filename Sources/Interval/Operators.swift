@@ -1,10 +1,10 @@
 //
-//	Operators.swift - Interval-formation operators.
+//	Operators.swift - Interval-forming operators.
 //	
 //	Created by Wowbagger & His Liquid Lunch on 20-07-18.
 //
 
-//	MARK: Ascending Interval operators.
+//	MARK: Ascending Interval-Forming Operators
 
 infix operator ≤∙≤: RangeFormationPrecedence
 infix operator ≤∙<: RangeFormationPrecedence
@@ -17,7 +17,7 @@ prefix operator ∙∙<
 postfix operator ≤∙∙
 postfix operator <∙∙
 
-//	MARK: Descending interval operators.
+//	MARK: Descending Interval-Forming Operators
 
 infix operator ≥∙≥: RangeFormationPrecedence
 infix operator >∙≥: RangeFormationPrecedence

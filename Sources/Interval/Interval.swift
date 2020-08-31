@@ -689,7 +689,7 @@ extension Interval: LosslessStringConvertible where Member: LosslessStringConver
 	
 }
 
-//	MARK: - Interval Operators
+//	MARK: - Interval-Forming Operators
 
 extension IntervalMember {
 	
@@ -767,7 +767,7 @@ extension IntervalMember {
 	
 }
 
-//	MARK: Inverse Interval Operators
+//	MARK: Inverse Interval-Forming Operators
 
 extension IntervalMember where Self: Strideable {
 	
