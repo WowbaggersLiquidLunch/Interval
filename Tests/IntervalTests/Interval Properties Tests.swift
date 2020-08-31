@@ -204,7 +204,7 @@ final class IntervalPropertiesTests: XCTestCase {
 							}
 							
 							if case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint, case let .bounded(upperBoundedEndpointValue) = upperEndpoint {
-								let intervalIsDegenerate =  (interval.isClosed && lowerBoundedEndpointValue == upperBoundedEndpointValue)
+								let intervalIsDegenerate = (interval.isClosed && lowerBoundedEndpointValue == upperBoundedEndpointValue)
 									|| lowerBoundedEndpointValue < upperBoundedEndpointValue && (
 										(interval.isHalfOpen && lowerBoundedEndpointValue.borders(on: upperBoundedEndpointValue)) || (interval.isOpen && lowerBoundedEndpointValue.separates(from: upperBoundedEndpointValue, byDegrees: 2))
 									)
