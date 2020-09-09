@@ -33,7 +33,7 @@ final class IntervalInitialisationTests: XCTestCase {
 	let whetherIntervalShouldBeOrderedDescendingly: [Bool] = [true, false]
 	
 	///	Checks that `Interval`'s primary initialiser's default parameters works as intended.
-	func testPrimaryInitialiser() {
+	func testOGInitialiser() {
 		
 		endpoints.forEach { lowerEndpoint in
 			endpoints.forEach { upperEndpoint in
