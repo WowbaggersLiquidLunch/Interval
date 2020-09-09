@@ -316,7 +316,7 @@ public struct Interval<Member: IntervalMember>: Equatable {
 	
 	//	MARK: - Related Intervals
 	
-	//	The discription for `interior` and `closure are lifted straightly from Wikipedia: https://en.wikipedia.org/wiki/Interval_(mathematics)#Terminology
+	//	The discription for `interior` and `closure` are lifted straightly from Wikipedia: https://en.wikipedia.org/wiki/Interval_(mathematics)#Terminology
 	
 	///	The interval's interior.
 	///
