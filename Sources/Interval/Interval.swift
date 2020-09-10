@@ -324,14 +324,15 @@ public struct Interval<Member: IntervalMember>: Equatable {
 	///
 	///	An empty interval's interior is an empty interior.
 	@inlinable
-	public var interior: Self? {
+	public var interior: Self {
 //		guard self.isProper else { return nil }
 		//	An empty interval's interior is an empty interval.
 		return Self(
 			lowerBoundary: .open,
 			lowerEndpoint: self.lowerEndpoint,
 			upperEndpoint: self.upperEndpoint,
-			upperBoundary: .open
+			upperBoundary: .open,
+			inInverseStridingDirection: isInverse
 		)
 	}
 	
@@ -341,14 +342,14 @@ public struct Interval<Member: IntervalMember>: Equatable {
 	///
 	///	The closure of an interval _I_ is the smallest closed interval that contains _I_; it is also the set _I_ augmented with its finite endpoints.
 	@inlinable
-	public var closure: Self? {
-		guard self.isBounded else { return nil }
-		
+	public var closure: Self {
+//		guard self.isBounded else { return nil }
 		return Self(
 			lowerBoundary: .closed,
 			lowerEndpoint: self.lowerEndpoint,
 			upperEndpoint: self.upperEndpoint,
-			upperBoundary: .closed
+			upperBoundary: .closed,
+			inInverseStridingDirection: isInverse
 		)
 	}
 	
