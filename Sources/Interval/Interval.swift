@@ -457,7 +457,7 @@ public struct Interval<Member: IntervalMember>: Equatable {
 		guard
 			case let .bounded(selfLowerEndpoint) = self.lowerEndpoint,
 			case let .bounded(otherLowerEndpoint) = other.lowerEndpoint
-		else { return other.isLowerUnbounded || self.isLowerBounded }
+		else { return other.isLowerUnbounded }
 		
 		return selfLowerEndpoint >= otherLowerEndpoint
 	}
@@ -469,7 +469,7 @@ public struct Interval<Member: IntervalMember>: Equatable {
 		guard
 			case let .bounded(selfUpperEndpoint) = self.upperEndpoint,
 			case let .bounded(otherUpperEndpoint) = other.upperEndpoint
-		else { return other.isUpperUnbounded || self.isUpperBounded }
+		else { return other.isUpperUnbounded }
 		
 		return selfUpperEndpoint <= otherUpperEndpoint
 	}
