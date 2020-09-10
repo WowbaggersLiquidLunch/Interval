@@ -314,6 +314,84 @@ final class IntervalInitialisationTests: XCTestCase {
 		)
 	}
 	
+	///	Checks that each of the tested intervals has a correct interior.
+	func testInitialisingInterior() {
+		
+		endpoints.forEach { lowerEndpoint in
+			endpoints.forEach { upperEndpoint in
+				boundaryAccessibilities.forEach { lowerBoundaryAccessibility in
+					boundaryAccessibilities.forEach { upperBoundaryAccessibility in
+						whetherIntervalShouldBeOrderedDescendingly.forEach { intervalShouldBeOrderedDescendingly in
+							
+							let interval = Interval(
+								lowerBoundary: lowerBoundaryAccessibility,
+								lowerEndpoint: lowerEndpoint,
+								upperEndpoint: upperEndpoint,
+								upperBoundary: upperBoundaryAccessibility,
+								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
+							)
+							
+							let intervalInterior = Interval(
+								lowerBoundary: .open,
+								lowerEndpoint: lowerEndpoint,
+								upperEndpoint: upperEndpoint,
+								upperBoundary: .open,
+								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
+							)
+							
+							XCTAssertEqual(
+								interval.interior,
+								intervalInterior,
+								"Interval \(interval)'s interior fails to evaluate to \(intervalInterior)."
+							)
+							
+						}
+					}
+				}
+			}
+		}
+		
+	}
+	
+	///	Checks that each of the tested intervals has a correct closure.
+	func testInitialisingClosure() {
+		
+		endpoints.forEach { lowerEndpoint in
+			endpoints.forEach { upperEndpoint in
+				boundaryAccessibilities.forEach { lowerBoundaryAccessibility in
+					boundaryAccessibilities.forEach { upperBoundaryAccessibility in
+						whetherIntervalShouldBeOrderedDescendingly.forEach { intervalShouldBeOrderedDescendingly in
+							
+							let interval = Interval(
+								lowerBoundary: lowerBoundaryAccessibility,
+								lowerEndpoint: lowerEndpoint,
+								upperEndpoint: upperEndpoint,
+								upperBoundary: upperBoundaryAccessibility,
+								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
+							)
+							
+							let intervalClosure = Interval(
+								lowerBoundary: .closed,
+								lowerEndpoint: lowerEndpoint,
+								upperEndpoint: upperEndpoint,
+								upperBoundary: .closed,
+								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
+							)
+							
+							XCTAssertEqual(
+								interval.closure,
+								intervalClosure,
+								"Interval \(interval)'s closure fails to evaluate to \(intervalClosure)."
+							)
+							
+						}
+					}
+				}
+			}
+		}
+		
+	}
+	
 	///	Checks that interval-forming operators work as intended.
 	func testIntervalFormingOperators() {
 		
