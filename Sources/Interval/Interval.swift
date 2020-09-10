@@ -450,9 +450,9 @@ public struct Interval<Member: IntervalMember>: Equatable {
 		return  otherUpperEndpoint < selfLowerEndpoint
 	}
 	
-	///	Returns a Boolean value that indicates whether this interval's lower endpoint fully precedes the given other interval's.
+	///	Returns a Boolean value that indicates whether this interval's lower endpoint is no lesser than the given other interval's.
 	///	- Parameter other: The other interval.
-	///	- Returns: `true` if the interval's lower endpoint fully precedes the other's; otherwise, `false`.
+	///	- Returns: `true` if the interval's lower endpoint is greater than or equal to the other's; otherwise, `false`.
 	private func assumingBothUpperUnboundedIsContained(within other: Self) -> Bool {
 		guard
 			case let .bounded(selfLowerEndpoint) = self.lowerEndpoint,
@@ -462,9 +462,9 @@ public struct Interval<Member: IntervalMember>: Equatable {
 		return selfLowerEndpoint >= otherLowerEndpoint
 	}
 	
-	///	Returns a Boolean value that indicates whether this interval's upper endpoint fully succeeds the given other interval's.
+	///	Returns a Boolean value that indicates whether this interval's upper endpoint is no greater than the given other interval's.
 	///	- Parameter other: The other interval.
-	///	- Returns: `true` if the interval's upper endpoint fully succeeds the other's; otherwise, `false`.
+	///	- Returns: `true` if the interval's upper endpoint is less than or equal to the other's; otherwise, `false`.
 	private func assumingBothLowerUnboundedIsContained(within other: Self) -> Bool {
 		guard
 			case let .bounded(selfUpperEndpoint) = self.upperEndpoint,
