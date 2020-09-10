@@ -1,5 +1,5 @@
 //
-//	Interval Boundary Independence Tests.swift - Test cases and methods regarding interval boundaries' independence from intervals.
+//	Interval-Boundary Independence Tests.swift - Test cases and methods regarding interval boundaries' independence from intervals.
 //
 //	Created by Wowbagger & His Liquid Lunch on 20-08-16.
 //

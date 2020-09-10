@@ -1,5 +1,5 @@
 //
-//	Interval Boundary Initialisation Tests.swift - Test cases and methods regarding instantiating a boundary.
+//	Boundary Initialisation Tests.swift - Test cases and methods regarding instantiating a boundary.
 //
 //	Created by Wowbagger & His Liquid Lunch on 20-08-16.
 //
@@ -8,7 +8,7 @@ import XCTest
 @testable import Interval
 
 ///	A group of test cases and methods regarding instantiating a boundary.
-final class IntervalBoundaryInitialisationTests: XCTestCase {
+final class BoundaryInitialisationTests: XCTestCase {
 	
 	///	Checks that interval boundary accessibilities adapt correctly to their equivalent availabilities.
 	func testAdaptingFromBoundaryAccessibilityToAvailability() {
