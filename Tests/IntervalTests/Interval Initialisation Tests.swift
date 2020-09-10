@@ -301,7 +301,7 @@ final class IntervalInitialisationTests: XCTestCase {
 	}
 	
 	///	Checks that `Interval` can provide a correct unbounded interval.
-	func testCorrectnessOfUnboundedInterval() {
+	func testInitialisingUnboundedInterval() {
 		XCTAssertEqual(
 			Interval<Int>.unbounded,
 			Interval<Int>(
