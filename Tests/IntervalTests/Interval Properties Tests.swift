@@ -10,6 +10,31 @@ import XCTest
 ///	A group of test cases and methods regarding interval properties.
 final class IntervalPropertiesTests: XCTestCase {
 	
+	///	The collection of bounded endpoint values of type `UInt` for testing interval properties.
+	let boundedEndpointValuesOfTypeUInt: [UInt] = [.min, 0, 1, 2, 3, .max]
+	///	The collection of bounded endpoint values of type `Int` for testing interval properties.
+	let boundedEndpointValuesOfTypeInt: [Int] = [.min, -1, 0, 1, 2, .max]
+	///	The collection of bounded endpoint values of type `UInt64` for testing interval properties.
+	let boundedEndpointValuesOfTypeUInt64: [UInt64] = [.min, 0, 1, 2, 3, .max]
+	///	The collection of bounded endpoint values of type `Int64` for testing interval properties.
+	let boundedEndpointValuesOfTypeInt64: [Int64] = [.min, -1, 0, 1, 2, .max]
+	///	The collection of bounded endpoint values of type `UInt32` for testing interval properties.
+	let boundedEndpointValuesOfTypeUInt32: [UInt32] = [.min, 0, 1, 2, 3, .max]
+	///	The collection of bounded endpoint values of type `Int32` for testing interval properties.
+	let boundedEndpointValuesOfTypeInt32: [Int32] = [.min, -1, 0, 1, 2, .max]
+	///	The collection of bounded endpoint values of type `UInt16` for testing interval properties.
+	let boundedEndpointValuesOfTypeUInt16: [UInt16] = [.min, 0, 1, 2, 3, .max]
+	///	The collection of bounded endpoint values of type `Int16` for testing interval properties.
+	let boundedEndpointValuesOfTypeInt16: [Int16] = [.min, -1, 0, 1, 2, .max]
+	///	The collection of bounded endpoint values of type `UInt8` for testing interval properties.
+	let boundedEndpointValuesOfTypeUInt8: [UInt8] = [.min, 0, 1, 2, 3, .max]
+	///	The collection of bounded endpoint values of type `Int8` for testing interval properties.
+	let boundedEndpointValuesOfTypeInt8: [Int8] = [.min, -1, 0, 1, 2, .max]
+	///	The collection of bounded endpoint values of type `Double` for testing interval properties.
+	let boundedEndpointValuesOfTypeDouble: [Double] = [-1, 0, .leastNonzeroMagnitude, 0.5, 1, 2, .pi, .greatestFiniteMagnitude, .infinity]
+	///	The collection of bounded endpoint values of type `String` for testing interval properties.
+	let boundedEndpointValuesOfTypeString: [String] = ["a", "b", "ç", "π", "the", "internet", "is", "made", "of", "cats"]
+	
 	///	The collection of boundary accessibilities for testing interval properties.
 	let boundaryAccessibilities: [IntervalBoundaryAccessibility] = [.closed, .open]
 	//		///	The collection of boundary availabilities for testing interval properties.
@@ -21,11 +46,8 @@ final class IntervalPropertiesTests: XCTestCase {
 	///	Checks that internal have correct properties after initialisation.
 	func testIntervalBoundariesAndEndpoints() {
 		
-		///	The collection of bounded endpoint values for testing interval properties.
-		let boundedEndpointValues: [Int] = [.min, -1, 0, 1, 2, .max]
-		
 		///	The collection of bounded endpoints for testing interval properties.
-		let boundedEndpoints: [Interval<Int>.Endpoint] = boundedEndpointValues.map { .bounded($0) }
+		let boundedEndpoints: [Interval<Int>.Endpoint] = boundedEndpointValuesOfTypeInt.map { .bounded($0) }
 		
 		///	The collection of endpoints for testing interval properties.
 		let endpoints: [Interval<Int>.Endpoint] = boundedEndpoints + [.unbounded]
@@ -246,31 +268,6 @@ final class IntervalPropertiesTests: XCTestCase {
 		//	MARK: Collections of Countable Types
 		
 		//	Currently, as of Swift 5.3, the only `Countable`-conformable types in the standard library are `BinaryInteger` conforming types, which are basically just the 10 integer types. The reason all 10 types need to be included in this test case is because of the integer overflow that could happen in `Strideable`'s `advance(by:)` and `distance(to:)` methods. For more details, see documentation on `Countable`.
-		
-		///	The collection of bounded endpoint values of type `UInt` for testing interval properties.
-		let boundedEndpointValuesOfTypeUInt: [UInt] = [.min, 0, 1, 2, 3, .max]
-		///	The collection of bounded endpoint values of type `Int` for testing interval properties.
-		let boundedEndpointValuesOfTypeInt: [Int] = [.min, -1, 0, 1, 2, .max]
-		///	The collection of bounded endpoint values of type `UInt64` for testing interval properties.
-		let boundedEndpointValuesOfTypeUInt64: [UInt64] = [.min, 0, 1, 2, 3, .max]
-		///	The collection of bounded endpoint values of type `Int64` for testing interval properties.
-		let boundedEndpointValuesOfTypeInt64: [Int64] = [.min, -1, 0, 1, 2, .max]
-		///	The collection of bounded endpoint values of type `UInt32` for testing interval properties.
-		let boundedEndpointValuesOfTypeUInt32: [UInt32] = [.min, 0, 1, 2, 3, .max]
-		///	The collection of bounded endpoint values of type `Int32` for testing interval properties.
-		let boundedEndpointValuesOfTypeInt32: [Int32] = [.min, -1, 0, 1, 2, .max]
-		///	The collection of bounded endpoint values of type `UInt16` for testing interval properties.
-		let boundedEndpointValuesOfTypeUInt16: [UInt16] = [.min, 0, 1, 2, 3, .max]
-		///	The collection of bounded endpoint values of type `Int16` for testing interval properties.
-		let boundedEndpointValuesOfTypeInt16: [Int16] = [.min, -1, 0, 1, 2, .max]
-		///	The collection of bounded endpoint values of type `UInt8` for testing interval properties.
-		let boundedEndpointValuesOfTypeUInt8: [UInt8] = [.min, 0, 1, 2, 3, .max]
-		///	The collection of bounded endpoint values of type `Int8` for testing interval properties.
-		let boundedEndpointValuesOfTypeInt8: [Int8] = [.min, -1, 0, 1, 2, .max]
-		///	The collection of bounded endpoint values of type `Double` for testing interval properties.
-		let boundedEndpointValuesOfTypeDouble: [Double] = [-1, 0, .leastNonzeroMagnitude, 0.5, 1, 2, .pi, .greatestFiniteMagnitude, .infinity]
-		///	The collection of bounded endpoint values of type `String` for testing interval properties.
-		let boundedEndpointValuesOfTypeString: [String] = ["a", "b", "ç", "π", "the", "internet", "is", "made", "of", "cats"]
 		
 		///	Checks that intervals possibly bounded by any of the given endpoint values evaluate their cardinality correctly
 		///	- Parameter boundedEndpointsValues: The given endpoint values.
