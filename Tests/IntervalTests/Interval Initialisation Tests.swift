@@ -392,6 +392,74 @@ final class IntervalInitialisationTests: XCTestCase {
 		
 	}
 	
+	///	Checks that `reversed()` creates a copy of the interval with its iterating direction reversed.
+	func testInitialisingIntervalWithReversedIteratingDirection() {
+		
+		///	Pairs of interval-forming operators that create bounded intervals.
+		///
+		///	Each pair differ only in the iterating direction of the intervals they create.
+		let boundedIntervalFormationOperatorPairs: [(formAscendingInterval: (Int, Int) -> Interval<Int>, formDescendingInterval: (Int, Int) -> Interval<Int>)] = [
+			(≤∙≤, ≥∙≥),
+			(≤∙<, >∙≥),
+			(<∙≤, ≥∙>),
+			(<∙<, >∙>)
+		]
+		
+		///	Pairs of interval-forming operators that create bounded intervals.
+		///
+		///	Each pair differ only in the iterating direction of the intervals they create.
+		let halfUnboundedIntervalFormationOperatorPairs: [(formAscendingInterval: (Int) -> Interval<Int>, formDescendingInterval: (Int) -> Interval<Int>)] = [
+			(∙∙≤, ≥∙∙),
+			(∙∙<, >∙∙),
+			(≤∙∙, ∙∙≥),
+			(<∙∙, ∙∙>)
+		]
+		
+		boundedEndpointValues.forEach { lowerBoundedEndpointValue in
+			boundedEndpointValues.forEach { upperBoundedEndpointValue in
+				
+				boundedIntervalFormationOperatorPairs.forEach { formAscendingInterval, formDescendingInterval in
+					
+					let ascendinglyIteratedInterval = formAscendingInterval(lowerBoundedEndpointValue, upperBoundedEndpointValue)
+					let descendinglyIteratedInterval = formDescendingInterval(upperBoundedEndpointValue, lowerBoundedEndpointValue)
+					
+					XCTAssertEqual(
+						ascendinglyIteratedInterval.reversed(),
+						descendinglyIteratedInterval,
+						"Ascendingly iterated interval \(ascendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(descendinglyIteratedInterval)."
+					)
+					XCTAssertEqual(
+						descendinglyIteratedInterval.reversed(),
+						ascendinglyIteratedInterval,
+						"Descendingly iterated interval \(descendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(ascendinglyIteratedInterval)."
+					)
+					
+				}
+				
+			}
+			
+			halfUnboundedIntervalFormationOperatorPairs.forEach { formAscendingInterval, formDescendingInterval in
+				
+				let ascendinglyIteratedInterval = formAscendingInterval(lowerBoundedEndpointValue)
+				let descendinglyIteratedInterval = formDescendingInterval(lowerBoundedEndpointValue)
+				
+				XCTAssertEqual(
+					ascendinglyIteratedInterval.reversed(),
+					descendinglyIteratedInterval,
+					"Ascendingly iterated interval \(ascendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(descendinglyIteratedInterval)."
+				)
+				XCTAssertEqual(
+					descendinglyIteratedInterval.reversed(),
+					ascendinglyIteratedInterval,
+					"Descendingly iterated interval \(descendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(ascendinglyIteratedInterval)."
+				)
+				
+			}
+			
+		}
+		
+	}
+	
 	///	Checks that interval-forming operators work as intended.
 	func testIntervalFormingOperators() {
 		
