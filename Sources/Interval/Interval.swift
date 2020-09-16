@@ -434,7 +434,11 @@ public struct Interval<Member: IntervalMember>: Equatable {
 			case let .bounded(otherLowerEndpoint) = other.lowerEndpoint
 		else { return false }
 		
-		return selfUpperEndpoint < otherLowerEndpoint
+		if self.isUpperClosed && other.isLowerClosed {
+			return selfUpperEndpoint < otherLowerEndpoint
+		} else {
+			return selfUpperEndpoint <= otherLowerEndpoint
+		}
 	}
 	
 	///	Returns a Boolean value that indicates whether this interval fully succeeds the given other interval.
@@ -447,7 +451,11 @@ public struct Interval<Member: IntervalMember>: Equatable {
 			case let .bounded(selfLowerEndpoint) = self.lowerEndpoint
 		else { return false }
 		
-		return  otherUpperEndpoint < selfLowerEndpoint
+		if other.isUpperClosed && self.isLowerClosed {
+			return otherUpperEndpoint < selfLowerEndpoint
+		} else {
+			return otherUpperEndpoint <= selfLowerEndpoint
+		}
 	}
 	
 	///	Returns a Boolean value that indicates whether this interval's lower endpoint is no lesser than the given other interval's.
