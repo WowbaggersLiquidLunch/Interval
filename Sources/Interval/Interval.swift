@@ -589,6 +589,12 @@ public struct Interval<Member: IntervalMember>: Equatable {
 	
 }
 
+//	MARK: - Hashable Conformance
+
+extension Interval: Hashable where Member: Hashable {}
+
+extension Interval.Endpoint: Hashable where Member: Hashable {}
+
 //	MARK: - CustomStringConvertible Conformance
 
 extension Interval: CustomStringConvertible where Member: CustomStringConvertible {
