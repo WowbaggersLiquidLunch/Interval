@@ -13,7 +13,13 @@
 ///
 ///	An interval has a lower boundary and an upper boundary, and a lower endpoint and an upper endpoint. It represents a range, or a continuous set, of values of a `IntervalMember` type. Each boundary can be either closed or open (or, inclusive or exclusive), and each endpoint can be either bounded or unbounded. A closed boundary includes its corresponding endpoint in the interval, while an open boundary does not. A bounded endpoint provides a tangible boundary for the interval; an unbounded lower endpoint is equivalent to the abstract negative infinity, an unbounded upper endpoint the positive infinity. An unbounded endpoint always comes with an open boundary.
 ///
+///	Cardinality
+///	-----------
+///
 ///	Defined by its boundries and endpoints, an interval can be empty, degenerate, or propper: An empty interval contains no members, a degenerate interval 1 and only 1 member, and a proper interval more than 1 member.
+///
+///	Iterating Direction
+///	-------------------
 ///
 ///	An interval whose `Member` conforms to the `Strideable` protocol is iterated in the inverse (descending) order, if `isInverse` is set to `true`. If `Member` doesn't conform to `Strideable`, then `isInverse` is accessible, but has no effects.
 ///
