@@ -121,7 +121,7 @@ class IntervalComparisonTests: XCTestCase {
 													interval1.isSubinterval(of: interval2),
 													interval1IsSubintervalOfInterval2,
 													"""
-													Interval \(interval1) should \(interval1IsSubintervalOfInterval2 ? "" : "not ")be a subinterval of \(interval2), \
+													\(interval1) should \(interval1IsSubintervalOfInterval2 ? "" : "not ")be a subinterval of \(interval2), \
 													because \(interval1.isEmpty ? "\(interval1) is ∅, and " : "")\(interval2.isEmpty ? "\(interval2) is ∅, and " : "")\
 													\(interval1.isEmpty ? "∅" : "\(interval1)") \(interval1IsSubintervalOfInterval2 ? "⊆" : "⊈") \(interval2.isEmpty ? "∅" : "\(interval2)").
 													"""
@@ -131,7 +131,7 @@ class IntervalComparisonTests: XCTestCase {
 													interval1.isSuperinterval(of: interval2),
 													interval1IsSuperintervalOfInterval2,
 													"""
-													Interval \(interval1) should \(interval1IsSuperintervalOfInterval2 ? "" : "not ")be a superinterval of \(interval2), \
+													\(interval1) should \(interval1IsSuperintervalOfInterval2 ? "" : "not ")be a superinterval of \(interval2), \
 													because \(interval1.isEmpty ? "\(interval1) is ∅, and " : "")\(interval2.isEmpty ? "\(interval2) is ∅, and " : "")\
 													\(interval1.isEmpty ? "∅" : "\(interval1)") \(interval1IsSuperintervalOfInterval2 ? "⊇" : "⊉") \(interval2.isEmpty ? "∅" : "\(interval2)").
 													"""
@@ -141,7 +141,7 @@ class IntervalComparisonTests: XCTestCase {
 													interval1.isStrictSubinterval(of: interval1),
 													interval1IsStrictSubintervalOfInterval2,
 													"""
-													Interval \(interval1) should \(interval1IsStrictSubintervalOfInterval2 ? "" : "not ")be a proper (strict) subinterval of \(interval2), \
+													\(interval1) should \(interval1IsStrictSubintervalOfInterval2 ? "" : "not ")be a proper (strict) subinterval of \(interval2), \
 													because \(interval1.isEmpty ? "\(interval1) is ∅, and " : "")\(interval2.isEmpty ? "\(interval2) is ∅, and " : "")\
 													\(interval1.isEmpty ? "∅" : "\(interval1)") \(interval1IsStrictSubintervalOfInterval2 ? "⊊" : "⊄") \(interval2.isEmpty ? "∅" : "\(interval2)").
 													"""
@@ -151,7 +151,7 @@ class IntervalComparisonTests: XCTestCase {
 													interval1.isStrictSuperinterval(of: interval2),
 													interval1IsStrictSuperintervalOfInterval2,
 													"""
-													Interval \(interval1) should \(interval1IsStrictSuperintervalOfInterval2 ? "" : "not ")be a proper (strict) superinterval of \(interval2), \
+													\(interval1) should \(interval1IsStrictSuperintervalOfInterval2 ? "" : "not ")be a proper (strict) superinterval of \(interval2), \
 													because \(interval1.isEmpty ? "\(interval1) is ∅, and " : "")\(interval2.isEmpty ? "\(interval2) is ∅, and " : "")\
 													\(interval1.isEmpty ? "∅" : "\(interval1)") \(interval1IsStrictSuperintervalOfInterval2 ? "⊋" : "⊅") \(interval2.isEmpty ? "∅" : "\(interval2)").
 													"""
