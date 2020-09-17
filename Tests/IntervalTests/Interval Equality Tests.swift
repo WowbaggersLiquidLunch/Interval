@@ -10,26 +10,26 @@ import XCTest
 ///	A group of test cases and methods regarding `Interval`'s `Equatable` conformance.
 class IntervalEqualityTests: XCTestCase {
 	
-	///	The lesser bounded endpoint value for testing initialisations.
+	///	The lesser bounded endpoint value for testing interval equality.
 	let lesserBoundedEndpointValue = 0
-	///	The greater bounded endpoint value for testing initialisations.
+	///	The greater bounded endpoint value for testing interval equality.
 	let greaterBoundedEndpointValue = 1
-	///	The collection of bounded endpoint values for testing initialisations.
+	///	The collection of bounded endpoint values for testing interval equality.
 	var boundedEndpointValues: [Int] { [lesserBoundedEndpointValue, greaterBoundedEndpointValue] }
 	
-	///	The lesser bounded endpoint for testing initialisations.
+	///	The lesser bounded endpoint for testing interval equality.
 	var lesserBoundedEndpoint: Interval<Int>.Endpoint { .bounded(lesserBoundedEndpointValue) }
-	///	The greater bounded endpoint for testing initialisations.
+	///	The greater bounded endpoint for testing interval equality.
 	var greaterBoundedEndpoint: Interval<Int>.Endpoint { .bounded(greaterBoundedEndpointValue) }
-	///	The collection of endpoints for testing initialisations.
+	///	The collection of endpoints for testing interval equality.
 	var endpoints: [Interval<Int>.Endpoint] { [lesserBoundedEndpoint, greaterBoundedEndpoint, .unbounded] }
 	
-	///	The collection of boundary accessibilities for testing initialisations.
+	///	The collection of boundary accessibilities for testing interval equality.
 	let boundaryAccessibilities: [IntervalBoundaryAccessibility] = [.closed, .open]
-	///	The collection of boundary availabilities for testing initialisations.
+	///	The collection of boundary availabilities for testing interval equality.
 	let boundaryAvailabilities: [IntervalBoundaryAvailability] = [.inclusive, .exclusive]
 	
-	///	The collection of interval striding directions for testing initialisations.
+	///	The collection of interval striding directions for testing interval equality.
 	let whetherIntervalShouldBeOrderedDescendingly: [Bool] = [true, false]
 	
 	///	Verifies that intervals are equal if their defining properties are equal or if they're both empty.
