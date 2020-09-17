@@ -36,7 +36,7 @@ jobs:
         run: swift test --configuration debug --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --verbose
       - name: Get Code Coverage path
         id: showCodeCoveragePath
-        run: echo "::set-output name=codeCoveragePath::$(swift --show-codecov-path)"
+        run: echo "::set-output name=codeCoveragePath::$(swift test --show-codecov-path)"
   
   ubuntu_test:
     name: Test on Ubuntu ${{ matrix.ubuntu_version }} with Swift ${{ matrix.swift_version }}
@@ -70,5 +70,5 @@ jobs:
         run: swift test --configuration debug --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --verbose
       - name: Get Code Coverage path
         id: showCodeCoveragePath
-        run: echo "::set-output name=codeCoveragePath::$(swift --show-codecov-path)"
+        run: echo "::set-output name=codeCoveragePath::$(swift test --show-codecov-path)"
        
