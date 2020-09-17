@@ -215,177 +215,181 @@ final class CountabilityTests: XCTestCase {
 		
 	}
 	
-	//	FIXME: Fix test case.
+	#if false
 	
-//	///	Checks that the default implementation of Countable is correct.
-//	func testDefaultImplementationOfCountable() {
-//
-//		///	Standardised measurement of achievement in a course.
-//		enum Grade: String, CaseIterable, Countable {
-//
-//			///	Outstanding grade.
-//			case a = "A"
-//			///	Decent grade.
-//			case b = "B"
-//			///	Sub-par grade.
-//			case c = "C"
-//			///	Passing grade.
-//			case d = "D"
-//			///	Failing grade.
-//			case f = "F"
-//
-//			//	MARK: CaseIterable Conformance
-//
-//			typealias AllCases = [Self]
-//
-//			static var allCases: [Self] = [.a, .b, .c, .d, .f]
-//
-//			//	MARK: Comparable Conformance
-//			static func < (lhs: Self, rhs: Self) -> Bool {
-//				return lhs.rawValue > rhs.rawValue
-//			}
-//
-//			//	This is necessary because otherwise `Strideable` uses `distance(to:)` for `==`
-//			static func ==(lhs: Self, rhs: Self) -> Bool {
-//				return lhs.rawValue == rhs.rawValue
-//			}
-//
-//			///	A type that represents the distance between two grades.
-//			typealias Stride = Int
-//
-//			///	Returns the distance from this grade to the given grade, expressed as a stride.
-//			///	- Parameter other: The grade to calculate the distance to.
-//			///	- Returns: The distance from this grade to `other`.
-//			func distance(to other: Self) -> Stride {
-//				let sortedGrades = Self.allCases.sorted()
-//				let otherIndex = sortedGrades.firstIndex(of: other)!
-//				let selfIndex = sortedGrades.firstIndex(of: self)!
-//				return abs(selfIndex - otherIndex)
-//			}
-//
-//			///	Returns a grade that is offset the specified distance from this grade.
-//			///	- Parameter n: The distance to advance this grade.
-//			///	- Returns: A grade that is offset from this grade by `n`.
-//			func advanced(by n: Stride) -> Self {
-//				let sortedGrades = Self.allCases.sorted(by: <)
-//				let selfIndex = sortedGrades.firstIndex(of: self)!
-//				return sortedGrades[selfIndex + n]
-//			}
-//
-//			///	Returns the grade that immediately precedes the given grade.
-//			///	- Precondition: `grade < .a`.
-//			///	- Parameter grade: The given grade.
-//			///	- Returns: The value that immediately precedes the given grade.
-//			static func instance(immediatelyPreceding grade: Self) -> Self {
-//				precondition(grade < .a, "Grade can not be A.")
-//				let sortedGrades = Self.allCases.sorted(by: >)
-//				let gradeIndex = sortedGrades.firstIndex(of: grade)!
-//				return sortedGrades[gradeIndex - 1]
-//			}
-//
-//			///	Returns the grade that immediately succeedes the given grade.
-//			///	- Precondition: `grade > .f`.
-//			///	- Parameter grade: The given grade.
-//			///	- Returns: The value that immediately succeedes the given grade.
-//			static func instance(immediatelySucceeding grade: Self) -> Self {
-//				precondition(grade > .f, "Grade can not be F.")
-//				let sortedGrades = Self.allCases.sorted(by: >)
-//				let gradeIndex = sortedGrades.firstIndex(of: grade)!
-//				return sortedGrades[gradeIndex + 1]
-//			}
-//
-//		}
-//
-//		Grade.allCases.forEach { grade1 in
-//
-//			if grade1 != .a {
-//				let oneHigherGrade: Grade = {
-//					let sortedGrades = Grade.allCases.sorted(by: >)
-//					let grade1Index = sortedGrades.firstIndex(of: grade1)!
-//					return sortedGrades[grade1Index - 1]
-//				}()
-//
-//				XCTAssertEqual(
-//					Grade.instance(immediatelyPreceding: grade1),
-//					oneHigherGrade,
-//					"Grade \(grade1) should be immediately preceded by \(oneHigherGrade)."
-//				)
-//				XCTAssertEqual(
-//					grade1.immediatePredecessor,
-//					oneHigherGrade,
-//					"Grade \(grade1) should be immediately preceded by \(oneHigherGrade)."
-//				)
-//			}
-//
-//			if grade1 != .f {
-//				let oneLowerGrade: Grade = {
-//					let sortedGrades = Grade.allCases.sorted(by: >)
-//					let grade1Index = sortedGrades.firstIndex(of: grade1)!
-//					return sortedGrades[grade1Index + 1]
-//				}()
-//
-//				XCTAssertEqual(
-//					Grade.instance(immediatelySucceeding: grade1),
-//					oneLowerGrade,
-//					"Grade \(grade1) should be immediately succeeded by \(oneLowerGrade)."
-//				)
-//				XCTAssertEqual(
-//					grade1.immediateSuccessor,
-//					oneLowerGrade,
-//					"Grade \(grade1) should be immediately succeeded by \(oneLowerGrade)."
-//				)
-//			}
-//
-//			Grade.allCases.forEach { grade2 in
-//
-//				let gradesAreNeighbours: Bool = {
-//					let sortedGrades = Grade.allCases.sorted()
-//					let grade1Index = sortedGrades.firstIndex(of: grade1)!
-//					let grade2Index = sortedGrades.firstIndex(of: grade2)!
-//					return abs(grade1Index - grade2Index) == 1
-//				}()
-//
-//				XCTAssertEqual(
-//					grade1.borders(on: grade2),
-//					gradesAreNeighbours,
-//					"Grrades \(grade1) and \(grade2) should\(gradesAreNeighbours ? "": " not ") be neighbours."
-//				)
-//
-//				let gradesShareNeighbours: Bool = {
-//					if grade1 == grade2 { return true }
-//					let sortedGrades = Grade.allCases.sorted()
-//					let grade1Index = sortedGrades.firstIndex(of: grade1)!
-//					let grade2Index = sortedGrades.firstIndex(of: grade2)!
-//					return abs(grade1Index - grade2Index) == 2
-//				}()
-//
-//				XCTAssertEqual(
-//					grade1.sharesCommonNeighbor(with: grade2),
-//					gradesShareNeighbours,
-//					"Grrades \(grade1) and \(grade2) should\(gradesAreNeighbours ? "": " not ") share common neighbours."
-//				)
-//
-//				collectionOfDegreesOfSeparation.forEach { degrees in
-//
-//					let gradesAreSeparatedByDegrees: Bool = {
-//						let sortedGrades = Grade.allCases.sorted()
-//						let grade1Index = sortedGrades.firstIndex(of: grade1)!
-//						let grade2Index = sortedGrades.firstIndex(of: grade2)!
-//						return abs(grade1Index - grade2Index) == degrees
-//					}()
-//
-//					XCTAssertEqual(
-//						grade1.separates(from: grade2, byDegrees: degrees),
-//						gradesAreSeparatedByDegrees,
-//						"Grrades \(grade1) and \(grade2) should\(gradesAreSeparatedByDegrees ? "": " not ") be separated by \(degrees) degree\(degrees == 1 ? "s" : "")."
-//					)
-//
-//				}
-//
-//			}
-//
-//		}
-//
-//	}
+	//	FIXME: Fix `testDefaultImplementationOfCountable()`.
+	
+	///	Checks that the default implementation of Countable is correct.
+	func testDefaultImplementationOfCountable() {
+		
+		///	Standardised measurement of achievement in a course.
+		enum Grade: String, CaseIterable, Countable {
+			
+			///	Outstanding grade.
+			case a = "A"
+			///	Decent grade.
+			case b = "B"
+			///	Sub-par grade.
+			case c = "C"
+			///	Passing grade.
+			case d = "D"
+			///	Failing grade.
+			case f = "F"
+			
+			//	MARK: CaseIterable Conformance
+			
+			typealias AllCases = [Self]
+			
+			static var allCases: [Self] = [.a, .b, .c, .d, .f]
+			
+			//	MARK: Comparable Conformance
+			static func < (lhs: Self, rhs: Self) -> Bool {
+				return lhs.rawValue > rhs.rawValue
+			}
+			
+			//	This is necessary because otherwise `Strideable` uses `distance(to:)` for `==`
+			static func ==(lhs: Self, rhs: Self) -> Bool {
+				return lhs.rawValue == rhs.rawValue
+			}
+			
+			///	A type that represents the distance between two grades.
+			typealias Stride = Int
+
+			///	Returns the distance from this grade to the given grade, expressed as a stride.
+			///	- Parameter other: The grade to calculate the distance to.
+			///	- Returns: The distance from this grade to `other`.
+			func distance(to other: Self) -> Stride {
+				let sortedGrades = Self.allCases.sorted()
+				let otherIndex = sortedGrades.firstIndex(of: other)!
+				let selfIndex = sortedGrades.firstIndex(of: self)!
+				return abs(selfIndex - otherIndex)
+			}
+			
+			///	Returns a grade that is offset the specified distance from this grade.
+			///	- Parameter n: The distance to advance this grade.
+			///	- Returns: A grade that is offset from this grade by `n`.
+			func advanced(by n: Stride) -> Self {
+				let sortedGrades = Self.allCases.sorted(by: <)
+				let selfIndex = sortedGrades.firstIndex(of: self)!
+				return sortedGrades[selfIndex + n]
+			}
+			
+			///	Returns the grade that immediately precedes the given grade.
+			///	- Precondition: `grade < .a`.
+			///	- Parameter grade: The given grade.
+			///	- Returns: The value that immediately precedes the given grade.
+			static func instance(immediatelyPreceding grade: Self) -> Self {
+				precondition(grade < .a, "Grade can not be A.")
+				let sortedGrades = Self.allCases.sorted(by: >)
+				let gradeIndex = sortedGrades.firstIndex(of: grade)!
+				return sortedGrades[gradeIndex - 1]
+			}
+			
+			///	Returns the grade that immediately succeedes the given grade.
+			///	- Precondition: `grade > .f`.
+			///	- Parameter grade: The given grade.
+			///	- Returns: The value that immediately succeedes the given grade.
+			static func instance(immediatelySucceeding grade: Self) -> Self {
+				precondition(grade > .f, "Grade can not be F.")
+				let sortedGrades = Self.allCases.sorted(by: >)
+				let gradeIndex = sortedGrades.firstIndex(of: grade)!
+				return sortedGrades[gradeIndex + 1]
+			}
+			
+		}
+		
+		Grade.allCases.forEach { grade1 in
+			
+			if grade1 != .a {
+				let oneHigherGrade: Grade = {
+					let sortedGrades = Grade.allCases.sorted(by: >)
+					let grade1Index = sortedGrades.firstIndex(of: grade1)!
+					return sortedGrades[grade1Index - 1]
+				}()
+				
+				XCTAssertEqual(
+					Grade.instance(immediatelyPreceding: grade1),
+					oneHigherGrade,
+					"Grade \(grade1) should be immediately preceded by \(oneHigherGrade)."
+				)
+				XCTAssertEqual(
+					grade1.immediatePredecessor,
+					oneHigherGrade,
+					"Grade \(grade1) should be immediately preceded by \(oneHigherGrade)."
+				)
+			}
+			
+			if grade1 != .f {
+				let oneLowerGrade: Grade = {
+					let sortedGrades = Grade.allCases.sorted(by: >)
+					let grade1Index = sortedGrades.firstIndex(of: grade1)!
+					return sortedGrades[grade1Index + 1]
+				}()
+				
+				XCTAssertEqual(
+					Grade.instance(immediatelySucceeding: grade1),
+					oneLowerGrade,
+					"Grade \(grade1) should be immediately succeeded by \(oneLowerGrade)."
+				)
+				XCTAssertEqual(
+					grade1.immediateSuccessor,
+					oneLowerGrade,
+					"Grade \(grade1) should be immediately succeeded by \(oneLowerGrade)."
+				)
+			}
+			
+			Grade.allCases.forEach { grade2 in
+				
+				let gradesAreNeighbours: Bool = {
+					let sortedGrades = Grade.allCases.sorted()
+					let grade1Index = sortedGrades.firstIndex(of: grade1)!
+					let grade2Index = sortedGrades.firstIndex(of: grade2)!
+					return abs(grade1Index - grade2Index) == 1
+				}()
+				
+				XCTAssertEqual(
+					grade1.borders(on: grade2),
+					gradesAreNeighbours,
+					"Grrades \(grade1) and \(grade2) should\(gradesAreNeighbours ? "": " not ") be neighbours."
+				)
+				
+				let gradesShareNeighbours: Bool = {
+					if grade1 == grade2 { return true }
+					let sortedGrades = Grade.allCases.sorted()
+					let grade1Index = sortedGrades.firstIndex(of: grade1)!
+					let grade2Index = sortedGrades.firstIndex(of: grade2)!
+					return abs(grade1Index - grade2Index) == 2
+				}()
+				
+				XCTAssertEqual(
+					grade1.sharesCommonNeighbor(with: grade2),
+					gradesShareNeighbours,
+					"Grrades \(grade1) and \(grade2) should\(gradesAreNeighbours ? "": " not ") share common neighbours."
+				)
+				
+				collectionOfDegreesOfSeparation.forEach { degrees in
+					
+					let gradesAreSeparatedByDegrees: Bool = {
+						let sortedGrades = Grade.allCases.sorted()
+						let grade1Index = sortedGrades.firstIndex(of: grade1)!
+						let grade2Index = sortedGrades.firstIndex(of: grade2)!
+						return abs(grade1Index - grade2Index) == degrees
+					}()
+					
+					XCTAssertEqual(
+						grade1.separates(from: grade2, byDegrees: degrees),
+						gradesAreSeparatedByDegrees,
+						"Grrades \(grade1) and \(grade2) should\(gradesAreSeparatedByDegrees ? "": " not ") be separated by \(degrees) degree\(degrees == 1 ? "s" : "")."
+					)
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	#endif
 	
 }
