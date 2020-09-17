@@ -32,6 +32,7 @@ jobs:
       - name: Build & Test Interval
         run: swift test --enable-code-coverage --sanitize=thread
       - name: Report Code Coverage
+        if: ${{ always() }}
         uses: maxep/spm-lcov-action@0.3.1
       - name: Get Code Coverage path
         if: ${{ always() }}
@@ -72,6 +73,7 @@ jobs:
       - name: Build & Test Interval
         run: swift test --enable-code-coverage --enable-test-discovery --sanitize=thread
       - name: Report Code Coverage
+        if: ${{ always() }}
         uses: maxep/spm-lcov-action@0.3.1
       - name: Get Code Coverage path
         if: ${{ always() }}
