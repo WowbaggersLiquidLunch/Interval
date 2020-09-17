@@ -491,28 +491,40 @@ public struct Interval<Member: IntervalMember> {
 		}
 	}
 	
-	///	Returns a Boolean value that indicates whether this interval's lower endpoint is no lesser than the given other interval's.
+	///	Returns a Boolean value that indicates whether this interval's lowest accessible member is no lesser than the given other interval's.
 	///	- Parameter other: The other interval.
-	///	- Returns: `true` if the interval's lower endpoint is greater than or equal to the other's; otherwise, `false`.
+	///	- Returns: `true`, if `self` is empty or a subinterval of non-empty `other`, assuming both are upper-unbounded; otherwise, `false`.
 	private func assumingBothUpperUnboundedIsContained(within other: Self) -> Bool {
+		guard !self.isEmpty else { return true }
+		guard !other.isEmpty else { return false }
 		guard
 			case let .bounded(selfLowerEndpoint) = self.lowerEndpoint,
 			case let .bounded(otherLowerEndpoint) = other.lowerEndpoint
 		else { return other.isLowerUnbounded }
 		
-		return selfLowerEndpoint >= otherLowerEndpoint
+		if other.isLowerOpen && self.isLowerClosed {
+			return otherLowerEndpoint < selfLowerEndpoint
+		} else {
+			return otherLowerEndpoint <= selfLowerEndpoint
+		}
 	}
 	
-	///	Returns a Boolean value that indicates whether this interval's upper endpoint is no greater than the given other interval's.
+	///	Returns a Boolean value that indicates whether this interval's highest accessible member is no greater than the given other interval's.
 	///	- Parameter other: The other interval.
-	///	- Returns: `true` if the interval's upper endpoint is less than or equal to the other's; otherwise, `false`.
+	///	- Returns: `true`, if `self` is  empty or a subinterval of non-empty `other`, assuming both are lower-unbounded; otherwise, `false`.
 	private func assumingBothLowerUnboundedIsContained(within other: Self) -> Bool {
+		guard !self.isEmpty else { return true }
+		guard !other.isEmpty else { return false }
 		guard
 			case let .bounded(selfUpperEndpoint) = self.upperEndpoint,
 			case let .bounded(otherUpperEndpoint) = other.upperEndpoint
 		else { return other.isUpperUnbounded }
 		
-		return selfUpperEndpoint <= otherUpperEndpoint
+		if self.isUpperClosed && other.isUpperOpen {
+			return selfUpperEndpoint < otherUpperEndpoint
+		} else {
+			return selfUpperEndpoint <= otherUpperEndpoint
+		}
 	}
 	
 	//	MARK: - Testing for Membership
