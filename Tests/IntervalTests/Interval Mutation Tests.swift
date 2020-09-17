@@ -47,15 +47,15 @@ class IntervalMutationTests: XCTestCase {
 					originallyAscendinglyIteratedInterval.reverse()
 					originallyDescendinglyIteratedInterval.reverse()
 					
-					XCTAssertEqual(
+					compareIntervals(
 						originallyAscendinglyIteratedInterval,
 						formDescendingInterval(upperBoundedEndpointValue, lowerBoundedEndpointValue),
-						"Ascendingly iterated interval \(formAscendingInterval(lowerBoundedEndpointValue, upperBoundedEndpointValue)) fails to reverse its interating direction."
+						failureMessage: "Ascendingly iterated interval \(formAscendingInterval(lowerBoundedEndpointValue, upperBoundedEndpointValue)) fails to reverse its interating direction."
 					)
-					XCTAssertEqual(
+					compareIntervals(
 						originallyDescendinglyIteratedInterval,
 						formAscendingInterval(lowerBoundedEndpointValue, upperBoundedEndpointValue),
-						"Descendingly iterated interval \(formDescendingInterval(upperBoundedEndpointValue, lowerBoundedEndpointValue)) fails to reverse its interating direction."
+						failureMessage: "Descendingly iterated interval \(formDescendingInterval(upperBoundedEndpointValue, lowerBoundedEndpointValue)) fails to reverse its interating direction."
 					)
 					
 				}
@@ -69,19 +69,52 @@ class IntervalMutationTests: XCTestCase {
 				originallyAscendinglyIteratedInterval.reverse()
 				originallyDescendinglyIteratedInterval.reverse()
 				
-				XCTAssertEqual(
+				compareIntervals(
 					originallyAscendinglyIteratedInterval,
 					formDescendingInterval(lowerBoundedEndpointValue),
-					"Ascendingly iterated interval \(formAscendingInterval(lowerBoundedEndpointValue)) fails to reverse its interating direction."
+					failureMessage: "Ascendingly iterated interval \(formAscendingInterval(lowerBoundedEndpointValue)) fails to reverse its interating direction."
 				)
-				XCTAssertEqual(
+				compareIntervals(
 					originallyDescendinglyIteratedInterval,
 					formAscendingInterval(lowerBoundedEndpointValue),
-					"Descendingly iterated interval \(formDescendingInterval(lowerBoundedEndpointValue)) fails to reverse its interating direction."
+					failureMessage: "Descendingly iterated interval \(formDescendingInterval(lowerBoundedEndpointValue)) fails to reverse its interating direction."
 				)
 				
 			}
 			
+		}
+		
+		///	Compares 2 intervals memberwisely.
+		///	- Parameters:
+		///	  - interval1: An interval to compare.
+		///	  - interval2: Another interval to compare.
+		///	  - failureMessage: An optional description of a failure.
+		func compareIntervals<Member>(_ interval1: Interval<Member>, _ interval2: Interval<Member>, failureMessage: String = "") {
+			XCTAssertEqual(
+				interval1.lowerBoundaryAccessibility,
+				interval2.lowerBoundaryAccessibility,
+				failureMessage
+			)
+			XCTAssertEqual(
+				interval1.lowerEndpoint,
+				interval2.lowerEndpoint,
+				failureMessage
+			)
+			XCTAssertEqual(
+				interval1.upperEndpoint,
+				interval2.upperEndpoint,
+				failureMessage
+			)
+			XCTAssertEqual(
+				interval1.upperBoundaryAccessibility,
+				interval2.upperBoundaryAccessibility,
+				failureMessage
+			)
+			XCTAssertEqual(
+				interval1.isInverse,
+				interval2.isInverse,
+				failureMessage
+			)
 		}
 		
 	}
