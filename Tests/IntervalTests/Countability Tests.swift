@@ -246,7 +246,7 @@ final class CountabilityTests: XCTestCase {
 			}
 			
 			//	This is necessary because otherwise `Strideable` uses `distance(to:)` for `==`
-			static func ==(lhs: Self, rhs: Self) -> Bool {
+			static func == (lhs: Self, rhs: Self) -> Bool {
 				return lhs.rawValue == rhs.rawValue
 			}
 			
