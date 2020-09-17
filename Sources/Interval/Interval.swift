@@ -411,7 +411,7 @@ public struct Interval<Member: IntervalMember> {
 	///
 	///	- Returns: A copy of the interval with its iterating direction reversed.
 	@inlinable
-	func reversed() -> Self {
+	public func reversed() -> Self {
 		var newInterval = self
 		newInterval.reverse()
 		return newInterval
