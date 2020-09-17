@@ -29,11 +29,8 @@ jobs:
             ${{ runner.os }}-spm-
       - name: Print Package Description
         run: swift package describe
-      - name: Build & Test Interval Configured for Release
-        run: swift test --configuration release --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread
-      - name: Build & Test Interval Configured for Debug
-        if: ${{ failure() }}
-        run: swift test --configuration debug --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --verbose
+      - name: Build & Test Interval
+        run: swift test --enable-code-coverage --sanitize=thread
       - name: Get Code Coverage path
         id: showCodeCoveragePath
         run: echo "::set-output name=codeCoveragePath::$(swift test --show-codecov-path)"
@@ -68,11 +65,8 @@ jobs:
             ${{ runner.os }}-spm-
       - name: Print Package Description
         run: swift package describe
-      - name: Build & Test Interval Configured for Release
-        run: swift test --configuration release --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread
-      - name: Build & Test Interval Configured for Debug
-        if: ${{ failure() }}
-        run: swift test --configuration debug --enable-code-coverage --enable-test-discovery --list-tests --sanitize=thread --verbose
+      - name: Build & Test Interval
+        run: swift test --enable-code-coverage --enable-test-discovery --sanitize=thread
       - name: Get Code Coverage path
         id: showCodeCoveragePath
         run: echo "::set-output name=codeCoveragePath::$(swift test --show-codecov-path)"
