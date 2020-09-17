@@ -37,7 +37,7 @@ class IntervalComparisonTests: XCTestCase {
 		switch (interval1.lowerEndpoint, interval2.lowerEndpoint) {
 		case (_, .unbounded):
 			return true
-		case (.unbounded, .bounded(_)):
+		case (.unbounded, .bounded):
 			return false
 		case let (.bounded(lowerEndpointValue1), .bounded(lowerEndpointValue2)):
 			switch (interval1.lowerBoundaryAccessibility, interval2.lowerBoundaryAccessibility) {
@@ -63,7 +63,7 @@ class IntervalComparisonTests: XCTestCase {
 		switch (interval1.upperEndpoint, interval2.upperEndpoint) {
 		case (_, .unbounded):
 			return true
-		case (.unbounded, .bounded(_)):
+		case (.unbounded, .bounded):
 			return false
 		case let (.bounded(upperEndpointValue1), .bounded(upperEndpointValue2)):
 			switch (interval1.upperBoundaryAccessibility, interval2.upperBoundaryAccessibility) {
