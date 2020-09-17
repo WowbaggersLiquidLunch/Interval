@@ -40,22 +40,21 @@ final class IntervalInitialisationTests: XCTestCase {
 				boundaryAccessibilities.forEach { lowerBoundaryAccessibility in
 					boundaryAccessibilities.forEach { upperBoundaryAccessibility in
 						
-						XCTAssertEqual(
-							Interval(
-								lowerBoundary: lowerBoundaryAccessibility,
-								lowerEndpoint: lowerEndpoint,
-								upperEndpoint: upperEndpoint,
-								upperBoundary: upperBoundaryAccessibility
-							),
-							Interval(
-								lowerBoundary: lowerBoundaryAccessibility,
-								lowerEndpoint: lowerEndpoint,
-								upperEndpoint: upperEndpoint,
-								upperBoundary: upperBoundaryAccessibility,
-								inInverseStridingDirection: false
-							),
-							"`Interval` fails to initialise correctly with default parameter values."
+						let interval1 = Interval(
+							lowerBoundary: lowerBoundaryAccessibility,
+							lowerEndpoint: lowerEndpoint,
+							upperEndpoint: upperEndpoint,
+							upperBoundary: upperBoundaryAccessibility
 						)
+						let interval2 = Interval(
+							lowerBoundary: lowerBoundaryAccessibility,
+							lowerEndpoint: lowerEndpoint,
+							upperEndpoint: upperEndpoint,
+							upperBoundary: upperBoundaryAccessibility,
+							inInverseStridingDirection: false
+						)
+						
+						compareIntervals(interval1, interval2, failureMessage: "`Interval` fails to initialise correctly with default parameter values.")
 						
 					}
 				}
@@ -75,39 +74,38 @@ final class IntervalInitialisationTests: XCTestCase {
 							
 							//	MARK: Initialise with Explicit Parameter Values
 							
-							XCTAssertEqual(
-								Interval(
-									from: lowerBoundedEndpointValue, lowerBoundaryAvailability,
-									to: upperBoundedEndpointValue, upperBoundaryAvailability,
-									inInverseStridingDirection: intervalShouldBeOrderedDescendingly
-								),
-								Interval(
-									lowerBoundary: IntervalBoundaryAccessibility(availability: lowerBoundaryAvailability),
-									lowerEndpoint: .bounded(lowerBoundedEndpointValue),
-									upperEndpoint: .bounded(upperBoundedEndpointValue),
-									upperBoundary: IntervalBoundaryAccessibility(availability: upperBoundaryAvailability),
-									inInverseStridingDirection: intervalShouldBeOrderedDescendingly
-								),
-								"`Interval`'s initialiser for bounded intervals fails to initialise correctly."
+							let interval1 = Interval(
+								from: lowerBoundedEndpointValue, lowerBoundaryAvailability,
+								to: upperBoundedEndpointValue, upperBoundaryAvailability,
+								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 							)
+							let interval2 = Interval(
+								lowerBoundary: IntervalBoundaryAccessibility(availability: lowerBoundaryAvailability),
+								lowerEndpoint: .bounded(lowerBoundedEndpointValue),
+								upperEndpoint: .bounded(upperBoundedEndpointValue),
+								upperBoundary: IntervalBoundaryAccessibility(availability: upperBoundaryAvailability),
+								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
+							)
+							
+							compareIntervals(interval1, interval2, failureMessage: "`Interval`'s initialiser for bounded intervals fails to initialise correctly.")
 							
 						}
 						
 						//	MARK: Initialise with Default Parameter Values
 						
-						XCTAssertEqual(
-							Interval(
-								from: lowerBoundedEndpointValue, lowerBoundaryAvailability,
-								to: upperBoundedEndpointValue, upperBoundaryAvailability
-							),
-							Interval(
-								lowerBoundary: IntervalBoundaryAccessibility(availability: lowerBoundaryAvailability),
-								lowerEndpoint: .bounded(lowerBoundedEndpointValue),
-								upperEndpoint: .bounded(upperBoundedEndpointValue),
-								upperBoundary: IntervalBoundaryAccessibility(availability: upperBoundaryAvailability)
-							),
-							"`Interval`'s initialiser for bounded intervals fails to initialise correctly with default parameter values."
+						let interval3 = Interval(
+							from: lowerBoundedEndpointValue, lowerBoundaryAvailability,
+							to: upperBoundedEndpointValue, upperBoundaryAvailability
 						)
+						let interval4 = Interval(
+							lowerBoundary: IntervalBoundaryAccessibility(availability: lowerBoundaryAvailability),
+							lowerEndpoint: .bounded(lowerBoundedEndpointValue),
+							upperEndpoint: .bounded(upperBoundedEndpointValue),
+							upperBoundary: IntervalBoundaryAccessibility(availability: upperBoundaryAvailability),
+							inInverseStridingDirection: false
+						)
+						
+						compareIntervals(interval3, interval4, failureMessage: "`Interval`'s initialiser for bounded intervals fails to initialise correctly with default parameter values.")
 						
 					}
 				}
@@ -126,35 +124,34 @@ final class IntervalInitialisationTests: XCTestCase {
 						
 						//	MARK: Initialise with Explicit Parameter Values
 						
-						XCTAssertEqual(
-							Interval(
-								from: lowerBoundedEndpointValue, to: upperBoundedEndpointValue, boundaryAvailability,
-								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
-							),
-							Interval(
-								lowerBoundary: IntervalBoundaryAccessibility(availability: boundaryAvailability),
-								lowerEndpoint: .bounded(lowerBoundedEndpointValue),
-								upperEndpoint: .bounded(upperBoundedEndpointValue),
-								upperBoundary: IntervalBoundaryAccessibility(availability: boundaryAvailability),
-								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
-							),
-							"`Interval`'s initialiser for intervals with symmetric boundaries fails to initialise correctly."
+						let interval1 = Interval(
+							from: lowerBoundedEndpointValue, to: upperBoundedEndpointValue, boundaryAvailability,
+							inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 						)
+						let interval2 = Interval(
+							lowerBoundary: IntervalBoundaryAccessibility(availability: boundaryAvailability),
+							lowerEndpoint: .bounded(lowerBoundedEndpointValue),
+							upperEndpoint: .bounded(upperBoundedEndpointValue),
+							upperBoundary: IntervalBoundaryAccessibility(availability: boundaryAvailability),
+							inInverseStridingDirection: intervalShouldBeOrderedDescendingly
+						)
+						
+						compareIntervals(interval1, interval2, failureMessage: "`Interval`'s initialiser for intervals with symmetric boundaries fails to initialise correctly.")
 						
 					}
 					
 					//	MARK: Initialise with Default Parameter Values
 					
-					XCTAssertEqual(
-						Interval(from: lowerBoundedEndpointValue, to: upperBoundedEndpointValue, boundaryAvailability),
-						Interval(
-							lowerBoundary: IntervalBoundaryAccessibility(availability: boundaryAvailability),
-							lowerEndpoint: .bounded(lowerBoundedEndpointValue),
-							upperEndpoint: .bounded(upperBoundedEndpointValue),
-							upperBoundary: IntervalBoundaryAccessibility(availability: boundaryAvailability)
-						),
-						"`Interval`'s initialiser for intervals with symmetric boundaries fails to initialise correctly with default parameter values."
+					let interval3 = Interval(from: lowerBoundedEndpointValue, to: upperBoundedEndpointValue, boundaryAvailability)
+					let interval4 = Interval(
+						lowerBoundary: IntervalBoundaryAccessibility(availability: boundaryAvailability),
+						lowerEndpoint: .bounded(lowerBoundedEndpointValue),
+						upperEndpoint: .bounded(upperBoundedEndpointValue),
+						upperBoundary: IntervalBoundaryAccessibility(availability: boundaryAvailability),
+						inInverseStridingDirection: false
 					)
+					
+					compareIntervals(interval3, interval4, failureMessage: "`Interval`'s initialiser for intervals with symmetric boundaries fails to initialise correctly with default parameter values.")
 					
 				}
 			}
@@ -170,35 +167,34 @@ final class IntervalInitialisationTests: XCTestCase {
 				
 				//	MARK: Initialise with Explicit Parameter Values
 				
-				XCTAssertEqual(
-					Interval(
-						toUnboundedFrom: lesserBoundedEndpointValue, lowerBoundaryAvailability,
-						inInverseStridingDirection: intervalShouldBeOrderedDescendingly
-					),
-					Interval(
-						lowerBoundary: IntervalBoundaryAccessibility(availability: lowerBoundaryAvailability),
-						lowerEndpoint: lesserBoundedEndpoint,
-						upperEndpoint: .unbounded,
-						upperBoundary: .open,
-						inInverseStridingDirection: intervalShouldBeOrderedDescendingly
-					),
-					"`Interval`'s initialiser for lower-bounded upper-unbounded intervals fails to initialise correctly."
+				let interval1 = Interval(
+					toUnboundedFrom: lesserBoundedEndpointValue, lowerBoundaryAvailability,
+					inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 				)
+				let interval2 = Interval(
+					lowerBoundary: IntervalBoundaryAccessibility(availability: lowerBoundaryAvailability),
+					lowerEndpoint: lesserBoundedEndpoint,
+					upperEndpoint: .unbounded,
+					upperBoundary: .open,
+					inInverseStridingDirection: intervalShouldBeOrderedDescendingly
+				)
+				
+				compareIntervals(interval1, interval2, failureMessage: "`Interval`'s initialiser for lower-bounded upper-unbounded intervals fails to initialise correctly.")
 				
 			}
 			
 			//	MARK: Initialise with Default Parameter Values
 			
-			XCTAssertEqual(
-				Interval(toUnboundedFrom: lesserBoundedEndpointValue, lowerBoundaryAvailability),
-				Interval(
-					lowerBoundary: IntervalBoundaryAccessibility(availability: lowerBoundaryAvailability),
-					lowerEndpoint: lesserBoundedEndpoint,
-					upperEndpoint: .unbounded,
-					upperBoundary: .open
-				),
-				"`Interval`'s initialiser for lower-bounded upper-unbounded intervals fails to initialise correctly with default parameter values."
+			let interval3 = Interval(toUnboundedFrom: lesserBoundedEndpointValue, lowerBoundaryAvailability)
+			let interval4 = Interval(
+				lowerBoundary: IntervalBoundaryAccessibility(availability: lowerBoundaryAvailability),
+				lowerEndpoint: lesserBoundedEndpoint,
+				upperEndpoint: .unbounded,
+				upperBoundary: .open,
+				inInverseStridingDirection: false
 			)
+			
+			compareIntervals(interval3, interval4, failureMessage: "`Interval`'s initialiser for lower-bounded upper-unbounded intervals fails to initialise correctly with default parameter values.")
 			
 		}
 		
@@ -212,35 +208,33 @@ final class IntervalInitialisationTests: XCTestCase {
 				
 				//	MARK: Initialise with Explicit Parameter Values
 				
-				XCTAssertEqual(
-					Interval(
-						fromUnboundedTo: greaterBoundedEndpointValue, upperBoundaryAvailability,
-						inInverseStridingDirection: intervalShouldBeOrderedDescendingly
-					),
-					Interval(
-						lowerBoundary: .open,
-						lowerEndpoint: .unbounded,
-						upperEndpoint: greaterBoundedEndpoint,
-						upperBoundary: IntervalBoundaryAccessibility(availability: upperBoundaryAvailability),
-						inInverseStridingDirection: intervalShouldBeOrderedDescendingly
-					),
-					"`Interval`'s initialiser for lower-unbounded upper-bounded intervals fails to initialise correctly."
+				let interval1 = Interval(
+					fromUnboundedTo: greaterBoundedEndpointValue, upperBoundaryAvailability,
+					inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 				)
+				let interval2 = Interval(
+					lowerBoundary: .open,
+					lowerEndpoint: .unbounded,
+					upperEndpoint: greaterBoundedEndpoint,
+					upperBoundary: IntervalBoundaryAccessibility(availability: upperBoundaryAvailability),
+					inInverseStridingDirection: intervalShouldBeOrderedDescendingly
+				)
+				
+				compareIntervals(interval1, interval2, failureMessage: "`Interval`'s initialiser for lower-unbounded upper-bounded intervals fails to initialise correctly.")
 				
 			}
 			
 			//	MARK: Initialise with Default Parameter Values
 			
-			XCTAssertEqual(
-				Interval(fromUnboundedTo: greaterBoundedEndpointValue, upperBoundaryAvailability),
-				Interval(
-					lowerBoundary: .open,
-					lowerEndpoint: .unbounded,
-					upperEndpoint: greaterBoundedEndpoint,
-					upperBoundary: IntervalBoundaryAccessibility(availability: upperBoundaryAvailability)
-				),
-				"`Interval`'s initialiser for lower-unbounded upper-bounded intervals fails to initialise correctly with default parameter values."
+			let interval3 = Interval(fromUnboundedTo: greaterBoundedEndpointValue, upperBoundaryAvailability)
+			let interval4 = Interval(
+				lowerBoundary: .open,
+				lowerEndpoint: .unbounded,
+				upperEndpoint: greaterBoundedEndpoint,
+				upperBoundary: IntervalBoundaryAccessibility(availability: upperBoundaryAvailability)
 			)
+			
+			compareIntervals(interval3, interval4, failureMessage: "`Interval`'s initialiser for lower-unbounded upper-bounded intervals fails to initialise correctly with default parameter values.")
 			
 		}
 		
@@ -248,61 +242,61 @@ final class IntervalInitialisationTests: XCTestCase {
 	
 	///	Checks that `Internal` can correctly initialise from a `ClosedRange` instance.
 	func testInitialisingFromClosedRange() {
-		XCTAssertEqual(
+		compareIntervals(
 			Interval(closedRange: lesserBoundedEndpointValue...greaterBoundedEndpointValue),
 			lesserBoundedEndpointValue≤∙≤greaterBoundedEndpointValue,
-			"Fails to instantiate a `\(lesserBoundedEndpointValue)≤∙≤\(greaterBoundedEndpointValue)` from `\(lesserBoundedEndpointValue)...\(greaterBoundedEndpointValue)`"
+			failureMessage: "Fails to instantiate a `\(lesserBoundedEndpointValue)≤∙≤\(greaterBoundedEndpointValue)` from `\(lesserBoundedEndpointValue)...\(greaterBoundedEndpointValue)`"
 		)
 	}
 	
 	///	Checks that `Internal` can correctly initialise from a `Range` instance.
 	func testInitialisingFromRange() {
-		XCTAssertEqual(
+		compareIntervals(
 			Interval(range: lesserBoundedEndpointValue..<greaterBoundedEndpointValue),
 			lesserBoundedEndpointValue≤∙<greaterBoundedEndpointValue,
-			"Fails to instantiate a `\(lesserBoundedEndpointValue)≤∙<\(greaterBoundedEndpointValue)` from `\(lesserBoundedEndpointValue)...\(greaterBoundedEndpointValue)`"
+			failureMessage: "Fails to instantiate a `\(lesserBoundedEndpointValue)≤∙<\(greaterBoundedEndpointValue)` from `\(lesserBoundedEndpointValue)...\(greaterBoundedEndpointValue)`"
 		)
 	}
 	
 	///	Checks that `Internal` can correctly initialise from a `PartialRangeFrom` instance.
 	func testInitialisingFromLowerBoundedPartialRange() {
-		XCTAssertEqual(
+		compareIntervals(
 			Interval(lowerBoundedPartialRange: lesserBoundedEndpointValue...),
 			lesserBoundedEndpointValue≤∙∙,
-			"Fails to instantiate a `\(lesserBoundedEndpointValue)≤∙∙` from `\(lesserBoundedEndpointValue)...`"
+			failureMessage: "Fails to instantiate a `\(lesserBoundedEndpointValue)≤∙∙` from `\(lesserBoundedEndpointValue)...`"
 		)
 	}
 	
 	///	Checks that `Internal` can correctly initialise from a `PartialRangeThrough` instance.
 	func testInitialisingFromUpperBoundedAndClosedPartialRange() {
-		XCTAssertEqual(
+		compareIntervals(
 			Interval(upperBoundedAndClosedPartialRange: ...greaterBoundedEndpointValue),
 			∙∙≤greaterBoundedEndpointValue,
-			"Fails to instantiate a `∙∙≤\(greaterBoundedEndpointValue)` from `...\(greaterBoundedEndpointValue)`"
+			failureMessage: "Fails to instantiate a `∙∙≤\(greaterBoundedEndpointValue)` from `...\(greaterBoundedEndpointValue)`"
 		)
 	}
 	
 	///	Checks that `Internal` can correctly initialise from a `PartialRangeTo` instance.
 	func testInitialisingFromUpperBoundedAndOpenPartialRange() {
-		XCTAssertEqual(
+		compareIntervals(
 			Interval(upperBoundedAndOpenPartialRange: ..<greaterBoundedEndpointValue),
 			∙∙<greaterBoundedEndpointValue,
-			"Fails to instantiate a `∙∙<\(greaterBoundedEndpointValue)` from `..<\(greaterBoundedEndpointValue)`"
+			failureMessage: "Fails to instantiate a `∙∙<\(greaterBoundedEndpointValue)` from `..<\(greaterBoundedEndpointValue)`"
 		)
 	}
 	
 	///	Checks that `Internal` can correctly initialise from a `UnboundedRange` instance.
 	func testInitialisingFromUnboundedRange() {
-		XCTAssertEqual(
+		compareIntervals(
 			Interval<Int>(unboundedRange: ...),
 			Interval<Int>.unbounded,
-			"Fails to instantiate an unbounded real interval from `...`"
+			failureMessage: "Fails to instantiate an unbounded real interval from `...`"
 		)
 	}
 	
 	///	Checks that `Interval` can provide a correct unbounded interval.
 	func testInitialisingUnboundedInterval() {
-		XCTAssertEqual(
+		compareIntervals(
 			Interval<Int>.unbounded,
 			Interval<Int>(
 				lowerBoundary: .open,
@@ -310,7 +304,7 @@ final class IntervalInitialisationTests: XCTestCase {
 				upperEndpoint: .unbounded,
 				upperBoundary: .open
 			),
-			"`Interval<Int>` fails to provide (-∞, ∞)."
+			failureMessage: "`Interval<Int>` fails to provide (-∞, ∞)."
 		)
 	}
 	
@@ -339,10 +333,10 @@ final class IntervalInitialisationTests: XCTestCase {
 								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 							)
 							
-							XCTAssertEqual(
+							compareIntervals(
 								interval.interior,
 								intervalInterior,
-								"Interval \(interval)'s interior fails to evaluate to \(intervalInterior)."
+								failureMessage: "Interval \(interval)'s interior fails to evaluate to \(intervalInterior)."
 							)
 							
 						}
@@ -378,10 +372,10 @@ final class IntervalInitialisationTests: XCTestCase {
 								inInverseStridingDirection: intervalShouldBeOrderedDescendingly
 							)
 							
-							XCTAssertEqual(
+							compareIntervals(
 								interval.closure,
 								intervalClosure,
-								"Interval \(interval)'s closure fails to evaluate to \(intervalClosure)."
+								failureMessage: "Interval \(interval)'s closure fails to evaluate to \(intervalClosure)."
 							)
 							
 						}
@@ -423,15 +417,15 @@ final class IntervalInitialisationTests: XCTestCase {
 					let ascendinglyIteratedInterval = formAscendingInterval(lowerBoundedEndpointValue, upperBoundedEndpointValue)
 					let descendinglyIteratedInterval = formDescendingInterval(upperBoundedEndpointValue, lowerBoundedEndpointValue)
 					
-					XCTAssertEqual(
+					compareIntervals(
 						ascendinglyIteratedInterval.reversed(),
 						descendinglyIteratedInterval,
-						"Ascendingly iterated interval \(ascendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(descendinglyIteratedInterval)."
+						failureMessage: "Ascendingly iterated interval \(ascendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(descendinglyIteratedInterval)."
 					)
-					XCTAssertEqual(
+					compareIntervals(
 						descendinglyIteratedInterval.reversed(),
 						ascendinglyIteratedInterval,
-						"Descendingly iterated interval \(descendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(ascendinglyIteratedInterval)."
+						failureMessage: "Descendingly iterated interval \(descendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(ascendinglyIteratedInterval)."
 					)
 					
 				}
@@ -443,15 +437,15 @@ final class IntervalInitialisationTests: XCTestCase {
 				let ascendinglyIteratedInterval = formAscendingInterval(lowerBoundedEndpointValue)
 				let descendinglyIteratedInterval = formDescendingInterval(lowerBoundedEndpointValue)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					ascendinglyIteratedInterval.reversed(),
 					descendinglyIteratedInterval,
-					"Ascendingly iterated interval \(ascendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(descendinglyIteratedInterval)."
+					failureMessage: "Ascendingly iterated interval \(ascendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(descendinglyIteratedInterval)."
 				)
-				XCTAssertEqual(
+				compareIntervals(
 					descendinglyIteratedInterval.reversed(),
 					ascendinglyIteratedInterval,
-					"Descendingly iterated interval \(descendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(ascendinglyIteratedInterval)."
+					failureMessage: "Descendingly iterated interval \(descendinglyIteratedInterval) fails to create a copy with reversed iterating direction \(ascendinglyIteratedInterval)."
 				)
 				
 			}
@@ -468,7 +462,7 @@ final class IntervalInitialisationTests: XCTestCase {
 				
 				//	MARK: Ascending Interval-Forming Operators
 				
-				XCTAssertEqual(
+				compareIntervals(
 					lowerBoundedEndpointValue≤∙≤upperBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .closed,
@@ -477,10 +471,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .closed,
 						inInverseStridingDirection: false
 					),
-					"`\(lowerBoundedEndpointValue)≤∙≤\(upperBoundedEndpointValue)` fails to initialise [\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue)]."
+					failureMessage: "`\(lowerBoundedEndpointValue)≤∙≤\(upperBoundedEndpointValue)` fails to initialise [\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue)]."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					lowerBoundedEndpointValue≤∙<upperBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .closed,
@@ -489,10 +483,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .open,
 						inInverseStridingDirection: false
 					),
-					"`\(lowerBoundedEndpointValue)≤∙<\(upperBoundedEndpointValue)` fails to initialise [\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue))."
+					failureMessage: "`\(lowerBoundedEndpointValue)≤∙<\(upperBoundedEndpointValue)` fails to initialise [\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue))."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					lowerBoundedEndpointValue<∙≤upperBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .open,
@@ -501,10 +495,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .closed,
 						inInverseStridingDirection: false
 					),
-					"`\(lowerBoundedEndpointValue)<∙≤\(upperBoundedEndpointValue)` fails to initialise (\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue)]."
+					failureMessage: "`\(lowerBoundedEndpointValue)<∙≤\(upperBoundedEndpointValue)` fails to initialise (\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue)]."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					lowerBoundedEndpointValue<∙<upperBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .open,
@@ -513,10 +507,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .open,
 						inInverseStridingDirection: false
 					),
-					"`\(lowerBoundedEndpointValue)<∙<\(upperBoundedEndpointValue)` fails to initialise (\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue))."
+					failureMessage: "`\(lowerBoundedEndpointValue)<∙<\(upperBoundedEndpointValue)` fails to initialise (\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue))."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					∙∙≤upperBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .open,
@@ -525,10 +519,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .closed,
 						inInverseStridingDirection: false
 					),
-					"`∙∙≤\(upperBoundedEndpointValue)` fails to initialise (-∞, \(upperBoundedEndpointValue)]."
+					failureMessage: "`∙∙≤\(upperBoundedEndpointValue)` fails to initialise (-∞, \(upperBoundedEndpointValue)]."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					∙∙<upperBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .open,
@@ -537,10 +531,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .open,
 						inInverseStridingDirection: false
 					),
-					"`∙∙<\(upperBoundedEndpointValue)` fails to initialise (-∞, \(upperBoundedEndpointValue))."
+					failureMessage: "`∙∙<\(upperBoundedEndpointValue)` fails to initialise (-∞, \(upperBoundedEndpointValue))."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					lowerBoundedEndpointValue≤∙∙,
 					Interval(
 						lowerBoundary: .closed,
@@ -549,10 +543,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .open,
 						inInverseStridingDirection: false
 					),
-					"`\(lowerBoundedEndpointValue)≤∙∙` fails to initialise [\(lowerBoundedEndpointValue), ∞)."
+					failureMessage: "`\(lowerBoundedEndpointValue)≤∙∙` fails to initialise [\(lowerBoundedEndpointValue), ∞)."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					lowerBoundedEndpointValue<∙∙,
 					Interval(
 						lowerBoundary: .open,
@@ -561,12 +555,12 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .open,
 						inInverseStridingDirection: false
 					),
-					"`\(lowerBoundedEndpointValue)<∙∙` fails to initialise (\(lowerBoundedEndpointValue), ∞)."
+					failureMessage: "`\(lowerBoundedEndpointValue)<∙∙` fails to initialise (\(lowerBoundedEndpointValue), ∞)."
 				)
 				
 				//	MARK: Descending Interval-Forming Operators
 				
-				XCTAssertEqual(
+				compareIntervals(
 					upperBoundedEndpointValue≥∙≥lowerBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .closed,
@@ -575,10 +569,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .closed,
 						inInverseStridingDirection: true
 					),
-					"`\(upperBoundedEndpointValue)≥∙≥\(lowerBoundedEndpointValue)` fails to initialise inverse [\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue)]."
+					failureMessage: "`\(upperBoundedEndpointValue)≥∙≥\(lowerBoundedEndpointValue)` fails to initialise inverse [\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue)]."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					upperBoundedEndpointValue>∙≥lowerBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .closed,
@@ -587,10 +581,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .open,
 						inInverseStridingDirection: true
 					),
-					"`\(upperBoundedEndpointValue)>∙≥\(lowerBoundedEndpointValue)` fails to initialise inverse [\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue))."
+					failureMessage: "`\(upperBoundedEndpointValue)>∙≥\(lowerBoundedEndpointValue)` fails to initialise inverse [\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue))."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					upperBoundedEndpointValue≥∙>lowerBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .open,
@@ -599,10 +593,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .closed,
 						inInverseStridingDirection: true
 					),
-					"`\(upperBoundedEndpointValue)≥∙>\(lowerBoundedEndpointValue)` fails to initialise inverse (\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue)]."
+					failureMessage: "`\(upperBoundedEndpointValue)≥∙>\(lowerBoundedEndpointValue)` fails to initialise inverse (\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue)]."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					upperBoundedEndpointValue>∙>lowerBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .open,
@@ -611,10 +605,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .open,
 						inInverseStridingDirection: true
 					),
-					"`\(upperBoundedEndpointValue)>∙>\(lowerBoundedEndpointValue)` fails to initialise inverse (\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue))."
+					failureMessage: "`\(upperBoundedEndpointValue)>∙>\(lowerBoundedEndpointValue)` fails to initialise inverse (\(lowerBoundedEndpointValue), \(upperBoundedEndpointValue))."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					upperBoundedEndpointValue≥∙∙,
 					Interval(
 						lowerBoundary: .open,
@@ -623,10 +617,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .closed,
 						inInverseStridingDirection: true
 					),
-					"`\(upperBoundedEndpointValue)≥∙∙` fails to initialise inverse (-∞, \(upperBoundedEndpointValue)]."
+					failureMessage: "`\(upperBoundedEndpointValue)≥∙∙` fails to initialise inverse (-∞, \(upperBoundedEndpointValue)]."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					upperBoundedEndpointValue>∙∙,
 					Interval(
 						lowerBoundary: .open,
@@ -635,10 +629,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .open,
 						inInverseStridingDirection: true
 					),
-					"`\(upperBoundedEndpointValue)>∙∙` fails to initialise inverse (-∞, \(upperBoundedEndpointValue))."
+					failureMessage: "`\(upperBoundedEndpointValue)>∙∙` fails to initialise inverse (-∞, \(upperBoundedEndpointValue))."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					∙∙≥lowerBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .closed,
@@ -647,10 +641,10 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .open,
 						inInverseStridingDirection: true
 					),
-					"`∙∙≥\(lowerBoundedEndpointValue)` fails to initialise inverse [\(lowerBoundedEndpointValue), ∞)."
+					failureMessage: "`∙∙≥\(lowerBoundedEndpointValue)` fails to initialise inverse [\(lowerBoundedEndpointValue), ∞)."
 				)
 				
-				XCTAssertEqual(
+				compareIntervals(
 					∙∙>lowerBoundedEndpointValue,
 					Interval(
 						lowerBoundary: .open,
@@ -659,12 +653,45 @@ final class IntervalInitialisationTests: XCTestCase {
 						upperBoundary: .open,
 						inInverseStridingDirection: true
 					),
-					"`∙∙>\(lowerBoundedEndpointValue)` fails to initialise inverse (\(lowerBoundedEndpointValue), ∞)."
+					failureMessage: "`∙∙>\(lowerBoundedEndpointValue)` fails to initialise inverse (\(lowerBoundedEndpointValue), ∞)."
 				)
 				
 			}
 		}
 		
+	}
+	
+	///	Compares 2 intervals memberwisely.
+	///	- Parameters:
+	///	  - interval1: An interval to compare.
+	///	  - interval2: Another interval to compare.
+	///	  - failureMessage: An optional description of a failure.
+	func compareIntervals<Member>(_ interval1: Interval<Member>, _ interval2: Interval<Member>, failureMessage: String = "") {
+		XCTAssertEqual(
+			interval1.lowerBoundaryAccessibility,
+			interval2.lowerBoundaryAccessibility,
+			failureMessage
+		)
+		XCTAssertEqual(
+			interval1.lowerEndpoint,
+			interval2.lowerEndpoint,
+			failureMessage
+		)
+		XCTAssertEqual(
+			interval1.upperEndpoint,
+			interval2.upperEndpoint,
+			failureMessage
+		)
+		XCTAssertEqual(
+			interval1.upperBoundaryAccessibility,
+			interval2.upperBoundaryAccessibility,
+			failureMessage
+		)
+		XCTAssertEqual(
+			interval1.isInverse,
+			interval2.isInverse,
+			failureMessage
+		)
 	}
 		
 }

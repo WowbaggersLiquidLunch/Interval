@@ -17,8 +17,37 @@
 ///
 ///	An interval whose `Member` conforms to the `Strideable` protocol is iterated in the inverse (descending) order, if `isInverse` is set to `true`. If `Member` doesn't conform to `Strideable`, then `isInverse` is accessible, but has no effects.
 ///
+///	Equality Comparison
+///	-------------------
+///
+///	When two intervals are compared for equality, only their boundaries and endpoints are considered; their iterating directions are ignored:
+///
+///	```swift
+///	let interval1 = Interval(from: 0, to: 1, .inclusive, inInverseStridingDirection: false)
+///	let interval2 = Interval(from: 0, to: 1, .inclusive, inInverseStridingDirection: true)
+///	print(interval1 == interval2)	//	true
+///	```
+///
+///	All empty intervals with the same `Member` type are equal; no empty interval is equal to any non-empty interval:
+///
+///	```swift
+///	let interval3 = Interval(from: 0, to: 0, .exclusive)
+///	let interval4 = Interval(from: 3, to: 2, .exclusive)
+///	let interval5 = Interval(from: 0, to: 0, .inclusive)
+///	print(interval3 == interval4)	//	true
+///	print(interval3 == interval5)	//	false
+///	```
+///
+///	- ToDo: Allow equality comparsions of different `Interval` types wherever comparison between their associated `Member` types is allowed:
+///
+///	  ```swift
+///	  let intervalOfInts: Interval<Int> = Interval(from: 1, to: 9, .exclusive)
+///	  let intervalOfUInts: Interval<UInt> = Interval(from: 1, to: 9, .exclusive)
+///	  print(intervalOfInts == intervalOfUInts)	//	true
+///	  ```
+///
 ///	- SeeAlso: `IntervalMember` for additional design rationales.
-public struct Interval<Member: IntervalMember>: Equatable {
+public struct Interval<Member: IntervalMember> {
 	
 	//	MARK: - Supporting Types
 	
@@ -395,9 +424,7 @@ public struct Interval<Member: IntervalMember>: Equatable {
 	///	- Parameter other: The other interval.
 	///	- Returns: `true` if the interval is a strict subinterval of `other`; otherwise, `false`.
 	public func isStrictSubinterval(of other: Self) -> Bool {
-		(self.isSubinterval(of: other) && self != other) &&
-			//	Because empty intervals still contain their lower and upper endpoint and boundary information, they need special handling.
-			!(self.isEmpty && other.isEmpty)
+		(self.isSubinterval(of: other) && self != other)
 	}
 	
 	///	Returns a Boolean value that indicates whether this interval is a superinterval of the given other interval.
@@ -595,6 +622,15 @@ public struct Interval<Member: IntervalMember>: Equatable {
 		
 	}
 	
+}
+
+//	MARK: - Equatable Conformance
+
+extension Interval: Equatable {
+	public static func == (lhs: Self, rhs: Self) -> Bool {
+		//	Iterating direction is not considered in equality comparison.
+		(lhs.lowerBoundaryAccessibility, lhs.lowerEndpoint, lhs.upperEndpoint, lhs.upperBoundaryAccessibility) == (rhs.lowerBoundaryAccessibility, rhs.lowerEndpoint, rhs.upperEndpoint, rhs.upperBoundaryAccessibility) || (lhs.isEmpty && rhs.isEmpty)
+	}
 }
 
 //	MARK: - Hashable Conformance
