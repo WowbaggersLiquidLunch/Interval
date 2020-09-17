@@ -11,7 +11,7 @@ import XCTest
 class IntervalComparisonTests: XCTestCase {
 	
 	///	The collection of bounded endpoint values for testing interval comparison.
-	var boundedEndpointValues: [Int] = [.min, -1, 0, 1, .max]
+	var boundedEndpointValues: [Int] = [.min, -1, 0, 1, 2, .max]
 	///	The collection of endpoints for testing interval comparison.
 	var endpoints: [Interval<Int>.Endpoint] { boundedEndpointValues.map { .bounded($0) } + [.unbounded] }
 	
