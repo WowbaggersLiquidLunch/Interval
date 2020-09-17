@@ -75,12 +75,10 @@ class IntervalComparisonTests: XCTestCase {
 		}
 	}
 	
-	#if false
-	
 	//	FIXME: Fix `testIntervalContainment()`.
 	
 	///	Checks that intervals compare for containment correctly.
-	func testIntervalContainment() {
+	private func testIntervalContainment() {
 		
 		endpoints.forEach { lowerEndpoint1 in
 			endpoints.forEach { upperEndpoint1 in
@@ -174,7 +172,5 @@ class IntervalComparisonTests: XCTestCase {
 		}
 		
 	}
-	
-	#endif
 	
 }

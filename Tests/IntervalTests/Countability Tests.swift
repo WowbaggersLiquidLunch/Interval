@@ -215,12 +215,10 @@ final class CountabilityTests: XCTestCase {
 		
 	}
 	
-	#if false
-	
 	//	FIXME: Fix `testDefaultImplementationOfCountable()`.
 	
 	///	Checks that the default implementation of Countable is correct.
-	func testDefaultImplementationOfCountable() {
+	private func testDefaultImplementationOfCountable() {
 		
 		///	Standardised measurement of achievement in a course.
 		enum Grade: String, CaseIterable, Countable {
@@ -389,7 +387,5 @@ final class CountabilityTests: XCTestCase {
 		}
 		
 	}
-	
-	#endif
 	
 }
