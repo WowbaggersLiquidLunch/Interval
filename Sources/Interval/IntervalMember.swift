@@ -108,12 +108,9 @@ extension Decimal: IntervalMember {}
 extension DispatchTime: IntervalMember {}
 extension DispatchWallTime: IntervalMember {}
 
-
 //	MARK: Conditionally Available Types
-
 @available(macOS 10.12, macCatalyst 13, iOS 10, watchOS 3, tvOS 10, *) extension DateInterval: IntervalMember {}
 @available(macOS 10.12, macCatalyst 13, iOS 10, watchOS 3, tvOS 10, *) extension Measurement: IntervalMember {}
-
 //	`SchedulerTimeType`s isn't available on Linux.
 #if !os(Linux)
 @available(macOS 10.15, macCatalyst 13, iOS 13, watchOS 6, tvOS 13, *) extension DispatchQueue.SchedulerTimeType: IntervalMember {}
