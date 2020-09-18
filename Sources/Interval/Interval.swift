@@ -540,6 +540,48 @@ public struct Interval<Member: IntervalMember> {
 		}
 	}
 	
+	//	MARK: - Combining Intervals
+	
+	///	Returns the largest subinterval shared by this interval and the given other interval.
+	///	- Important: The resulting interval's iterating direction is always the same as `self`'s.
+	///	- Parameter other: The given other interval.
+	///	- Returns: The empty one, if either `self` or `other` is empty; otherwise, a new interval formed with the greater of `self` and `other`'s lowerbounds and the lesser of their upperbounds. The new interval's iterating direction stays the same as `self`'s.
+	public func intersection(_ other: Self) -> Self {
+		guard !self.isEmpty else { return self }
+		guard !other.isEmpty else {
+			var newInterval = other
+			newInterval.isInverse = self.isInverse
+			return newInterval
+		}
+		let (lowerBoundaryAccessibility, lowerEndpoint) = self.assumingBothUpperUnboundedIsContained(within: other) ? (self.lowerBoundaryAccessibility, self.lowerEndpoint) : (other.lowerBoundaryAccessibility, other.lowerEndpoint)
+		let (upperBoundaryAccessibility, upperEndpoint) = self.assumingBothLowerUnboundedIsContained(within: other) ? (self.upperBoundaryAccessibility, self.upperEndpoint) : (other.upperBoundaryAccessibility, other.upperEndpoint)
+		return Interval(
+			lowerBoundary: lowerBoundaryAccessibility,
+			lowerEndpoint: lowerEndpoint,
+			upperEndpoint: upperEndpoint,
+			upperBoundary: upperBoundaryAccessibility,
+			inInverseStridingDirection: self.isInverse
+		)
+	}
+	
+	///	Removes the members of this interval that aren’t also in the given other interval.
+	///	- Parameter other: the given other interval.
+	@inlinable
+	public mutating func formIntersection(_ other: Self) {
+		self = self.intersection(other)
+	}
+	
+	///	Returns the largest subinterval shared by this interval and the given other interval.
+	///	- Important: The resulting interval's iterating direction is always the same as `lhs`'s.
+	///	- Parameters:
+	///	  - lhs: An interval.
+	///	  - rhs: Another interval.
+	///	- Returns: The empty one, if either `lhs` or `rhs` is empty; otherwise, a new interval formed with the greater of `lhs` and `rhs`'s lowerbounds and the lesser of their upperbounds. The new interval's iterating direction stays the same as `lhs`'s.
+	@inlinable
+	public static func ∩ (lhs: Self, rhs: Self) -> Self {
+		lhs.intersection(rhs)
+	}
+	
 	//	MARK: - Testing for Membership
 	
 	///	Returns a Boolean value indicating whether the given value is contained within the interval.

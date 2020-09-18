@@ -29,3 +29,7 @@ postfix operator >∙∙
 
 prefix operator ∙∙≥
 prefix operator ∙∙>
+
+//	MARK: Interval-Combining Operators
+
+infix operator ∩: AdditionPrecedence
