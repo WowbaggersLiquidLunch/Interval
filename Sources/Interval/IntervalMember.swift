@@ -116,10 +116,10 @@ extension DispatchWallTime: IntervalMember {}
 
 //	`SchedulerTimeType`s isn't available on Linux.
 #if !os(Linux)
-@available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension DispatchQueue.SchedulerTimeType: IntervalMember {}
-@available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension DispatchQueue.SchedulerTimeType.Stride: IntervalMember {}
-@available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension OperationQueue.SchedulerTimeType: IntervalMember {}
-@available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension OperationQueue.SchedulerTimeType.Stride: IntervalMember {}
-@available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension RunLoop.SchedulerTimeType: IntervalMember {}
-@available(macOS 10.15, macCatalyst 13, iOS 8, watchOS 2, tvOS 9, *) extension RunLoop.SchedulerTimeType.Stride: IntervalMember {}
+@available(macOS 10.15, macCatalyst 13, iOS 13, watchOS 6, tvOS 13, *) extension DispatchQueue.SchedulerTimeType: IntervalMember {}
+@available(macOS 10.15, macCatalyst 13, iOS 13, watchOS 6, tvOS 13, *) extension DispatchQueue.SchedulerTimeType.Stride: IntervalMember {}
+@available(macOS 10.15, macCatalyst 13, iOS 13, watchOS 6, tvOS 13, *) extension OperationQueue.SchedulerTimeType: IntervalMember {}
+@available(macOS 10.15, macCatalyst 13, iOS 13, watchOS 6, tvOS 13, *) extension OperationQueue.SchedulerTimeType.Stride: IntervalMember {}
+@available(macOS 10.15, macCatalyst 13, iOS 13, watchOS 6, tvOS 13, *) extension RunLoop.SchedulerTimeType: IntervalMember {}
+@available(macOS 10.15, macCatalyst 13, iOS 13, watchOS 6, tvOS 13, *) extension RunLoop.SchedulerTimeType.Stride: IntervalMember {}
 #endif
