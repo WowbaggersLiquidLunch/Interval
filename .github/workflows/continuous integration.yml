@@ -56,7 +56,7 @@ jobs:
     strategy:
       matrix:
         ubuntu_version: [ 16.04, 18.04, 20.04 ]
-        swift_version: [ 5.2 ]
+        swift_version: [ 5.2, 5.3 ]
     
     steps:
       - name: Checkout Repository
