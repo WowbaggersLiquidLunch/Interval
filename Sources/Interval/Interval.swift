@@ -262,6 +262,7 @@ public struct Interval<Member: IntervalMember> {
 	//	MARK: - Special Intervals
 	
 	///	An unbounded interval.
+	@inlinable
 	public static var unbounded: Self {
 		.init(
 			lowerBoundary: .open,
@@ -274,12 +275,15 @@ public struct Interval<Member: IntervalMember> {
 	//	MARK: - Inspecting Boundaries
 	
 	///	A Boolean value indicating whether the interval is closed.
+	@inlinable
 	public var isClosed: Bool { isLowerClosed && isUpperClosed }
 	
 	///	A Boolean value indicating whether the interval is open.
+	@inlinable
 	public var isOpen: Bool { isLowerOpen && isUpperOpen }
 	
 	///	A Boolean value indicating whether the interval is half-open.
+	@inlinable
 	public var isHalfOpen: Bool { !(isClosed || isOpen) }
 	
 	///	A Boolean value indicating whether the interval's lower boundary is closed.
@@ -289,20 +293,25 @@ public struct Interval<Member: IntervalMember> {
 	public let isUpperClosed: Bool
 	
 	///	A Boolean value indicating whether the interval's lower boundary is open.
+	@inlinable
 	public var isLowerOpen: Bool { !isLowerClosed }
 	
 	///	A Boolean value indicating whether the interval's upper boundary is open.
+	@inlinable
 	public var isUpperOpen: Bool { !isUpperClosed }
 	
 	//	MARK: - Inspecting Endpoints
 	
 	///	A Boolean value indicating whether the interval is bounded.
+	@inlinable
 	public var isBounded: Bool { isLowerBounded && isUpperBounded }
 	
 	///	A Boolean value indicating whether the interval is unbounded.
+	@inlinable
 	public var isUnbounded: Bool { isLowerUnbounded && isUpperUnbounded }
 	
 	///	A Boolean value indicating whether the interval is half-bounded.
+	@inlinable
 	public var isHalfBounded: Bool { !(isBounded || isUnbounded) }
 	
 	///	A Boolean value indicating whether the interval's lower endpoint is bounded.
@@ -312,9 +321,11 @@ public struct Interval<Member: IntervalMember> {
 	public let isUpperBounded: Bool
 	
 	///	A Boolean value indicating whether the interval's lower endpoint is unbounded.
+	@inlinable
 	public var isLowerUnbounded: Bool { !isLowerBounded }
 	
 	///	A Boolean value indicating whether the interval's upper endpoint is unbounded.
+	@inlinable
 	public var isUpperUnbounded: Bool { !isUpperBounded }
 	
 	//	MARK: - Interval Cardinality
@@ -322,6 +333,7 @@ public struct Interval<Member: IntervalMember> {
 	//	FIXME: Use a stored property for `isEmpty`.
 	
 	///	A Boolean value indicating whether the interval contains no members.
+	@inlinable
 	public var isEmpty: Bool {
 		guard
 			case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint,
@@ -335,6 +347,7 @@ public struct Interval<Member: IntervalMember> {
 	//	FIXME: Use a stored property for `isDegenerate`.
 	
 	///	A Boolean value indicating whether the interval contains 1 and only 1 member.
+	@inlinable
 	public var isDegenerate: Bool {
 		guard
 			case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint,
@@ -346,6 +359,7 @@ public struct Interval<Member: IntervalMember> {
 	}
 	
 	///	A Boolean value indicating whether the interval contains more than 1 member.
+	@inlinable
 	public var isProper: Bool { !isEmpty && !isDegenerate }
 	
 	//	MARK: - Related Intervals
@@ -427,6 +441,7 @@ public struct Interval<Member: IntervalMember> {
 	///	Returns a Boolean value that indicates whether this interval is a strict subinterval of the given other interval.
 	///	- Parameter other: The other interval.
 	///	- Returns: `true` if the interval is a strict subinterval of `other`; otherwise, `false`.
+	@inlinable
 	public func isStrictSubinterval(of other: Self) -> Bool {
 		(self.isSubinterval(of: other) && self != other)
 	}
@@ -643,6 +658,7 @@ public struct Interval<Member: IntervalMember> {
 //	MARK: - Equatable Conformance
 
 extension Interval: Equatable {
+	@inlinable
 	public static func == (lhs: Self, rhs: Self) -> Bool {
 		//	Iterating direction is not considered in equality comparison.
 		(lhs.lowerBoundaryAccessibility, lhs.lowerEndpoint, lhs.upperEndpoint, lhs.upperBoundaryAccessibility) == (rhs.lowerBoundaryAccessibility, rhs.lowerEndpoint, rhs.upperEndpoint, rhs.upperBoundaryAccessibility) || (lhs.isEmpty && rhs.isEmpty)
@@ -659,6 +675,7 @@ extension Interval.Endpoint: Hashable where Member: Hashable {}
 
 extension Interval: CustomStringConvertible where Member: CustomStringConvertible {
 	
+	@inlinable
 	public var description: String {
 		
 		let lowerBoundaryCharacter: Character = self.isLowerClosed ? "[" : "("
