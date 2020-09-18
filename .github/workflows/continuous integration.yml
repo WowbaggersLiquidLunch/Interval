@@ -44,9 +44,11 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ${{ steps.showCodeCoveragePath.outputs.codeCoveragePath}}
-      - name: Upload Code Coverage to Codacy
+      - name: Set Codacy Token as Environment Virable
         if: ${{ always() }}
         run: export CODACY_PROJECT_TOKEN=${{ secrets.CODACY_TOKEN }}
+      - name: Upload Code Coverage to Codacy
+        if: ${{ always() }}
         run: bash <(curl -Ls https://coverage.codacy.com/get.sh) .build/debug/codecov/lcov.info
   
   ubuntu_test:
