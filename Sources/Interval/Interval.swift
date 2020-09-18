@@ -94,7 +94,6 @@ public struct Interval<Member: IntervalMember> {
 	///	  - upperEndpoint: The interval's upper endpoint.
 	///	  - upperBoundaryAccessibility: The interval's upper boundary accessibility.
 	///	  - isInverse: Whether the interval is iterated in the inverse (descending) direction, if `Member` conforms to `Strideable`, default `false`.
-	@inlinable
 	public init(
 		lowerBoundary lowerBoundaryAccessibility: IntervalBoundaryAccessibility,
 		lowerEndpoint: Endpoint,
@@ -395,12 +394,11 @@ public struct Interval<Member: IntervalMember> {
 	///	A Boolean value indicating whether the interval is iterated in the inverse (descending) direction.
 	///
 	///	It's only effective if `Member` conforms to `Strideable`.
-	public var isInverse: Bool = false
+	public private(set) var isInverse: Bool = false
 	
 	///	Reverses the interval's iterating direction.
 	///
 	///	It's only effective if `Member` conforms to `Strideable`.
-	@inlinable
 	public mutating func reverse() {
 		isInverse.toggle()
 	}
