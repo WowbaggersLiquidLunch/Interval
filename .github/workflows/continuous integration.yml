@@ -44,6 +44,12 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ${{ steps.showCodeCoveragePath.outputs.codeCoveragePath}}
+      - name: Upload Code Coverage to Codacy
+        if: ${{ always() }}
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_TOKEN }}
+          coverage-reports: .build/debug/codecov/lcov.info
   
   ubuntu_test:
     name: Test on Ubuntu ${{ matrix.ubuntu_version }} with Swift ${{ matrix.swift_version }}
@@ -85,4 +91,9 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ${{ steps.showCodeCoveragePath.outputs.codeCoveragePath}}
-       
+      - name: Upload Code Coverage to Codacy
+        if: ${{ always() }}
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_TOKEN }}
+          coverage-reports: .build/debug/codecov/lcov.info
