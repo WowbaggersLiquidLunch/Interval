@@ -35,6 +35,11 @@ final class IntervalPropertiesTests: XCTestCase {
 	///	The collection of bounded endpoint values of type `String` for testing interval properties.
 	let boundedEndpointValuesOfTypeString: [String] = ["a", "b", "ç", "π", "the", "internet", "is", "made", "of", "cats"]
 	
+	///	The collection of bounded endpoints of type `Int`for testing interval properties.
+	var boundedEndpointsOfTypeInt: [Interval<Int>.Endpoint] { boundedEndpointValuesOfTypeInt.map { .bounded($0) } }
+	///	The collection of endpoints (bounded and unbounded) of type `Int` for testing interval properties.
+	var endpointsOfTypeInt: [Interval<Int>.Endpoint] { boundedEndpointsOfTypeInt + [.unbounded] }
+	
 	///	The collection of boundary accessibilities for testing interval properties.
 	let boundaryAccessibilities: [IntervalBoundaryAccessibility] = [.closed, .open]
 	//		///	The collection of boundary availabilities for testing interval properties.
@@ -46,14 +51,8 @@ final class IntervalPropertiesTests: XCTestCase {
 	///	Checks that internal have correct properties after initialisation.
 	func testIntervalBoundariesAndEndpoints() {
 		
-		///	The collection of bounded endpoints for testing interval properties.
-		let boundedEndpoints: [Interval<Int>.Endpoint] = boundedEndpointValuesOfTypeInt.map { .bounded($0) }
-		
-		///	The collection of endpoints for testing interval properties.
-		let endpoints: [Interval<Int>.Endpoint] = boundedEndpoints + [.unbounded]
-		
-		endpoints.forEach { lowerEndpoint in
-			endpoints.forEach { upperEndpoint in
+		endpointsOfTypeInt.forEach { lowerEndpoint in
+			endpointsOfTypeInt.forEach { upperEndpoint in
 				boundaryAccessibilities.forEach { lowerBoundaryAccessibility in
 					boundaryAccessibilities.forEach { upperBoundaryAccessibility in
 						whetherIntervalShouldBeOrderedDescendingly.forEach { intervalShouldBeOrderedDescendingly in
