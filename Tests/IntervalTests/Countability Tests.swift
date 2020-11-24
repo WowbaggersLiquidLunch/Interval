@@ -1,5 +1,5 @@
 //
-//	Countability Tests.swift - Test cases and methods regarding types' coutabilities.
+//	Countability Tests.swift - Test cases and methods regarding types' countabilities.
 //
 //	Created by Wowbagger & His Liquid Lunch on 20-08-10.
 //
@@ -10,7 +10,7 @@ import XCTest
 ///	A group of test cases regarding types' coutabilities.
 final class CountabilityTests: XCTestCase {
 	
-	///	The collection of degrees of separation for testing countinuity of uncountable types.
+	///	The collection of degrees of separation for testing continuity of uncountable types.
 	///
 	///	Members of the collection are designed to test edge cases for different bit-widths, such as `111`, `1000`, etc.
 	lazy var collectionOfDegreesOfSeparation: Set<Int> = {

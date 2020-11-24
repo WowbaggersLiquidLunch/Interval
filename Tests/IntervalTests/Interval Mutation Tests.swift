@@ -84,7 +84,7 @@ class IntervalMutationTests: XCTestCase {
 			
 		}
 		
-		///	Compares 2 intervals memberwisely.
+		///	Compares 2 intervals member-wisely.
 		///	- Parameters:
 		///	  - interval1: An interval to compare.
 		///	  - interval2: Another interval to compare.

@@ -37,9 +37,9 @@
 ///	}
 ///	```
 ///
-///	In the pseudocode above, there is no possible implementation for function `allPossibleValues` that can generate `allNaturalNumbers`. This is because the `count` of every `Set` instance is restricted by the finite size of `Set.Index`, that of `Int`, and that of physical memory available. The same size restriction exists for all Swift types, not just `Set.Index` and `Int`, which in practice renders all types as sets of binary sequences of fixed-lengths. Because all such sets are countable, one might be inclined to consider all Swift types countable. However, in general use cases, physically restrictions are often ignored, and types are treated as perfect representations of the mathematical concepts they intend to model. For example, altough `Double` is constrained to a fixed size of 64 bits, with all its instances having finite precisions and together forming a subset of rational numbers, it intends to model the entire set of real numbers, as indicated by its static properites such as `Double.pi` and `Double.infinity`. Because the set of all real numbers is uncountable, `Double` is uncountable.
+///	In the pseudocode above, there is no possible implementation for function `allPossibleValues` that can generate `allNaturalNumbers`. This is because the `count` of every `Set` instance is restricted by the finite size of `Set.Index`, that of `Int`, and that of physical memory available. The same size restriction exists for all Swift types, not just `Set.Index` and `Int`, which in practice renders all types as sets of binary sequences of fixed-lengths. Because all such sets are countable, one might be inclined to consider all Swift types countable. However, in general use cases, physically restrictions are often ignored, and types are treated as perfect representations of the mathematical concepts they intend to model. For example, although `Double` is constrained to a fixed size of 64 bits, with all its instances having finite precisions and together forming a subset of rational numbers, it intends to model the entire set of real numbers, as indicated by its static properties such as `Double.pi` and `Double.infinity`. Because the set of all real numbers is uncountable, `Double` is uncountable.
 ///
-///	Most Swift types such as `String` and `[Int]` can be proven uncountable by either a surjective mapping to `Double`, or by Cantor's diagonal argument. A simplified general rule of thumb to finding a type `T`'s contability, without going through a rigorous mathematical proof, is answering this question: "If given an arbitrary instance of the type `T`, can one reasonaly deduce the next in line with a stable algorithm?" If the answer is yes, then the type is countable, otherwise uncountable.
+///	Most Swift types such as `String` and `[Int]` can be proven uncountable by either a surjective mapping to `Double`, or by Cantor's diagonal argument. A simplified general rule of thumb to finding a type `T`'s countability, without going through a rigorous mathematical proof, is answering this question: "If given an arbitrary instance of the type `T`, can one reasonably deduce the next in line with a stable algorithm?" If the answer is yes, then the type is countable, otherwise uncountable.
 ///
 ///	Currently, as of Swift 5.2, among types defined in the standard library, only `BinaryInteger`-conforming types, `Void`, and `Never` are countable by the rules listed above. However, only `BinaryInteger`-conforming types conform to `Countable`. `Void` can not conform to `Countable` because tuples can not be extended. `Never` can not conform to `Countable` because the type is uninhabited, i.e. ∅.
 ///
@@ -56,25 +56,25 @@
 public protocol Countable: Strideable where Stride: BinaryInteger {
 	///	Returns the value that immediately precedes the given value.
 	///	- Parameter value: The given value.
-	///	- Returns: The value that immediately precedes the given value, with all possible values of type `Self` ordered ascendingly by their mapped natural numbers. It can be the greatest value less than `self`, but it doesn't have to be.
+	///	- Returns: The value that immediately precedes the given value, with all possible values of type `Self` ordered ascending by their mapped natural numbers. It can be the greatest value less than `self`, but it doesn't have to be.
 	@inlinable
 	static func instance(immediatelyPreceding value: Self) -> Self
 	
 	///	Returns the value that immediately succeeds the given value.
 	///	- Parameter value: The given value.
-	///	- Returns: The value that immediately succeeds the given value, with all possible values of type `Self` ordered ascendingly by their mapped natural numbers. It can be the least value greater than `self`, but it doesn't have to be.
+	///	- Returns: The value that immediately succeeds the given value, with all possible values of type `Self` ordered ascending by their mapped natural numbers. It can be the least value greater than `self`, but it doesn't have to be.
 	@inlinable
 	static func instance(immediatelySucceeding value: Self) -> Self
 	
 	///	The value that immediately precedes the current value.
 	///
-	///	The value is the one that immediately precedes the current value, with all possible values of type `Self` ordered ascendingly by their mapped natural numbers. It can be the greatest value less than `self`, but it doesn't have to be.
+	///	The value is the one that immediately precedes the current value, with all possible values of type `Self` ordered ascending by their mapped natural numbers. It can be the greatest value less than `self`, but it doesn't have to be.
 	@inlinable
 	var immediatePredecessor: Self { get }
 	
 	///	The value that immediately succeeds the current value.
 	///
-	///	The value is the one that immediately succeeds the current value, with all possible values of type `Self` ordered ascendingly by their mapped natural numbers. It can be the least value greater than `self`, but it doesn't have to be.
+	///	The value is the one that immediately succeeds the current value, with all possible values of type `Self` ordered ascending by their mapped natural numbers. It can be the least value greater than `self`, but it doesn't have to be.
 	@inlinable
 	var immediateSuccessor: Self { get }
 	
@@ -104,7 +104,7 @@ public protocol Countable: Strideable where Stride: BinaryInteger {
 extension Countable {
 	///	The value that immediately precedes the current value.
 	///
-	///	The value is the one that immediately precedes the current value, with all possible values of type `Self` ordered ascendingly by their mapped natural numbers. It can be the greatest value less than `self`, but it doesn't have to be.
+	///	The value is the one that immediately precedes the current value, with all possible values of type `Self` ordered ascending by their mapped natural numbers. It can be the greatest value less than `self`, but it doesn't have to be.
 	@inlinable
 	public var immediatePredecessor: Self {
 		Self.instance(immediatelyPreceding: self)
@@ -112,7 +112,7 @@ extension Countable {
 	
 	///	The value that immediately succeeds the current value.
 	///
-	///	The value is the one that immediately succeeds the current value, with all possible values of type `Self` ordered ascendingly by their mapped natural numbers. It can be the least value greater than `self`, but it doesn't have to be.
+	///	The value is the one that immediately succeeds the current value, with all possible values of type `Self` ordered ascending by their mapped natural numbers. It can be the least value greater than `self`, but it doesn't have to be.
 	@inlinable
 	public var immediateSuccessor: Self {
 		Self.instance(immediatelySucceeding: self)
@@ -140,7 +140,7 @@ extension Countable {
 	///
 	///	The current implementation of this method is provided by [cukr](https://forums.swift.org/t/negotiate-between-max-stride-size-and-max-distance/39559/5) on the Swift Forums.
 	///
-	///	If `Self` confroms to `BinaryInteger`, then in most cases, `self.separates(from: other, byDegrees: degrees)` is equivalent to `Stride(max(self, other) - min(self, other)) == degrees`. However, the equivalence breaks when `Self.min.distance(to: Self.max)` is greater than `Stride.max`, i.e. when the maximal distance between `self` and `other` is too large for `Stride` to represent.
+	///	If `Self` conforms to `BinaryInteger`, then in most cases, `self.separates(from: other, byDegrees: degrees)` is equivalent to `Stride(max(self, other) - min(self, other)) == degrees`. However, the equivalence breaks when `Self.min.distance(to: Self.max)` is greater than `Stride.max`, i.e. when the maximal distance between `self` and `other` is too large for `Stride` to represent.
 	///
 	///	- Precondition: `degrees >= 0`.
 	///
@@ -155,7 +155,7 @@ extension Countable {
 	///	  }
 	///	  ```
 	///
-	///	  However, some types such as are not as likely to have better-than-O(1) implementations, because they are possible to overflow both up and down. When working with these types, in situations where it's certain that they're free from at least one of the overflow risks, it might be advisable for clients to roll their own more efficient algorithms, instead of calling this merhod.
+	///	  However, some types such as are not as likely to have better-than-O(1) implementations, because they are possible to overflow both up and down. When working with these types, in situations where it's certain that they're free from at least one of the overflow risks, it might be advisable for clients to roll their own more efficient algorithms, instead of calling this method.
 	///
 	///	- ToDo: Find an O(1) solution.
 	///
@@ -196,7 +196,7 @@ extension Countable {
 
 extension Countable where Self: BinaryInteger {
 	///	Returns the value less than the given value by 1.
-	///	- Warning: If `Self` has a lowest representable value, use the implementation specialised for `Countable where Self: FixedWidthInteger`. Calling this static method with the loewst representable value of `Self` as `value` triggers an integer overflow, which will be trapped and reported as a runtime error.
+	///	- Warning: If `Self` has a lowest representable value, use the implementation specialised for `Countable where Self: FixedWidthInteger`. Calling this static method with the lowest representable value of `Self` as `value` triggers an integer overflow, which will be trapped and reported as a runtime error.
 	///	- Warning: Only the implementation specialised for `FixedWidthInteger` has been tested.
 	///	- Parameter value: The given other value.
 	///	- Returns: `value - 1`.
@@ -386,7 +386,7 @@ extension Int8: Countable {}
 //		fatalError("`Never` is uninhabited, so this function body should never have been executed.")
 //	}
 //
-//	///	Inspects if this value shares a common neighbor with the given other value.
+//	///	Inspects if this value shares a common neighbour with the given other value.
 //	///	- Warning: `Never` is uninhabited, so this function body should never have been executed.
 //	///	- Parameter other: The given other value.
 //	///	- Returns: `true` if the 2 values are both right next to a 3rd value, `false` otherwise.

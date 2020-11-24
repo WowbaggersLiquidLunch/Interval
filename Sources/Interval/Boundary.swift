@@ -4,7 +4,7 @@
 //	Created by Wowbagger & His Liquid Lunch on 20-08-16.
 //
 
-///	This file comtains the definitaion of `IntervalBoundaryAccessibility` and `IntervalBoundaryAvailability` structs. The structs are defined ouside of the `Interval` generic struct, because boundaries are universal across all intervals, and not bound by the interval's member's type.
+///	This file contains the definitaion of `IntervalBoundaryAccessibility` and `IntervalBoundaryAvailability` structs. The structs are defined ouside of the `Interval` generic struct, because boundaries are universal across all intervals, and not bound by the interval's member's type.
 
 //
 

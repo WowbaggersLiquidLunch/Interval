@@ -33,7 +33,7 @@ class IntervalEqualityTests: XCTestCase {
 	let whetherIntervalShouldBeOrderedDescendingly: [Bool] = [true, false]
 	
 	///	Verifies that intervals are equal if their defining properties are equal or if they're both empty.
-	func testsEqualityBewteenIntervals() {
+	func testsEqualityBetweenIntervals() {
 		
 		endpoints.forEach { lowerEndpoint1 in
 			endpoints.forEach { upperEndpoint1 in

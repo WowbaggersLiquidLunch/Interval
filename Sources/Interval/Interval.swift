@@ -1,12 +1,12 @@
 //
-//	Interval.swift - Unified and complete interval represenatation.
+//	Interval.swift - Unified and complete interval representation.
 //
 //	Created by Wowbagger & His Liquid Lunch on 20-07-18.
 //
 
-///	This file comtains the definitaion of the `Interval` generic struct, along with its extensions. Extensions of `IntervalMember` that closely relate to `Interval` are also contained within, but potentially will be moved into their own files.
+///	This file contains the definition of the `Interval` generic struct, along with its extensions. Extensions of `IntervalMember` that closely relate to `Interval` are also contained within, but potentially will be moved into their own files.
 
-//	TODO: Decide whether to allow closed unbounded intervals: [-∞, ∞], and up date the documentation if the decision is yes.
+//	TODO: Decide whether to allow closed unbounded intervals: [-∞, ∞], and update the documentation if the decision is yes.
 //	TODO: Update the entire documentation as the prototype progresses.
 
 ///	An interval.
@@ -16,7 +16,7 @@
 ///	Cardinality
 ///	-----------
 ///
-///	Defined by its boundries and endpoints, an interval can be empty, degenerate, or propper: An empty interval contains no members, a degenerate interval 1 and only 1 member, and a proper interval more than 1 member.
+///	Defined by its boundaries and endpoints, an interval can be empty, degenerate, or proper: An empty interval contains no members, a degenerate interval 1 and only 1 member, and a proper interval more than 1 member.
 ///
 ///	Iterating Direction
 ///	-------------------
@@ -44,7 +44,7 @@
 ///	print(interval3 == interval5)	//	false
 ///	```
 ///
-///	- ToDo: Allow equality comparsions of different `Interval` types wherever comparison between their associated `Member` types is allowed:
+///	- ToDo: Allow equality comparisons of different `Interval` types wherever comparison between their associated `Member` types is allowed:
 ///
 ///	  ```swift
 ///	  let intervalOfInts: Interval<Int> = Interval(from: 1, to: 9, .exclusive)
@@ -364,7 +364,7 @@ public struct Interval<Member: IntervalMember> {
 	
 	//	MARK: - Related Intervals
 	
-	//	The discription for `interior` and `closure` are lifted straightly from Wikipedia: https://en.wikipedia.org/wiki/Interval_(mathematics)#Terminology
+	//	The description for `interior` and `closure` are lifted straightly from Wikipedia: https://en.wikipedia.org/wiki/Interval_(mathematics)#Terminology
 	
 	///	The interval's interior.
 	///
@@ -384,7 +384,7 @@ public struct Interval<Member: IntervalMember> {
 		)
 	}
 	
-	//	TODO: Decide if an unbounded interval can be an closed interval.
+	//	TODO: Decide if an unbounded interval can be a closed interval.
 	
 	///	The interval's closure.
 	///
@@ -446,17 +446,17 @@ public struct Interval<Member: IntervalMember> {
 		(self.isSubinterval(of: other) && self != other)
 	}
 	
-	///	Returns a Boolean value that indicates whether this interval is a superinterval of the given other interval.
+	///	Returns a Boolean value that indicates whether this interval is a super-interval of the given other interval.
 	///	- Parameter other: The other interval.
-	///	- Returns: `true` if the interval is a superinterval of `other`; otherwise, `false`.
+	///	- Returns: `true` if the interval is a super-interval of `other`; otherwise, `false`.
 	@inlinable
 	public func isSuperinterval(of other: Self) -> Bool {
 		other.isSubinterval(of: self)
 	}
 	
-	///	Returns a Boolean value that indicates whether this interval is a strict superinterval of the given other interval.
+	///	Returns a Boolean value that indicates whether this interval is a strict super-interval of the given other interval.
 	///	- Parameter other: The other interval.
-	///	- Returns: `true` if the interval is a strict superinterval of `other`; otherwise, `false`.
+	///	- Returns: `true` if the interval is a strict super-interval of `other`; otherwise, `false`.
 	@inlinable
 	public func isStrictSuperinterval(of other: Self) -> Bool {
 		other.isStrictSubinterval(of: self)
@@ -545,7 +545,7 @@ public struct Interval<Member: IntervalMember> {
 	///	Returns the largest subinterval shared by this interval and the given other interval.
 	///	- Important: The resulting interval's iterating direction is always the same as `self`'s.
 	///	- Parameter other: The given other interval.
-	///	- Returns: The empty one, if either `self` or `other` is empty; otherwise, a new interval formed with the greater of `self` and `other`'s lowerbounds and the lesser of their upperbounds. The new interval's iterating direction stays the same as `self`'s.
+	///	- Returns: The empty one, if either `self` or `other` is empty; otherwise, a new interval formed with the greater of `self` and `other`'s lower bounds and the lesser of their upper bounds. The new interval's iterating direction stays the same as `self`'s.
 	public func intersection(_ other: Self) -> Self {
 		guard !self.isEmpty else { return self }
 		guard !other.isEmpty else {
@@ -576,7 +576,7 @@ public struct Interval<Member: IntervalMember> {
 	///	- Parameters:
 	///	  - lhs: An interval.
 	///	  - rhs: Another interval.
-	///	- Returns: The empty one, if either `lhs` or `rhs` is empty; otherwise, a new interval formed with the greater of `lhs` and `rhs`'s lowerbounds and the lesser of their upperbounds. The new interval's iterating direction stays the same as `lhs`'s.
+	///	- Returns: The empty one, if either `lhs` or `rhs` is empty; otherwise, a new interval formed with the greater of `lhs` and `rhs`'s lower bounds and the lesser of their upper bounds. The new interval's iterating direction stays the same as `lhs`'s.
 	@inlinable
 	public static func ∩ (lhs: Self, rhs: Self) -> Self {
 		lhs.intersection(rhs)
