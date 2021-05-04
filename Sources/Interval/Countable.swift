@@ -78,6 +78,16 @@ public protocol Countable: Strideable where Stride: BinaryInteger {
 	@inlinable
 	var immediateSuccessor: Self { get }
 	
+	///	Inspects if this value immediately precedes the given other value.
+	///	- Parameter other: The other value.
+	@inlinable
+	func immediatelyPrecedes(_ other: Self) -> Bool
+	
+	///	Inspects if this value immediately succeeds the given other value.
+	///	- Parameter other: The other value.
+	@inlinable
+	func immediatelySucceeds(_ other: Self) -> Bool
+	
 	///	Inspects if this value is right next to the given other value.
 	///	- Requires: Both `self.borders(on: self.immediatePredecessor)` and `self.borders(on: self.immediateSuccessor)` must evaluate to `true`.
 	///	- Parameter other: The given other value.
@@ -116,6 +126,20 @@ extension Countable {
 	@inlinable
 	public var immediateSuccessor: Self {
 		Self.instance(immediatelySucceeding: self)
+	}
+	
+	///	Inspects if this value immediately precedes the given other value.
+	///	- Parameter other: The other value.
+	@inlinable
+	public func immediatelyPrecedes(_ other: Self) -> Bool {
+		self < other && self.borders(on: other)
+	}
+	
+	///	Inspects if this value immediately succeeds the given other value.
+	///	- Parameter other: The other value.
+	@inlinable
+	public func immediatelySucceeds(_ other: Self) -> Bool {
+		other.immediatelyPrecedes(self)
 	}
 	
 	///	Inspects if this value is right next to the given other value.
