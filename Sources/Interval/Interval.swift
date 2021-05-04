@@ -7,7 +7,6 @@
 ///	This file contains the definition of the `Interval` generic struct, along with its extensions. Extensions of `IntervalMember` that closely relate to `Interval` are also contained within, but potentially will be moved into their own files.
 
 //	TODO: Decide whether to allow closed unbounded intervals: [-∞, ∞], and update the documentation if the decision is yes.
-//	TODO: Update the entire documentation as the prototype progresses.
 
 ///	An interval.
 ///

@@ -155,10 +155,6 @@ extension Countable {
 	///	  }
 	///	  ```
 	///
-	///	  However, some types such as are not as likely to have better-than-O(1) implementations, because they are possible to overflow both up and down. When working with these types, in situations where it's certain that they're free from at least one of the overflow risks, it might be advisable for clients to roll their own more efficient algorithms, instead of calling this method.
-	///
-	///	- ToDo: Find an O(1) solution.
-	///
 	///	- Warning: The default implementation of this instance method is untested, due to a problem with the test case.
 	///	
 	///	- ToDo: Fix the test case for the default implementation.
