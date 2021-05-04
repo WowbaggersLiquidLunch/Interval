@@ -136,9 +136,9 @@ extension Countable {
 		self.separates(from: other, byDegrees: 2) || self == other
 	}
 	
+	//	The current implementation of this method is provided by [cukr](https://forums.swift.org/t/negotiate-between-max-stride-size-and-max-distance/39559/5) on the Swift Forums.
+	
 	///	Inspects the correctness of the Bacon number (or, degrees of separation) between this value and the given other value.
-	///
-	///	The current implementation of this method is provided by [cukr](https://forums.swift.org/t/negotiate-between-max-stride-size-and-max-distance/39559/5) on the Swift Forums.
 	///
 	///	If `Self` conforms to `BinaryInteger`, then in most cases, `self.separates(from: other, byDegrees: degrees)` is equivalent to `Stride(max(self, other) - min(self, other)) == degrees`. However, the equivalence breaks when `Self.min.distance(to: Self.max)` is greater than `Stride.max`, i.e. when the maximal distance between `self` and `other` is too large for `Stride` to represent.
 	///
