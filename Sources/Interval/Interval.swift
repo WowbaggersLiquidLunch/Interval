@@ -564,6 +564,22 @@ extension Interval {
 		}
 	}
 	
+	///	Returns a Boolean value that indicates whether this interval fully precedes and adjoins the given other interval.
+	///	- Parameter other: The other interval.
+	///	- Returns: `true` if the interval immediately precedes `other`, and neither is empty; otherwise, `false`.
+	@inlinable
+	public func immediatelyPrecedes(_ other: Self) -> Bool {
+		fatalError()
+	}
+	
+	///	Returns a Boolean value that indicates whether this interval fully succeeds and adjoins the given other interval.
+	///	- Parameter other: The other interval.
+	///	- Returns: `true` if the interval immediately succeeds `other`, and neither is empty; otherwise, `false`.
+	@inlinable
+	public func immediatelySucceeds(_ other: Self) -> Bool {
+		fatalError()
+	}
+	
 	///	Returns a Boolean value that indicates whether this interval's lowest accessible member is no lesser than the given other interval's.
 	///	- Parameter other: The other interval.
 	///	- Returns: `true`, if `self` is empty or a subinterval of non-empty `other`, assuming both are upper-unbounded; otherwise, `false`.
@@ -601,8 +617,44 @@ extension Interval {
 	}
 }
 
+extension Interval where Member: Countable {
+	///	Returns a Boolean value that indicates whether this interval fully precedes the given other interval.
+	///	- Parameter other: The other interval.
+	///	- Returns: `true` if the interval fully precedes `other`, and neither is empty; otherwise, `false`.
+	@inlinable
+	public func fullyPrecedes(_ other: Self) -> Bool {
+		guard let selfLast = self.last, let otherFirst = other.first else { return false }
+		return selfLast < otherFirst
+	}
 	
+	///	Returns a Boolean value that indicates whether this interval fully succeeds the given other interval.
+	///	- Parameter other: The other interval.
+	///	- Returns: `true` if the interval fully succeeds `other`, and neither is empty; otherwise, `false`.
+	@inlinable
+	public func fullySucceeds(_ other: Self) -> Bool {
+		guard let selfFirst = self.first, let otherLast = other.last else { return false }
+		return selfFirst > otherLast
+	}
 	
+	///	Returns a Boolean value that indicates whether this interval fully precedes and adjoins the given other interval.
+	///	- Parameter other: The other interval.
+	///	- Returns: `true` if the interval immediately precedes `other`, and neither is empty; otherwise, `false`.
+	@inlinable
+	public func immediatelyPrecedes(_ other: Self) -> Bool {
+		guard let selfLast = self.last, let otherFirst = other.first else { return false }
+		return selfLast.immediatelyPrecedes(otherFirst)
+	}
+	
+	///	Returns a Boolean value that indicates whether this interval fully succeeds and adjoins the given other interval.
+	///	- Parameter other: The other interval.
+	///	- Returns: `true` if the interval immediately succeeds `other`, and neither is empty; otherwise, `false`.
+	@inlinable
+	public func immediatelySucceeds(_ other: Self) -> Bool {
+		guard let selfFirst = self.first, let otherLast = other.last else { return false }
+		return selfFirst.immediatelySucceeds(otherLast)
+	}
+}
+
 //	MARK: - Combining Intervals
 
 extension Interval {
