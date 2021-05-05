@@ -41,7 +41,7 @@
 ///
 ///	Most Swift types such as `String` and `[Int]` can be proven uncountable by either a surjective mapping to `Double`, or by Cantor's diagonal argument. A simplified general rule of thumb to finding a type `T`'s countability, without going through a rigorous mathematical proof, is answering this question: "If given an arbitrary instance of the type `T`, can one reasonably deduce the next in line with a stable algorithm?" If the answer is yes, then the type is countable, otherwise uncountable.
 ///
-///	Currently, as of Swift 5.2, among types defined in the standard library, only `BinaryInteger`-conforming types, `Void`, and `Never` are countable by the rules listed above. However, only `BinaryInteger`-conforming types conform to `Countable`. `Void` can not conform to `Countable` because tuples can not be extended. `Never` can not conform to `Countable` because the type is uninhabited, i.e. ∅.
+///	Currently, as of Swift 5.3, among types defined in the standard library, only `BinaryInteger`-conforming types, `Void`, and `Never` are countable by the rules listed above. However, only `BinaryInteger`-conforming types conform to `Countable`. `Void` can not conform to `Countable` because tuples can not be extended. `Never` can not conform to `Countable` because the type is uninhabited, i.e. ∅.
 ///
 ///	Conforming to the Countable Protocol
 ///	====================================
