@@ -899,6 +899,7 @@ extension Interval: LosslessStringConvertible where Member: LosslessStringConver
 			let upperBoundaryCharacter = description.last
 		else { return nil }
 		
+		//	FIXME: account for members whose `description` contains whitespace.
 		let descriptionSansBoundaryCharacters = description
 			.prefix(upTo: description.endIndex)
 			.suffix(from: description.index(after: description.startIndex))
