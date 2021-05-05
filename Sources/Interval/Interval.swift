@@ -327,40 +327,6 @@ public struct Interval<Member: IntervalMember> {
 	@inlinable
 	public var isUpperUnbounded: Bool { !isUpperBounded }
 	
-	//	MARK: - Interval Cardinality
-	
-	//	FIXME: Use a stored property for `isEmpty`.
-	
-	///	A Boolean value indicating whether the interval contains no members.
-	@inlinable
-	public var isEmpty: Bool {
-		guard
-			case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint,
-			case let .bounded(upperBoundedEndpointValue) = upperEndpoint
-		else { return false }
-		return lowerBoundedEndpointValue > upperBoundedEndpointValue
-			|| (!isClosed && lowerBoundedEndpointValue == upperBoundedEndpointValue)
-			|| (isOpen && lowerBoundedEndpointValue.borders(on: upperBoundedEndpointValue))
-	}
-	
-	//	FIXME: Use a stored property for `isDegenerate`.
-	
-	///	A Boolean value indicating whether the interval contains 1 and only 1 member.
-	@inlinable
-	public var isDegenerate: Bool {
-		guard
-			case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint,
-			case let .bounded(upperBoundedEndpointValue) = upperEndpoint
-		else { return false }
-		return !isEmpty && (
-			(isClosed && lowerBoundedEndpointValue == upperBoundedEndpointValue) || (isHalfOpen && lowerBoundedEndpointValue.borders(on: upperBoundedEndpointValue)) || (isOpen && lowerBoundedEndpointValue.sharesCommonNeighbor(with: upperBoundedEndpointValue))
-		)
-	}
-	
-	///	A Boolean value indicating whether the interval contains more than 1 member.
-	@inlinable
-	public var isProper: Bool { !isEmpty && !isDegenerate }
-	
 	//	MARK: - Related Intervals
 	
 	//	The description for `interior` and `closure` are lifted straightly from Wikipedia: https://en.wikipedia.org/wiki/Interval_(mathematics)#Terminology
@@ -427,9 +393,97 @@ public struct Interval<Member: IntervalMember> {
 		newInterval.reverse()
 		return newInterval
 	}
+}
+
+//	MARK: - Interval Cardinality
+
+extension Interval {
 	
-	//	MARK: - Comparing Intervals
+	//	FIXME: Use a stored property for `isEmpty`.
 	
+	///	A Boolean value indicating whether the interval contains no members.
+	@inlinable
+	public var isEmpty: Bool {
+		guard
+			case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint,
+			case let .bounded(upperBoundedEndpointValue) = upperEndpoint
+		else { return false }
+		return lowerBoundedEndpointValue > upperBoundedEndpointValue
+			|| (!isClosed && lowerBoundedEndpointValue == upperBoundedEndpointValue)
+			|| (isOpen && lowerBoundedEndpointValue.borders(on: upperBoundedEndpointValue))
+	}
+	
+	//	FIXME: Use a stored property for `isDegenerate`.
+	
+	///	A Boolean value indicating whether the interval contains 1 and only 1 member.
+	@inlinable
+	public var isDegenerate: Bool {
+		guard
+			case let .bounded(lowerBoundedEndpointValue) = lowerEndpoint,
+			case let .bounded(upperBoundedEndpointValue) = upperEndpoint
+		else { return false }
+		return !isEmpty && (
+			(isClosed && lowerBoundedEndpointValue == upperBoundedEndpointValue) || (isHalfOpen && lowerBoundedEndpointValue.borders(on: upperBoundedEndpointValue)) || (isOpen && lowerBoundedEndpointValue.sharesCommonNeighbor(with: upperBoundedEndpointValue))
+		)
+	}
+	
+	///	A Boolean value indicating whether the interval contains more than 1 member.
+	@inlinable
+	public var isProper: Bool { !isEmpty && !isDegenerate }
+	
+}
+
+//	MARK: - Testing for Membership
+
+extension Interval {
+	///	Returns a Boolean value indicating whether the given value is contained within the interval.
+	///	- Parameter value: The value to check for containment.
+	///	- Returns: `true` if `value` is contained within the interval; otherwise, `false`.
+	@inlinable
+	public func contains(_ value: Member) -> Bool {
+		if self.isUnbounded { return true }
+		
+		var valueIsAboveLowerEndpoint: Bool
+		var valueIsBelowUpperEndpoint: Bool
+		
+		if case let .bounded(lowerEndpoint) = lowerEndpoint {
+			valueIsAboveLowerEndpoint = value > lowerEndpoint || (self.isLowerClosed && value == lowerEndpoint)
+		} else { valueIsAboveLowerEndpoint = true }
+		
+		if case let .bounded(upperEndpoint) = upperEndpoint {
+			valueIsBelowUpperEndpoint = value < upperEndpoint || (self.isUpperClosed && value == upperEndpoint)
+		} else { valueIsBelowUpperEndpoint = true }
+		
+		return valueIsAboveLowerEndpoint && valueIsBelowUpperEndpoint
+	}
+	
+	///	Returns a Boolean value indicating whether a value is included in an interval.
+	///
+	///	You can use the pattern-matching operator (`~=`) to test whether a value is included in an interval. The pattern-matching operator is used internally in `case` statements for pattern matching. The following example uses the `~=` operator to test whether an integer is included in an interval of single-digit numbers:
+	///
+	///	```swift
+	///	let chosenNumber = 3
+	///	if 0<∙≤10 ~= chosenNumber {
+	///	    print("\(chosenNumber) is a single digit.")
+	///	}
+	///	//	Prints "3 is a single digit."
+	///	```
+	///
+	///	- Parameters:
+	///	  - pattern: An interval
+	///	  - bound: A value to match against `pattern`.
+	///	- Returns: `true` if `value` is contained within `pattern`; otherwise, `false`.
+	@inlinable
+	public static func ~= (pattern: Self, value: Member) -> Bool {
+		return pattern.contains(value)
+	}
+}
+
+	
+	
+//	MARK: - Comparing Intervals
+
+extension Interval {
 	///	Returns a Boolean value that indicates whether this interval is a subinterval of the given other interval.
 	///	- Parameter other: The other interval.
 	///	- Returns: `true` if the interval is a subinterval of `other`; otherwise, `false`.
@@ -538,9 +592,13 @@ public struct Interval<Member: IntervalMember> {
 			return selfUpperEndpoint <= otherUpperEndpoint
 		}
 	}
+}
+
 	
-	//	MARK: - Combining Intervals
 	
+//	MARK: - Combining Intervals
+
+extension Interval {
 	///	Returns the largest subinterval shared by this interval and the given other interval.
 	///	- Important: The resulting interval's iterating direction is always the same as `self`'s.
 	///	- Parameter other: The given other interval.
@@ -580,53 +638,11 @@ public struct Interval<Member: IntervalMember> {
 	public static func ∩ (lhs: Self, rhs: Self) -> Self {
 		lhs.intersection(rhs)
 	}
-	
-	//	MARK: - Testing for Membership
-	
-	///	Returns a Boolean value indicating whether the given value is contained within the interval.
-	///	- Parameter value: The value to check for containment.
-	///	- Returns: `true` if `value` is contained within the interval; otherwise, `false`.
-	@inlinable
-	public func contains(_ value: Member) -> Bool {
-		if self.isUnbounded { return true }
-		
-		var valueIsAboveLowerEndpoint: Bool
-		var valueIsBelowUpperEndpoint: Bool
-		
-		if case let .bounded(lowerEndpoint) = lowerEndpoint {
-			valueIsAboveLowerEndpoint = value > lowerEndpoint || (self.isLowerClosed && value == lowerEndpoint)
-		} else { valueIsAboveLowerEndpoint = true }
-		
-		if case let .bounded(upperEndpoint) = upperEndpoint {
-			valueIsBelowUpperEndpoint = value < upperEndpoint || (self.isUpperClosed && value == upperEndpoint)
-		} else { valueIsBelowUpperEndpoint = true }
-		
-		return valueIsAboveLowerEndpoint && valueIsBelowUpperEndpoint
-	}
-	
-	///	Returns a Boolean value indicating whether a value is included in an interval.
-	///
-	///	You can use the pattern-matching operator (`~=`) to test whether a value is included in an interval. The pattern-matching operator is used internally in `case` statements for pattern matching. The following example uses the `~=` operator to test whether an integer is included in an interval of single-digit numbers:
-	///
-	///	```swift
-	///	let chosenNumber = 3
-	///	if 0<∙≤10 ~= chosenNumber {
-	///	    print("\(chosenNumber) is a single digit.")
-	///	}
-	///	//	Prints "3 is a single digit."
-	///	```
-	///
-	///	- Parameters:
-	///	  - pattern: An interval
-	///	  - bound: A value to match against `pattern`.
-	///	- Returns: `true` if `value` is contained within `pattern`; otherwise, `false`.
-	@inlinable
-	public static func ~= (pattern: Self, value: Member) -> Bool {
-		return pattern.contains(value)
-	}
-	
-	//	MARK: - Converting Intervals
-	
+}
+
+//	MARK: - Converting Intervals
+
+extension Interval {
 	///	Returns the interval of indices described by another interval within the given collection.
 	///
 	///	You can use the `relative(to:)` method to convert an interval, which could be half- or fully unbounded, into a bounded interval. The _new_ bounded lower endpoint will have a closed boundary, and upper endpoint open. The following example uses this method to convert `(-∞, 4)` into `[0, 4)`, using an array instance to bound the interval with a lower endpoint.
@@ -693,7 +709,6 @@ public struct Interval<Member: IntervalMember> {
 		)
 		
 	}
-	
 }
 
 //	MARK: - Equatable Conformance
