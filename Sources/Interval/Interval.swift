@@ -523,11 +523,16 @@ extension Interval {
 		!(self.fullyPrecedes(other) || self.fullySucceeds(other))
 	}
 	
+	//	Note: It's an arbitrary choice that an interval does not precede or succeed another if both intervals are empty.
+	//	Rationale: An empty interval is a singularity like 0 / 0, where many operations, such as comparison, break.
+	
 	///	Returns a Boolean value that indicates whether this interval fully precedes the given other interval.
 	///	- Parameter other: The other interval.
-	///	- Returns: `true` if the interval fully precedes `other`; otherwise, `false`.
+	///	- Returns: `true` if the interval fully precedes `other`, and neither is empty; otherwise, `false`.
 	@inlinable
 	public func fullyPrecedes(_ other: Self) -> Bool {
+		guard !self.isEmpty && !other.isEmpty else { return false }
+		
 		guard
 			case let .bounded(selfUpperEndpoint) = self.upperEndpoint,
 			case let .bounded(otherLowerEndpoint) = other.lowerEndpoint
@@ -542,9 +547,11 @@ extension Interval {
 	
 	///	Returns a Boolean value that indicates whether this interval fully succeeds the given other interval.
 	///	- Parameter other: The other interval.
-	///	- Returns: `true` if the interval fully succeeds `other`; otherwise, `false`.
+	///	- Returns: `true` if the interval fully succeeds `other`, and neither is empty; otherwise, `false`.
 	@inlinable
 	public func fullySucceeds(_ other: Self) -> Bool {
+		guard !self.isEmpty && !other.isEmpty else { return false }
+		
 		guard
 			case let .bounded(otherUpperEndpoint) = other.upperEndpoint,
 			case let .bounded(selfLowerEndpoint) = self.lowerEndpoint
