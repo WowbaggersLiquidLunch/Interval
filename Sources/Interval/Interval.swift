@@ -479,8 +479,76 @@ extension Interval {
 	}
 }
 
+//	MARK: - Accessing Members
+
+extension Interval {
+	///	The only member in a degenerate interval.
+	///
+	///	If the interval isn't degenerate, the value of this property is `nil`
+	@inlinable
+	public var degenerateMember: Member? {
+		guard isDegenerate else { return nil }
+		return first
+	}
 	
+	///	The first member of an interval.
+	///
+	///	If the interval is empty, if it is lower-unbounded, or if it is lower-open and proper and its members uncountable, then the first member of the interval is considered unreachable, and the value of this property is `nil`.
+	///
+	///	If the interval is degenerate, then `first == last`, and neither is `nil`.
+	@inlinable
+	public var first: Member? {
+		guard case let .bounded(lowerEndpointValue) = lowerEndpoint, !isEmpty else { return nil }
+		guard isLowerClosed else { return isDegenerate ? last : nil }
+		return lowerEndpointValue
+	}
 	
+	///	The last member of an interval.
+	///
+	///	If the interval is empty, if it is upper-unbounded, or if it is upper-open and proper and its members uncountable, then the last member of the interval is considered unreachable, and the value of this property is `nil`.
+	///
+	///	If the interval is degenerate, then `last == first`, and neither is `nil`.
+	@inlinable
+	public var last: Member? {
+		guard case let .bounded(upperEndpointValue) = upperEndpoint, !isEmpty else { return nil }
+		guard isUpperClosed else { return isDegenerate ? first : nil }
+		return upperEndpointValue
+	}
+}
+
+extension Interval where Member: Countable {
+	///	The only member in a degenerate interval.
+	///
+	///	If the interval isn't degenerate, the value of this property is `nil`
+	@inlinable
+	public var degenerateMember: Member? {
+		guard isDegenerate else { return nil }
+		return first
+	}
+	
+	///	The first member of an interval.
+	///
+	///	If the interval is empty or lower-unbounded, the value of this property is `nil`.
+	///
+	///	If the interval is degenerate, then `first == last`, and neither is `nil`.
+	@inlinable
+	public var first: Member? {
+		guard case let .bounded(lowerEndpointValue) = lowerEndpoint, !isEmpty else { return nil }
+		return isLowerClosed ? lowerEndpointValue : lowerEndpointValue.immediateSuccessor
+	}
+	
+	///	The last member of an interval.
+	///
+	///	If the interval is empty or upper-unbounded, the value of this property is `nil`.
+	///
+	///	If the interval is degenerate, then `last == first`, and neither is `nil`.
+	@inlinable
+	public var last: Member? {
+		guard case let .bounded(upperEndpointValue) = upperEndpoint, !isEmpty else { return nil }
+		return isUpperClosed ? upperEndpointValue : upperEndpointValue.immediatePredecessor
+	}
+}
+
 //	MARK: - Comparing Intervals
 
 extension Interval {
