@@ -112,6 +112,22 @@ public protocol Countable: Strideable where Stride: BinaryInteger {
 }
 
 extension Countable {
+	///	Returns the value that immediately precedes the given value.
+	///	- Parameter value: The given value.
+	///	- Returns: The value that immediately precedes the given value, with all possible values of type `Self` ordered ascending by their mapped natural numbers. It can be the greatest value less than `self`, but it doesn't have to be.
+	@inlinable
+	static func instance(immediatelyPreceding value: Self) -> Self {
+		value.advanced(by: -1)
+	}
+	
+	///	Returns the value that immediately succeeds the given value.
+	///	- Parameter value: The given value.
+	///	- Returns: The value that immediately succeeds the given value, with all possible values of type `Self` ordered ascending by their mapped natural numbers. It can be the least value greater than `self`, but it doesn't have to be.
+	@inlinable
+	static func instance(immediatelySucceeding value: Self) -> Self {
+		value.advanced(by: 1)
+	}
+	
 	///	The value that immediately precedes the current value.
 	///
 	///	The value is the one that immediately precedes the current value, with all possible values of type `Self` ordered ascending by their mapped natural numbers. It can be the greatest value less than `self`, but it doesn't have to be.
