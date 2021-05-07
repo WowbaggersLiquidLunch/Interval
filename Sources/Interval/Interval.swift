@@ -436,6 +436,27 @@ extension Interval {
 //	MARK: - Testing for Membership
 
 extension Interval {
+	
+	@inlinable
+	public static func ∈ (_ possibleMember: Member, _ interval: Self) -> Bool {
+		interval.contains(possibleMember)
+	}
+	
+	@inlinable
+	public static func ∉ (_ possibleMember: Member, _ interval: Self) -> Bool {
+		!(possibleMember ∈ interval)
+	}
+	
+	@inlinable
+	public static func ∋ (_ interval: Self, _ possibleMember: Member) -> Bool {
+		possibleMember ∈ interval
+	}
+	
+	@inlinable
+	public static func ∌ (_ interval: Self, _ possibleMember: Member) -> Bool {
+		!(possibleMember ∈ interval)
+	}
+	
 	///	Returns a Boolean value indicating whether the given value is contained within the interval.
 	///	- Parameter value: The value to check for containment.
 	///	- Returns: `true` if `value` is contained within the interval; otherwise, `false`.
@@ -477,6 +498,7 @@ extension Interval {
 	public static func ~= (pattern: Self, value: Member) -> Bool {
 		return pattern.contains(value)
 	}
+	
 }
 
 //	MARK: - Accessing Members

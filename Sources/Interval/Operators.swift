@@ -33,3 +33,17 @@ prefix operator ∙∙>
 //	MARK: Interval-Combining Operators
 
 infix operator ∩: AdditionPrecedence
+
+//	MARK: Membership-Checking Operators
+
+infix operator ∈: SetInspectionPrecedence
+infix operator ∉: SetInspectionPrecedence
+infix operator ∋: SetInspectionPrecedence
+infix operator ∌: SetInspectionPrecedence
+
+//	MARK: - Precedence Groups
+
+precedencegroup SetInspectionPrecedence {
+	lowerThan: RangeFormationPrecedence
+	higherThan: LogicalConjunctionPrecedence
+}
